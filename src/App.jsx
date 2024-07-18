@@ -1,17 +1,19 @@
 
+import { useRef } from 'react'
 import './App.css'
 import Header from "./components/Header"
 import Home from "./components/Home"
 import Footer from "./components/Footer"
 import { useState } from 'react'
 import videoCards from './videoCards'
-import { nanoid } from 'nanoid'
-
+import NewVideo from './components/NewVideo'
 
 
 function App() {
   const [cardList, setCardList] = useState(videoCards)
+  const dialogRef = useRef(null)
 
+ 
   function Card({ image, title }) {
     return (
       <div className='card'>
@@ -31,13 +33,18 @@ function App() {
     )
   }
 
-  const frontElements = cardList.filter(card => card.category === "frontend").map(card => <Card key={card.title} title={card.title} image={card.image} />)
-  const backElements = cardList.filter(card => card.category === "backend").map(card => <Card key={card.title} title={card.title} image={card.image} />)
+  const frontElements = cardList.filter(card => card.category === "frontend").map(card => <Card key={card.id} title={card.title} image={card.image} />)
+  const backElements = cardList.filter(card => card.category !== "frontend").map(card => <Card key={card.id} title={card.title} image={card.image} />)
 
   function handleDelete(title) {
     setCardList(prevCardList => prevCardList.filter(card => card.title !== title))
   }
 
+  function newVideo(video) {
+    setCardList(prev => ([...prev, video ]))
+  }
+  
+  
   function editCard(editedCard) {
     setCardList(prevCardList => prevCardList.map(
       card => {
@@ -47,12 +54,15 @@ function App() {
     )
     )
   }
-  
-  
-console.log(cardList)
+
+  function handleModal() {
+    dialogRef.current.showModal()
+  }
+
   return (
     <>
-      <Header />
+      <NewVideo newVideo={newVideo}  dialogRef={dialogRef} />
+      <Header handleModal={handleModal}/>
       <Home />
       <div className='cards-container'>
         <div className='cards-front'>

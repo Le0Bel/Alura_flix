@@ -105,3 +105,47 @@ footer {
   gap: 2em;
 }
 
+
+/* Modal */
+
+dialog {
+  color:#2271d1;
+  border: 2px solid #6BD1FF;
+  border-radius: 15px;
+  width: 974px;
+  height: 1140px;
+  background-color: #03122F;
+}
+
+dialog h1 {
+  font-size: 60px;
+}
+
+.edit-container {
+  margin: 0 200px;
+}
+
+.edit-form {
+  color:azure;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-form label{
+font-size: 20px;
+font-weight: 600;
+}
+
+.edit-input {
+  border: 3px solid #2271d1;
+  border-radius: 18px;
+  padding: 8px 10px;
+  margin-bottom: 30px;
+  background-color: #03122F;
+  height: 62px;
+  color: #A5A5A5;
+  font-size: 20px;
+}
+/* fin de modal */
+
