@@ -6,20 +6,23 @@ export default [
         title: "Peli 1gg",
         image : "/home-fondo-1.png",
         description:" Mala",
-        category:"frontend"
+        category:"frontend",
+        video:'http:/etc'
     },
 
     {  id:nanoid(),
         title: "Peli 2 sdgdgdgg",
         image : "/home-fondo-1.png",
         description:" Mala",
-        category:"backend"
+        category:"backend",
+        video:'http:/etc'
     },
 
     {   id:nanoid(),
         title: "Peli 3 backend",
         image : "/home-fondo-1.png",
         description:" Mala",
-        category:"backend"
+        category:"backend",
+        video:'http:/etc'
     }
 ]
