@@ -46,7 +46,7 @@ export default function NewVideo({ dialogRef, newVideo }) {
                         value={formData.title}
                     />
 
-                    <label htmlFor="categoria">Categoria</label>
+                    <label htmlFor="category">Categoria</label>
                     <input
                         className="edit-input"
                         type="text"
@@ -55,7 +55,7 @@ export default function NewVideo({ dialogRef, newVideo }) {
                         value={formData.category}
                     />
 
-                    <label htmlFor="imagen">Imagen</label>
+                    <label htmlFor="image">Imagen</label>
                     <input
                         className="edit-input"
                         type="text" id="image"
@@ -71,7 +71,7 @@ export default function NewVideo({ dialogRef, newVideo }) {
                         value={formData.video}
                     />
 
-                    <label htmlFor="descripcion">Descripción</label>
+                    <label htmlFor="description">Descripción</label>
                     <input
                         className="edit-input"
                         type="text" id="description"
