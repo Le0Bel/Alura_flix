@@ -7,6 +7,7 @@ import Footer from "./components/Footer"
 import { useState } from 'react'
 import videoCards from './videoCards'
 import NewVideo from './components/NewVideo'
+import NewVideoNoControlada from './components/NewVideoNoControlada'
 import EditVideo from './components/EditVideo'
 
 
@@ -52,6 +53,7 @@ function App() {
     setCardEditId("")
   }
 
+
   function editCard(editedCard) {
     setCardList(prevCardList => prevCardList.map(
       card => {
@@ -62,10 +64,12 @@ function App() {
     )
   }
 
-  function handleModal() {
+  function openNewVideoModal() {
     dialogRef.current.showModal()
   }
-
+  function closeNewVideoModal (){
+    dialogRef.current.close()
+  }
 
   const frontElements = cardList.filter(card => card.category === "frontend").map(
     card => <Card key={card.id} title={card.title} image={card.image} id={card.id} />)
@@ -77,8 +81,9 @@ function App() {
   return (
     <>
       <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cancelEditCard={cancelEditCard} editCard={editCard} />
-      <NewVideo newVideo={newVideo} dialogRef={dialogRef} />
-      <Header handleModal={handleModal} />
+      <NewVideoNoControlada  newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
+      { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
+      <Header handleModal={openNewVideoModal} />
       <Home />
       <div className='cards-container'>
         <div className='cards-front'>
