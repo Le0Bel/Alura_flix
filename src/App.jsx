@@ -7,20 +7,24 @@ import Footer from "./components/Footer"
 import { useState } from 'react'
 import videoCards from './videoCards'
 import NewVideo from './components/NewVideo'
+import NewVideoNoControlada from './components/NewVideoNoControlada'
+import EditVideo from './components/EditVideo'
 
 
 function App() {
   const [cardList, setCardList] = useState(videoCards)
+  const [cardEditId, setCardEditId] = useState("")
   const dialogRef = useRef(null)
+  const editVideoRef = useRef(null)
 
- 
+
   function Card({ image, title, id }) {
     return (
       <div className='card'>
         <img className='card-img' src={image} alt="" />
         <h3 className='card-title'>{title}</h3>
         <div className='card-action'>
-          <div className='card-edit'>
+          <div className='card-edit' onClick={() => handleEdit(id)}>
             <img src="edit.svg" alt="" />
             <p>edit</p>
           </div>
@@ -33,38 +37,53 @@ function App() {
     )
   }
 
-  const frontElements = cardList.filter(card => card.category === "frontend").map(
-    card => <Card key={card.id} title={card.title} image={card.image} id={card.id}/>)
-  const backElements = cardList.filter(card => card.category !== "frontend").map(
-    card => <Card key={card.id} title={card.title} image={card.image} id={card.id}/>)
-
   function handleDelete(id) {
     setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
   }
 
-  function newVideo(video) {
-    setCardList(prev => ([...prev, video ]))
+  function handleEdit(id) {
+    setCardEditId(id)
   }
-  
-  
+
+  function newVideo(video) {
+    setCardList(prev => ([...prev, video]))
+  }
+
+  function cancelEditCard() {
+    setCardEditId("")
+  }
+
+
   function editCard(editedCard) {
     setCardList(prevCardList => prevCardList.map(
       card => {
-        if (card.title !== editCard.title) { return card }
+        if (card.id !== editedCard.id) { return card }
         else { return editedCard }
       }
     )
     )
   }
 
-  function handleModal() {
+  function openNewVideoModal() {
     dialogRef.current.showModal()
   }
+  function closeNewVideoModal (){
+    dialogRef.current.close()
+  }
+
+  const frontElements = cardList.filter(card => card.category === "frontend").map(
+    card => <Card key={card.id} title={card.title} image={card.image} id={card.id} />)
+  const backElements = cardList.filter(card => card.category !== "frontend").map(
+    card => <Card key={card.id} title={card.title} image={card.image} id={card.id} />)
+
+  if (cardEditId) editVideoRef.current.showModal() // Abre el modal de editar card si hay alguna tarjeta a editar 
 
   return (
     <>
-      <NewVideo newVideo={newVideo}  dialogRef={dialogRef} />
-      <Header handleModal={handleModal}/>
+      <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cancelEditCard={cancelEditCard} editCard={editCard} />
+      <NewVideoNoControlada  newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
+      { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
+      <Header handleModal={openNewVideoModal} />
       <Home />
       <div className='cards-container'>
         <div className='cards-front'>

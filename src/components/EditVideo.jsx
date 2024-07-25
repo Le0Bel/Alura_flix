@@ -1,18 +1,37 @@
-import { useState } from "react";
-import { nanoid } from 'nanoid'
+import { useEffect, useState } from "react";
 
+export default function EditVideo({ editVideoRef, cardEditId, cardList, cancelEditCard, editCard }) {
 
-export default function NewVideo({ dialogRef, newVideo }) {
-    
     const emptyCard = {
-        id:"",
+        id: "",
         title: "",
-        image : "",
-        description:"",
-        category:"",
-        video:''
+        image: "",
+        description: "",
+        category: "",
+        video: ''
     }
     const [formData, serFormData] = useState(emptyCard)
+
+
+    useEffect(() => {
+        function escFunction(event) {
+            if (event.key === "Escape") {
+                cancelEditCard()
+                console.log("cancelada edicion")
+            }
+        }
+        if (cardEditId) {
+            const cardToEdit = cardList.filter(card => card.id === cardEditId)[0]
+            serFormData(cardToEdit)
+            document.addEventListener("keydown", escFunction, false)
+            return () => {
+                document.removeEventListener("keydown", escFunction, false);
+            };
+
+        }
+    }, [cardEditId, cardList, cancelEditCard])
+
+
 
     function handleChange(event) {
         const id = event.target.id
@@ -27,15 +46,20 @@ export default function NewVideo({ dialogRef, newVideo }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        const video = { ...formData, id: nanoid() }
-        newVideo(video)
-        serFormData(emptyCard)
+        if (cardEditId) {
+            const editedCard = { ...formData, id: cardEditId }
+            editCard(editedCard)
+            console.log(editedCard)
+            cancelEditCard() //para limpiar el estado de App
+            editVideoRef.current.close()
+
+        }
     }
 
     return (
-        <dialog ref={dialogRef}>
+        <dialog ref={editVideoRef}>
             <div className="edit-container">
-                <h1>NUEVO VIDEO</h1>
+                <h1>EDITAR VIDEO</h1>
                 <form action="" className="edit-form" onSubmit={handleSubmit}>
 
                     <label htmlFor="title" >Titulo</label>
