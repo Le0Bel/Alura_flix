@@ -3,26 +3,27 @@ import { nanoid } from 'nanoid'
 export default [
     {
         id:nanoid(),
-        title: "Peli 1gg",
-        image : "/home-fondo-1.png",
-        description:" Mala",
+        title: "Video numero 1",
+        image : "/home-fondo-player.png",
+        description:" Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución" + 
+        "de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.",
         category:"frontend",
-        video:'http:/etc'
+        video:"https://www.youtube.com/embed/15JLxVzKMRQ?si=UauW6-wyoTAhCfI9"
     },
 
     {  id:nanoid(),
-        title: "Peli 2 sdgdgdgg",
-        image : "/home-fondo-1.png",
-        description:" Mala",
+        title: "Que es javascipt etc",
+        image : "/card-2-back.png",
+        description:" Como aprender backend rapidamente sin morir en el intento",
         category:"backend",
-        video:'http:/etc'
+        video:"https://www.youtube.com/embed/KCuiNzGbGTE?si=qv0r4fDf076gzXsH"
     },
 
     {   id:nanoid(),
         title: "Peli 3 backend",
-        image : "/home-fondo-1.png",
-        description:" Mala",
+        image : "/card-1.png",
+        description:" Este capitulo considera el Bla bla bla",
         category:"backend",
-        video:'http:/etc'
+        video:"https://www.youtube.com/embed/nMXEHfxYaQE?si=C1kigK9Yz8zfZ029" 
     }
 ]

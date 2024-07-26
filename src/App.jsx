@@ -14,14 +14,14 @@ import EditVideo from './components/EditVideo'
 function App() {
   const [cardList, setCardList] = useState(videoCards)
   const [cardEditId, setCardEditId] = useState("")
+  const [playingCardId, setPlayingCardId] = useState(videoCards[0].id)
   const dialogRef = useRef(null)
   const editVideoRef = useRef(null)
-
 
   function Card({ image, title, id }) {
     return (
       <div className='card'>
-        <img className='card-img' src={image} alt="" />
+        <img className='card-img' src={image} alt="" onClick={() => setPlayingCardId(id)} />
         <h3 className='card-title'>{title}</h3>
         <div className='card-action'>
           <div className='card-edit' onClick={() => handleEdit(id)}>
@@ -38,6 +38,10 @@ function App() {
   }
 
   function handleDelete(id) {
+    // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist si incluir la a borrar
+    console.log(id)
+    console.log(cardList.filter(card => card.id !== id)[0]?.id, "proxima Carta" )
+    if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
     setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
   }
 
@@ -49,10 +53,9 @@ function App() {
     setCardList(prev => ([...prev, video]))
   }
 
-  function cancelEditCard() {
+  function cleanCardToEditState() {
     setCardEditId("")
   }
-
 
   function editCard(editedCard) {
     setCardList(prevCardList => prevCardList.map(
@@ -67,7 +70,7 @@ function App() {
   function openNewVideoModal() {
     dialogRef.current.showModal()
   }
-  function closeNewVideoModal (){
+  function closeNewVideoModal() {
     dialogRef.current.close()
   }
 
@@ -80,11 +83,11 @@ function App() {
 
   return (
     <>
-      <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cancelEditCard={cancelEditCard} editCard={editCard} />
-      <NewVideoNoControlada  newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
+      <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cleanCardToEditState={cleanCardToEditState} editCard={editCard} />
+      <NewVideoNoControlada newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
       { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
       <Header handleModal={openNewVideoModal} />
-      <Home />
+      <Home playingCardId={playingCardId} cardList={cardList} />
       <div className='cards-container'>
         <div className='cards-front'>
           <h1>FrontEnd</h1>

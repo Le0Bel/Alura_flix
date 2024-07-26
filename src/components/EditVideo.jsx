@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function EditVideo({ editVideoRef, cardEditId, cardList, cancelEditCard, editCard }) {
+export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCardToEditState, editCard }) {
 
     const emptyCard = {
         id: "",
@@ -16,7 +16,7 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cancelEd
     useEffect(() => {
         function escFunction(event) {
             if (event.key === "Escape") {
-                cancelEditCard()
+                cleanCardToEditState()
                 console.log("cancelada edicion")
             }
         }
@@ -29,7 +29,7 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cancelEd
             };
 
         }
-    }, [cardEditId, cardList, cancelEditCard])
+    }, [cardEditId, cardList, cleanCardToEditState])
 
 
 
@@ -50,7 +50,7 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cancelEd
             const editedCard = { ...formData, id: cardEditId }
             editCard(editedCard)
             console.log(editedCard)
-            cancelEditCard() //para limpiar el estado de App
+            cleanCardToEditState() //para limpiar el estado de App
             editVideoRef.current.close()
 
         }

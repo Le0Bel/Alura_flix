@@ -1,19 +1,30 @@
-import React from "react";
-import playerImg from '../assets/home-fondo-player.png'
+import  { useEffect, useState } from "react";
 
-export default function Home() {
+export default function Home({ playingCardId, cardList }) {
+
+    const [playing, setPlaying] = useState(false)
+    const playingCard = cardList.filter(card => card.id === playingCardId)[0]
+    
+    useEffect( () => {
+        setPlaying(false)
+    }
+        ,[playingCardId])
+
     return (
         <>
-        <section className="hero">
-            <div className="hero-info">
-                <h2 className="hero-info-title">Front End</h2>
-                <p className="hero-info-text">Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.</p>
-            </div>
-            <img src={playerImg} className="player-img" alt="" />
-        </section>
-        <section className="cards-container">
+            <section className="hero">
+                <div className="hero-info">
+                    <h2 className="hero-info-title">{playingCard.category.toUpperCase()}</h2>
+                    <p className="hero-info-text">{playingCard.description}</p>
+                </div>
+                {!playing ?
+                    <img src={playingCard.image} className="player-img" alt="" onClick={() => setPlaying(true)}/>
+                    : <iframe className="player-img"  src={`${playingCard.video}?rel=0&autoplay=1`} title={playingCard.title} frameBorder="0" allow="autoplay;" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                }
+            </section>
+            <section className="cards-container">
 
-        </section>
+            </section>
         </>
     )
 }
