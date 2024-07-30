@@ -49,7 +49,6 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCar
         if (cardEditId) {
             const editedCard = { ...formData, id: cardEditId }
             editCard(editedCard)
-            console.log(editedCard)
             cleanCardToEditState() //para limpiar el estado de App
             editVideoRef.current.close()
 
