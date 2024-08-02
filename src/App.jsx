@@ -9,35 +9,21 @@ import videoCards from './videoCards'
 import NewVideo from './components/NewVideo'
 import NewVideoNoControlada from './components/NewVideoNoControlada'
 import EditVideo from './components/EditVideo'
+import Card from './components/Card'
 
 
 function App() {
   const [cardList, setCardList] = useState(videoCards)
   const [cardEditId, setCardEditId] = useState("")
+  const [playingCardId, setPlayingCardId] = useState(videoCards[0].id)
   const dialogRef = useRef(null)
   const editVideoRef = useRef(null)
 
 
-  function Card({ image, title, id }) {
-    return (
-      <div className='card'>
-        <img className='card-img' src={image} alt="" />
-        <h3 className='card-title'>{title}</h3>
-        <div className='card-action'>
-          <div className='card-edit' onClick={() => handleEdit(id)}>
-            <img src="edit.svg" alt="" />
-            <p>edit</p>
-          </div>
-          <div className='card-delete' onClick={() => handleDelete(id)}>
-            <p>delete</p>
-            <img src="delete.svg" alt="" />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   function handleDelete(id) {
+    // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la a borrar
+    if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
+
     setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
   }
 
@@ -45,14 +31,17 @@ function App() {
     setCardEditId(id)
   }
 
+  function selectAsActiveCard(id) {
+    setPlayingCardId(id)
+  }
+
   function newVideo(video) {
     setCardList(prev => ([...prev, video]))
   }
 
-  function cancelEditCard() {
+  function cleanCardToEditState() {
     setCardEditId("")
   }
-
 
   function editCard(editedCard) {
     setCardList(prevCardList => prevCardList.map(
@@ -67,39 +56,36 @@ function App() {
   function openNewVideoModal() {
     dialogRef.current.showModal()
   }
-  function closeNewVideoModal (){
+  function closeNewVideoModal() {
     dialogRef.current.close()
   }
 
-  const frontElements = cardList.filter(card => card.category === "frontend").map(
-    card => <Card key={card.id} title={card.title} image={card.image} id={card.id} />)
-  const backElements = cardList.filter(card => card.category !== "frontend").map(
-    card => <Card key={card.id} title={card.title} image={card.image} id={card.id} />)
+  // Make a list of the categories containes in cardlist
+  const categories = [...new Set(cardList.map(card => card.category))]
+  // create the containers for each category and fill them with the category cards
+  const cardElements = categories.map(category => {
+    return (<div key={category}>
+      <h1>{category.toUpperCase()}</h1>
+      <div className='front-cards-container'>
+        {cardList.filter(card => card.category === category).map(
+          card => <Card key={card.id} title={card.title} image={card.image} id={card.id}
+            handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
+      </div>
+    </div>)
+  })
 
   if (cardEditId) editVideoRef.current.showModal() // Abre el modal de editar card si hay alguna tarjeta a editar 
 
   return (
     <>
-      <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cancelEditCard={cancelEditCard} editCard={editCard} />
-      <NewVideoNoControlada  newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
+      <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cleanCardToEditState={cleanCardToEditState} editCard={editCard} />
+      <NewVideoNoControlada newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
       { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
       <Header handleModal={openNewVideoModal} />
-      <Home />
+      <Home playingCardId={playingCardId} cardList={cardList} />
       <div className='cards-container'>
-        <div className='cards-front'>
-          <h1>FrontEnd</h1>
-          <div className='front-cards-container'>
-            {frontElements}
-          </div>
-        </div>
-        <div className='cards-back'>
-          <h1>BackEnd</h1>
-          <div className='back-cards-container'>
-            {backElements}
-          </div>
-        </div>
+        {cardElements}
       </div>
-
       <Footer />
 
     </>

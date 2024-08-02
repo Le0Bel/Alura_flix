@@ -23,6 +23,7 @@ export default function NewVideoNoControlada({ dialogRef, newVideo, closeNewVide
                     <input
                         className="edit-input"
                         type="text" name="title" 
+                        required
                     />
 
                     <label htmlFor="category">Categoria</label>
