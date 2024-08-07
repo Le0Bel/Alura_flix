@@ -54,9 +54,9 @@ export default function NewVideoNoControlada({ dialogRef, newVideo, closeNewVide
                         name="description"
                     />
 
-                    <div>
-                        <button type="submit">Guardar</button>
-                        <button type="reset">Limpiar</button>
+                    <div className='modal-btn'>
+                        <button type="submit" className='modal-btn-submit' >Guardar</button>
+                        <button type="reset" className='modal-btn-reset' >Limpiar</button>
                     </div>
 
                 </form>

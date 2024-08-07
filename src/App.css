@@ -1,154 +1,276 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 * {
-  margin: 0;
   box-sizing: border-box;
+  margin: 0;
 }
 
 body
 {
-  margin: 0; 
+  background-color: rgb(17, 17, 17);
   font-family: "Roboto", sans-serif;
-  background-color: black;
 }
 
+/* #root {
+  border: 3px solid blue;
+  
+} */
+
 header {
-  margin: 0;
   display: flex;
-  background-color: rgb(38, 38, 38);
-  padding: 30px;
-  box-shadow: 0 10px 29px #2271D1, 0 3px  #2271D1;
   justify-content: space-between;
+  align-items: center;
+  background-color: rgb(38, 38, 38);
+  padding: 1.3em;
+  padding-left: 2em;
+  margin: 0;
+  box-shadow: 0 10px 29px #2271D1, 0 3px  #2271D1;
+}
+
+.logo {
+  height: 36px;
 }
 
 .btn {
-  height: 54px;
-  width: 140px;
-  padding: 1em;
-  font-weight: bold;
+  height: 40px;
+  width: 120px;
 }
 
 .new-btn {
   background-color: transparent;
   color: white;
-  border: 2px solid white;
+  border: none;
+  border: 1px solid rgb(82, 82, 82);
   border-radius: 10px;
-  margin-left: 0.5em;
+  box-shadow: 0px 0px 30px rgb(31, 31, 31);
+  margin-left: 1.5em;
+  cursor: pointer;
 }
 
 .home-btn {
-  background-color: black;
-  border: 2px solid #2271D1;
+  background-color: rgb(17, 17, 17);
+  border: 1px solid #2271D1;
   border-radius: 10px;
+  box-shadow: inset 0px 0px 15px #2271d17c;
   color: #2271D1;
-  box-shadow: inset 0px 0px 20px #2271D1;
+  cursor: pointer;
 }
 
-.hero {
-  height: 340px;
-  background: url("assets/home-fondo-1.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: white;
-  padding: 2em;
-  display: flex;
-  justify-content: space-between;
-
-}
-
-.hero-info {
-  width: 46%;
-  margin-top: 4em;
-  display:flex;
-  flex-direction: column;
-}
-
-.hero-info-title {
-  width: fit-content;
-  background-color: #6BD1FF;
-  font-size: 2rem;
-  display: block;
-  text-align: center;
-  padding: 0.3em 0.8em;
-  border-radius: 10px;
-  margin-bottom: 0.5em;
-}
+/* Hero Player section */
 
 .player-img {
   width: 50%;
   object-fit: contain;
 }
 
+.hero {
+  display: flex;
+  justify-content: space-between;
+  background: url("assets/home-fondo-1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  padding: 2em 3em;
+  height: 340px;
+}
+
+.hero-info {
+  width: 46%;
+  margin-top: 4em;
+}
+
+.hero-info-title {
+  display: inline-block;
+  background-color: #6BD1FF;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 0.5em;
+  padding: 0.5em 0.8em;
+} 
+
+
+/* End of hero/player section */
 
 footer {
   /* position: absolute;
   bottom: 0; */
-  width: 100%;
   display: flex;
-  background-color: rgb(38, 38, 38);
-  padding: 30px;
-  box-shadow: 0 -10px 29px #2271D1, 0 -3px  #2271D1;
   justify-content: center;
+  width: 100%;
+  background-color: rgb(38, 38, 38);
+  box-shadow: 0 -10px 29px #2271d1b9, 0 -3px  #2271D1;
+  padding: 30px;
 }
 
 /* Card */
 
+.cards-container {
+  flex:auto;
+  color: #e6e6e6;
+  padding: 1.5em 3em;
+}
+
+.card {
+  background-color: rgba(73, 73, 73, 0.452);
+  margin:1em 0 2em;
+  padding: 1em;
+}
+
 .card-img {
-  width: 200px;
+  width: 230px;
+  margin-bottom: 0.5em;
   object-fit: cover;
 }
 
-.cards-container {
-  min-height: 40dvh;
+.card, .card-img {
+  border-radius: 5px;
+}
+
+.card-title {
+  font-weight: normal;
+  font-size: 1.3em;
+}
+
+.card-edit,
+.card-delete {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  cursor: pointer;
+  margin-top: 0.8em;
+  color: #A5A5A5;
+}
+
+.card-edit:hover,
+.card-delete:hover{
   color: white;
+  filter: invert(48%) sepia(0%) saturate(397%) hue-rotate(25deg) brightness(116%) contrast(1000%);
+}
+
+.svg {
+  width: 20px;
+  filter: invert(48%) sepia(5%) saturate(397%) hue-rotate(25deg) brightness(116%) contrast(80%);
 }
 
 .front-cards-container, .back-cards-container {
   display: flex;
   gap: 2em;
+  
 }
 
+.card-action {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgb(88, 88, 88);
+  margin-top: 1.5em;
+}
 
 /* Modal */
 
 dialog {
-  color:#2271d1;
-  border: 2px solid #6BD1FF;
-  border-radius: 15px;
-  width: 974px;
-  height: 1140px;
-  background-color: #03122F;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  border: none;
+  min-width: 100%;
+  min-height: 100%;
+
 }
 
 dialog h1 {
-  font-size: 60px;
+  font-size: 45px;
+  margin-bottom: 1em;
+  text-align: center;
 }
 
 .edit-container {
-  margin: 0 200px;
+  background-color: #03122F;
+  color:#2271d1;
+  border: 1px solid #133866;
+  border-radius: 15px;
+  width: 80%;
+  height: 80%;
+  margin: auto auto;
+  padding: 3em 5em;
 }
 
+
 .edit-form {
-  color:azure;
   display: flex;
   flex-direction: column;
+  color:azure;
   gap: 10px;
 }
 
 .edit-form label{
-font-size: 20px;
-font-weight: 600;
+font-size: 18px;
+font-weight: 400;
 }
 
 .edit-input {
-  border: 3px solid #2271d1;
-  border-radius: 18px;
-  padding: 8px 10px;
-  margin-bottom: 30px;
   background-color: #03122F;
-  height: 62px;
+  border: 1px solid #1b5499;
+  border-radius: 10px;
   color: #A5A5A5;
   font-size: 20px;
+  height: 55px;
+  padding: 8px 10px;
+  margin-bottom: 30px;
+}
+
+.modal-btn {
+  margin: 0 0 0 auto ;
+}
+
+.modal-btn-submit,
+.modal-btn-reset {
+  border: none;
+  border-radius: 5px;
+  padding: 0.7em 1.3em;
+  
+}
+.modal-btn-reset {
+  margin-left: 1em;
+}
+
+.modal-btn-submit {
+  background-color: rgb(17, 17, 17);
+  border: 1px solid #2271D1;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 10px #2271d17c;
+  color:#83bbff;
+  cursor: pointer;
+  transition: 1s;
+}
+
+
+.modal-btn-submit:hover {
+  border: 1px solid white;
+  color: white;
+  transition: 1s;
+}
+
+.modal-btn-reset {
+  background-color: #03122F;
+  border: none;
+  border: 1px solid #97c4fca8;
+  border-radius: 10px;
+  box-shadow: 0px 0px 30px rgb(20, 20, 20);
+  color: white;
+  cursor: pointer;
+  margin-left: 1em;
+  transition: 0.5s;
+}
+
+.modal-btn-reset:hover {
+  background-color: rgb(17, 17, 17);
+  border: 1px solid #2271D1;
+  color:#83bbff;
+  transition: 0.5s;
 }
 /* fin de modal */
 
