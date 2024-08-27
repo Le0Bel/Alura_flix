@@ -1,5 +1,5 @@
 
-import { useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import './App.css'
 import Header from "./components/Header"
 import Home from "./components/Home"
@@ -9,7 +9,9 @@ import videoCards from './videoCards'
 import NewVideo from './components/NewVideo'
 import NewVideoNoControlada from './components/NewVideoNoControlada'
 import EditVideo from './components/EditVideo'
+import Login from './components/Login' 
 import Card from './components/Card'
+import { AuthContext } from './context/AuthContext'
 
 
 function App() {
@@ -18,10 +20,14 @@ function App() {
   const [playingCardId, setPlayingCardId] = useState(videoCards[0].id)
   const dialogRef = useRef(null)
   const editVideoRef = useRef(null)
+  const loginRef=useRef(null)
+
+const {user, login ,logout} = useContext(AuthContext)  
+
 
 
   function handleDelete(id) {
-    // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la a borrar
+    // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la que se va a borrar
     if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
 
     setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
@@ -59,6 +65,9 @@ function App() {
   function closeNewVideoModal() {
     dialogRef.current.close()
   }
+  function openLogin(){
+    loginRef.current.showModal()
+  }
 
   // Make a list of the categories containes in cardlist
   const categories = [...new Set(cardList.map(card => card.category))]
@@ -78,10 +87,11 @@ function App() {
 
   return (
     <>
+      <Login loginRef={loginRef}/>
       <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cleanCardToEditState={cleanCardToEditState} editCard={editCard} />
       <NewVideoNoControlada newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
       { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
-      <Header handleModal={openNewVideoModal} />
+      <Header handleModal={openNewVideoModal} openLogin={openLogin} />
       <Home playingCardId={playingCardId} cardList={cardList} />
       <div className='cards-container'>
         {cardElements}
