@@ -26,10 +26,11 @@ export default function login({ loginRef }) {
                         type="text"
                         name="password"
                     />
-
+                    <button type="submit" className='modal-btn-submit' >
+                        Iniciar Sesión
+                    </button>
                 </form>
             </div>
         </dialog>
-
     )
 }
