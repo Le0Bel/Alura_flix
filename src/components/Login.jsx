@@ -1,9 +1,18 @@
+/* eslint-disable react/prop-types */
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
+export default function Login({ loginRef, closeLogin }) {
 
-export default function login({ loginRef }) {
+    const [error, setError] = useState("")
+    const { login } = useContext(AuthContext)
 
     function handleSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
+        const fieldsValues = Object.fromEntries(new FormData(e.target))
+        const res = login(fieldsValues.name, fieldsValues.password)
+        if (res === "error") setError("Nombre o contraseña incorrecta, intente nuevamente")
+        else closeLogin()
     }
 
 
@@ -23,9 +32,12 @@ export default function login({ loginRef }) {
                     <label htmlFor="password">Contraseña</label>
                     <input
                         className="edit-input"
-                        type="text"
+                        type="password"
                         name="password"
                     />
+                    <div className="error-msg-container">
+                        {error} 
+                    </div>
                     <button type="submit" className='modal-btn-submit' >
                         Iniciar Sesión
                     </button>

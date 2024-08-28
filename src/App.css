@@ -56,6 +56,14 @@ header {
   cursor: pointer;
 }
 
+.logout {
+  display:flex;
+  color :white;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 /* Hero Player section */
 
 .player-img {
@@ -219,7 +227,6 @@ font-weight: 400;
   font-size: 20px;
   height: 55px;
   padding: 8px 10px;
-  margin-bottom: 30px;
 }
 
 .modal-btn {
@@ -272,5 +279,14 @@ font-weight: 400;
   color:#83bbff;
   transition: 0.5s;
 }
+
+.error-msg-container{
+  color: #f61e1e;
+  font-size: 1.3em;
+  display: flex ;
+  height: 30px;
+  margin-bottom: 15px;
+}
+
 /* fin de modal */
 

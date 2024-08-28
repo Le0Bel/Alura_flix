@@ -1,5 +1,5 @@
 
-import { useContext, useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import './App.css'
 import Header from "./components/Header"
 import Home from "./components/Home"
@@ -9,9 +9,8 @@ import videoCards from './videoCards'
 import NewVideo from './components/NewVideo'
 import NewVideoNoControlada from './components/NewVideoNoControlada'
 import EditVideo from './components/EditVideo'
-import Login from './components/Login' 
+import Login from './components/Login'
 import Card from './components/Card'
-import { AuthContext } from './context/AuthContext'
 
 
 function App() {
@@ -20,10 +19,7 @@ function App() {
   const [playingCardId, setPlayingCardId] = useState(videoCards[0].id)
   const dialogRef = useRef(null)
   const editVideoRef = useRef(null)
-  const loginRef=useRef(null)
-
-const {user, login ,logout} = useContext(AuthContext)  
-
+  const loginRef = useRef(null)
 
 
   function handleDelete(id) {
@@ -65,11 +61,14 @@ const {user, login ,logout} = useContext(AuthContext)
   function closeNewVideoModal() {
     dialogRef.current.close()
   }
-  function openLogin(){
+  function openLogin() {
     loginRef.current.showModal()
   }
+  function closeLogin() {
+    loginRef.current.close()
+  }
 
-  // Make a list of the categories containes in cardlist
+  // Makes a list of the categories contained in cardlist
   const categories = [...new Set(cardList.map(card => card.category))]
   // create the containers for each category and fill them with the category cards
   const cardElements = categories.map(category => {
@@ -87,7 +86,7 @@ const {user, login ,logout} = useContext(AuthContext)
 
   return (
     <>
-      <Login loginRef={loginRef}/>
+      <Login loginRef={loginRef} closeLogin={closeLogin} />
       <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cleanCardToEditState={cleanCardToEditState} editCard={editCard} />
       <NewVideoNoControlada newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
       { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
