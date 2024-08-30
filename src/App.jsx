@@ -24,11 +24,12 @@ function App() {
   //Fetch inicial de videos de JsonSrvr
 
   useEffect(()=> {
-    fetch("http://localhost:3000/videos")   // ** agregar control de erores al fetch y pasarlo a un custom Hook useFetch
+    fetch("http://localhost:3000/videos")   // ** agregar mejor control de errores al fetch y pasarlo a un custom Hook useFetch
     .then(res => res.json())
     .then(videos => {setCardList(videos)
                       setPlayingCardId(videos[0].id)
-    } ) 
+    } )
+    .catch( error => alert("Unable to get video data from the server") ) 
      }
     , [])
 
