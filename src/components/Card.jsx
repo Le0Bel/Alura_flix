@@ -1,9 +1,17 @@
+/* eslint-disable react/prop-types */
+import { useContext } from "react"
+import { AuthContext } from "../context/AuthContext"
+
+
 export default function Card({ image, title, id, handleEdit, handleDelete, selectAsActiveCard }) {
-    
-    return (
-      <div className='card'>
-        <img className='card-img' src={image} alt="" onClick={() => selectAsActiveCard(id)} />
-        <h3 className='card-title'>{title}</h3>
+
+  const { user } = useContext(AuthContext)
+
+  return (
+    <div className='card'>
+      <img className='card-img' src={image} alt="" onClick={() => selectAsActiveCard(id)} />
+      <h3 className='card-title'>{title}</h3>
+      {user.role==="admin" &&
         <div className='card-action'>
           <div className='card-edit' onClick={() => handleEdit(id)}>
             <img className="svg svg-edit" src="edit.svg" alt="" />
@@ -14,6 +22,7 @@ export default function Card({ image, title, id, handleEdit, handleDelete, selec
             <img className="svg svg-delete" src="delete.svg" alt="" />
           </div>
         </div>
-      </div>
-    )
-  }
+      }
+    </div>
+  )
+}
