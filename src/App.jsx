@@ -23,21 +23,31 @@ function App() {
 
   //Fetch inicial de videos de JsonSrvr
 
-  useEffect(()=> {
+  useEffect(() => {
     fetch("http://localhost:3000/videos")   // ** agregar mejor control de errores al fetch y pasarlo a un custom Hook useFetch
-    .then(res => res.json())
-    .then(videos => {setCardList(videos)
-                      setPlayingCardId(videos[0].id)
-    } )
-    .catch( error => alert("Unable to get video data from the server") ) 
-     }
+      .then(res => res.json())
+      .then(videos => {
+        setCardList(videos)
+        setPlayingCardId(videos[0].id)
+      })
+      .catch(error => alert("Unable to get video data from the server"))
+  }
     , [])
 
-  function handleDelete(id) {
+  async function handleDelete(id) {
     // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la que se va a borrar
     if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
 
     setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
+    // Llama la API para borrar el vido de la base de datos
+    try {
+      const response = await fetch(`http://localhost:3000/videos/${id}`, {
+        method: "DELETE",
+      })
+      if (response.ok) console.log("Video eliminado correctamente")
+    }
+    catch { alert(" Error de conexión con el servidor") }
+
   }
 
   function handleEdit(id) {
@@ -48,8 +58,18 @@ function App() {
     setPlayingCardId(id)
   }
 
-  function newVideo(video) {
+  async function newVideo(video) {
     setCardList(prev => ([...prev, video]))
+    // hace la llamada  a la Api del srvr para agregar en el nuevo
+    const videoJson = await JSON.stringify(video)
+    try {
+      const response = await fetch("http://localhost:3000/videos", {
+        method: "POST",
+        body: videoJson
+      })
+      if (response.ok) console.log("Video agregado correctamente")
+    }
+    catch { alert(" Error de conexión con el servidor") }
   }
 
   function cleanCardToEditState() {
@@ -81,20 +101,20 @@ function App() {
 
   let cardElements
   if (cardList.length > 0) {
-  // Makes a list of the categories contained in cardlist
-  const categories = [...new Set(cardList.map(card => card?.category))]
-  // create the containers for each category and fill them with the category cards
-   cardElements = categories.map(category => {
-    return (<div key={category}>
-      <h1>{category.toUpperCase()}</h1>
-      <div className='front-cards-container'>
-        {cardList.filter(card => card.category === category).map(
-          card => <Card key={card.id} title={card.title} image={card.image} id={card.id}
-            handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
-      </div>
-    </div>)
-  })
-}
+    // Makes a list of the categories contained in cardlist
+    const categories = [...new Set(cardList.map(card => card?.category))]
+    // create the containers for each category and fill them with the category cards
+    cardElements = categories.map(category => {
+      return (<div key={category}>
+        <h1>{category.toUpperCase()}</h1>
+        <div className='front-cards-container'>
+          {cardList.filter(card => card.category === category).map(
+            card => <Card key={card.id} title={card.title} image={card.image} id={card.id}
+              handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
+        </div>
+      </div>)
+    })
+  }
   if (cardEditId) editVideoRef.current.showModal() // Abre el modal de editar card si hay alguna tarjeta a editar 
 
   return (
