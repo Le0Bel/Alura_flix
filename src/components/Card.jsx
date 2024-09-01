@@ -3,7 +3,7 @@ import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 
 
-export default function Card({ image, title, id, handleEdit, handleDelete, selectAsActiveCard }) {
+export default function Card({ image, title, id, handleEdit, handleDelete, selectAsActiveCard, editOn }) {
 
   const { user } = useContext(AuthContext)
 
@@ -11,8 +11,8 @@ export default function Card({ image, title, id, handleEdit, handleDelete, selec
     <div className='card'>
       <img className='card-img' src={image} alt="" onClick={() => selectAsActiveCard(id)} />
       <h3 className='card-title'>{title}</h3>
-      {user.role==="admin" &&
-        <div className='card-action'>
+      {user.role==="admin" && editOn &&
+        <div className='card-action' >
           <div className='card-edit' onClick={() => handleEdit(id)}>
             <img className="svg svg-edit" src="edit.svg" alt="" />
             <p>edit</p>

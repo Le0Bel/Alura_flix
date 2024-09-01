@@ -25,7 +25,7 @@ export default function Login({ loginRef, closeLogin }) {
                     <label htmlFor="name" >Nombre de Usuario</label>
                     <input
                         className="edit-input"
-                        type="text" name="name"
+                        type="text" name="name" id="name"
                         required
                     />
 
@@ -34,6 +34,7 @@ export default function Login({ loginRef, closeLogin }) {
                         className="edit-input"
                         type="password"
                         name="password"
+                        id="password"
                     />
                     <div className="error-msg-container">
                         {error} 

@@ -17,6 +17,7 @@ function App() {
   const [cardList, setCardList] = useState([])
   const [cardEditId, setCardEditId] = useState("")
   const [playingCardId, setPlayingCardId] = useState("")
+  const [editOn, setEditOn] = useState(false)
   const dialogRef = useRef(null)
   const editVideoRef = useRef(null)
   const loginRef = useRef(null)
@@ -30,7 +31,7 @@ function App() {
         setCardList(videos)
         setPlayingCardId(videos[0].id)
       })
-      .catch(error => alert("Unable to get video data from the server"))
+      .catch(error => alert("Lo lamentamos no se pudo obener las lista de videos del servidor"))
   }
     , [])
 
@@ -38,15 +39,16 @@ function App() {
     // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la que se va a borrar
     if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
 
-    setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
     // Llama la API para borrar el vido de la base de datos
     try {
       const response = await fetch(`http://localhost:3000/videos/${id}`, {
         method: "DELETE",
       })
       if (response.ok) console.log("Video eliminado correctamente")
+      // actualiza el estado sin la tarjeta eliminada
+      setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
     }
-    catch { alert(" Error de conexión con el servidor") }
+    catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
 
   }
 
@@ -59,33 +61,48 @@ function App() {
   }
 
   async function newVideo(video) {
-    setCardList(prev => ([...prev, video]))
+
     // hace la llamada  a la Api del srvr para agregar en el nuevo
-    const videoJson = await JSON.stringify(video)
     try {
       const response = await fetch("http://localhost:3000/videos", {
         method: "POST",
-        body: videoJson
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(video)
       })
       if (response.ok) console.log("Video agregado correctamente")
+      // actualiza el estado con el nuevo video  
+      setCardList(prev => ([...prev, video]))
     }
-    catch { alert(" Error de conexión con el servidor") }
+    catch { alert(" Error de conexión con el servidor al agregar video") }
   }
 
   function cleanCardToEditState() {
     setCardEditId("")
   }
 
-  function editCard(editedCard) {
-    setCardList(prevCardList => prevCardList.map(
-      card => {
-        if (card.id !== editedCard.id) { return card }
-        else { return editedCard }
-      }
-    )
-    )
+  async function editCard(editedCard) {
+     try {
+      const response = await fetch(`http://localhost:3000/videos/${editedCard.id}`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editedCard)
+      })
+      if (response.ok) console.log("Video editado correctamente")
+      // Actualiza el estado con la card editada
+      setCardList(prevCardList => prevCardList.map(
+        card => {
+          if (card.id !== editedCard.id) { return card }
+          else { return editedCard }
+        }
+      ))
+    }
+    catch { alert(" Error de conexión con el servidor al editer video") }
   }
 
+  function activateEdition () {
+    setEditOn(prev => !prev)
+  } 
+  
   function openNewVideoModal() {
     dialogRef.current.showModal()
   }
@@ -109,7 +126,7 @@ function App() {
         <h1>{category.toUpperCase()}</h1>
         <div className='front-cards-container'>
           {cardList.filter(card => card.category === category).map(
-            card => <Card key={card.id} title={card.title} image={card.image} id={card.id}
+            card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
               handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
         </div>
       </div>)
@@ -123,7 +140,7 @@ function App() {
       <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cleanCardToEditState={cleanCardToEditState} editCard={editCard} />
       <NewVideoNoControlada newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
       { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
-      <Header handleModal={openNewVideoModal} openLogin={openLogin} />
+      <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} />
       <Home playingCardId={playingCardId} cardList={cardList} />
       <div className='cards-container'>
         {cardElements}
