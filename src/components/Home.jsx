@@ -23,7 +23,7 @@ export default function Home({ playingCardId, cardList }) {
     return (
         <>
             {playingCardId ?
-                <section className="hero">
+                <section className="hero" style={{background:`url(${playingCard.playerBackground}), url("/Images/fallback-background.jpg")` }}> {/*la segunda url es un fallback por si la primera falla */}
                     <div className="hero-info">
                         <h2 className="hero-info-title">{playingCard?.category.toUpperCase()}</h2>
                         <p className="hero-info-text">{playingCard?.description}</p>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 
 export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCardToEditState, editCard }) {
@@ -8,7 +9,8 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCar
         image: "",
         description: "",
         category: "",
-        video: ''
+        video: '',
+        playerBackground: ""
     }
     const [formData, serFormData] = useState(emptyCard)
 
@@ -100,6 +102,14 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCar
                         type="text" id="description"
                         onChange={handleChange}
                         value={formData.description}
+                    />
+
+                    <label htmlFor="playerBackground">Fondo del reproductor</label>
+                    <input
+                        className="edit-input"
+                        type="text" id="playerBackground"
+                        onChange={handleChange}
+                        value={formData.playerBackground}
                     />
 
                     <div>
