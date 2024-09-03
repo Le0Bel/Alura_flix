@@ -3,14 +3,14 @@ import { nanoid } from 'nanoid'
 
 
 export default function NewVideo({ dialogRef, newVideo }) {
-    
+
     const emptyCard = {
-        id:"",
+        id: "",
         title: "",
-        image : "",
-        description:"",
-        category:"",
-        video:''
+        image: "",
+        description: "",
+        category: "",
+        video: ''
     }
     const [formData, serFormData] = useState(emptyCard)
 
@@ -77,6 +77,14 @@ export default function NewVideo({ dialogRef, newVideo }) {
                         type="text" id="description"
                         onChange={handleChange}
                         value={formData.description}
+                    />
+
+                    <label htmlFor="playerBackground">Fondo del reproductor</label>
+                    <input
+                        className="edit-input"
+                        type="text" id="playerBackground"
+                        onChange={handleChange}
+                        value={formData.playerBackground}
                     />
 
                     <div>

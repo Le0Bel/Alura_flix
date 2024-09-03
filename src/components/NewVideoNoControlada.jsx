@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid'
 
 
 export default function NewVideoNoControlada({ dialogRef, newVideo, closeNewVideoModal }) {
-    
+
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -22,7 +22,7 @@ export default function NewVideoNoControlada({ dialogRef, newVideo, closeNewVide
                     <label htmlFor="title" >Titulo</label>
                     <input
                         className="edit-input"
-                        type="text" name="title" 
+                        type="text" name="title"
                         required
                     />
 
@@ -36,22 +36,28 @@ export default function NewVideoNoControlada({ dialogRef, newVideo, closeNewVide
                     <label htmlFor="image">Imagen</label>
                     <input
                         className="edit-input"
-                        type="text" 
+                        type="text"
                         name="image"
                     />
 
                     <label htmlFor="video">Video</label>
                     <input
                         className="edit-input"
-                        type="text" 
+                        type="text"
                         name="video"
                     />
 
                     <label htmlFor="description">Descripción</label>
                     <input
                         className="edit-input"
-                        type="text" 
+                        type="text"
                         name="description"
+                    />
+
+                    <label htmlFor="playerBackground">Fondo del reproductor</label>
+                    <input
+                        className="edit-input"
+                        type="text" name="playerBackground"
                     />
 
                     <div className='modal-btn'>

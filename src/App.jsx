@@ -31,7 +31,7 @@ function App() {
         setCardList(videos)
         setPlayingCardId(videos[0].id)
       })
-      .catch(error => alert("Lo lamentamos no se pudo obener las lista de videos del servidor"))
+      .catch((error) => {alert("Lo lamentamos no se pudo obener las lista de videos del servidor") } )
   }
     , [])
 

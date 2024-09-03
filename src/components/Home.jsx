@@ -23,7 +23,8 @@ export default function Home({ playingCardId, cardList }) {
     return (
         <>
             {playingCardId ?
-                <section className="hero">
+
+                <section className="hero" style={{background:`url(${playingCard.playerBackground}), url("/Images/fallback-background.jpg")` }}> {/*la segunda url es un fallback por si la primera falla */}
                     {!playing ?
                         <img src={playingCard?.image} className="player-img" alt="" onClick={() => setPlaying(true)} />
                         : <iframe className="player-img" src={`${playingCard.video}?rel=0&autoplay=1`} title={playingCard.title} frameBorder="0" allow="autoplay;" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
