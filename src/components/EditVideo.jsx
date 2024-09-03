@@ -97,9 +97,9 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCar
                     />
 
                     <label htmlFor="description">Descripción</label>
-                    <input
-                        className="edit-input"
-                        type="text" id="description"
+                    <textarea
+                        className="edit-text-area"
+                        rows="4" id="description"
                         onChange={handleChange}
                         value={formData.description}
                     />

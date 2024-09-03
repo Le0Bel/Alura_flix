@@ -48,9 +48,9 @@ export default function NewVideoNoControlada({ dialogRef, newVideo, closeNewVide
                     />
 
                     <label htmlFor="description">Descripción</label>
-                    <input
-                        className="edit-input"
-                        type="text"
+                    <textarea
+                        className="edit-text-area"
+                        rows="4" 
                         name="description"
                     />
 
