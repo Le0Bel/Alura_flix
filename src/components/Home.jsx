@@ -24,14 +24,16 @@ export default function Home({ playingCardId, cardList }) {
         <>
             {playingCardId ?
                 <section className="hero">
-                    <div className="hero-info">
-                        <h2 className="hero-info-title">{playingCard?.category.toUpperCase()}</h2>
-                        <p className="hero-info-text">{playingCard?.description}</p>
-                    </div>
                     {!playing ?
                         <img src={playingCard?.image} className="player-img" alt="" onClick={() => setPlaying(true)} />
                         : <iframe className="player-img" src={`${playingCard.video}?rel=0&autoplay=1`} title={playingCard.title} frameBorder="0" allow="autoplay;" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                     }
+                    <div className="hero-info">
+                        <h2 className="hero-info-title">{playingCard?.category.toUpperCase()}</h2>
+                        <p className="hero-info-title">{playingCard?.title}</p>
+                        <p className="hero-info-text">{playingCard?.description}</p>
+                    </div>
+
                 </section>
                 : <section className="hero">
                     <div className="hero-info">

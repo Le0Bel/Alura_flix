@@ -10,16 +10,16 @@ export default function Card({ image, title, id, handleEdit, handleDelete, selec
   return (
     <div className='card'>
       <img className='card-img' src={image} alt="" onClick={() => selectAsActiveCard(id)} />
-      <h3 className='card-title'>{title}</h3>
+      <p className='card-title'>{title}</p>
       {user.role==="admin" && editOn &&
         <div className='card-action' >
           <div className='card-edit' onClick={() => handleEdit(id)}>
             <img className="svg svg-edit" src="edit.svg" alt="" />
-            <p>edit</p>
+            <p>Editar video</p>
           </div>
           <div className='card-delete' onClick={() => handleDelete(id)}>
-            <p></p>
             <img className="svg svg-delete" src="delete.svg" alt="" />
+            <p>Borrar</p>
           </div>
         </div>
       }
