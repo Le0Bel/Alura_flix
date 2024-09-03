@@ -20,7 +20,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(38, 38, 38);
+  background-color: #262626;
   padding: 1.3em;
   padding-left: 2em;
   margin: 0;
@@ -33,27 +33,43 @@ header {
 
 .btn {
   height: 40px;
-  width: 120px;
+  width: 150px;
+  background-color: #2F2F2F;
+  color: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.212)
 }
 
 .new-btn {
-  background-color: transparent;
-  color: white;
-  border: none;
-  border: 1px solid rgb(82, 82, 82);
-  border-radius: 10px;
-  box-shadow: 0px 0px 30px rgb(31, 31, 31);
-  margin-left: 1.5em;
-  cursor: pointer;
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+  border-right: 1px solid rgb(82, 82, 82);
 }
 
-.home-btn {
-  background-color: rgb(17, 17, 17);
-  border: 1px solid #2271D1;
+.edit-btn {
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.edit-btn-active {
+  background-color: hsl(219, 65%, 60%);
+}
+
+.log-btn {
+  color: rgb(197, 197, 197);
+  background:none;
+  border: none;
   border-radius: 10px;
-  box-shadow: inset 0px 0px 15px #2271d17c;
-  color: #2271D1;
   cursor: pointer;
+
+}
+
+.logged-user {
+  font-weight: 300;
+  font-size: 0.875rem;
+  border-right: 1px solid rgb(143, 143, 143);
+  padding: 0.5em 1em;
 }
 
 .logout {
@@ -64,38 +80,49 @@ header {
   gap: 10px;
 }
 
-/* Hero Player section */
+.video-controls-wrapper {
+  position: fixed;
+  width: 100%;
+  right: 0;
+  top: 20px;
+  z-index: 10;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Video Player section */
 
 .player-img {
-  width: 50%;
+  width: 45%;
   object-fit: contain;
+  border-radius: 10px;
 }
 
 .hero {
   display: flex;
-  justify-content: space-between;
-  background: url("/Images/fallback-background.jpg");
+  align-items: center;
+  justify-content: space-around;
+  background: url("./public/a_frontend_background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   color: white;
   padding: 2em 3em;
-  height: 340px;
+  height: 500px;
+  border-bottom: 1px solid rgb(83, 83, 83);
 }
 
 .hero-info {
-  width: 46%;
-  margin-top: 4em;
+  width: 40%;
 }
 
 .hero-info-title {
-  display: inline-block;
-  background-color: #6BD1FF;
   font-size: 2rem;
-  text-align: center;
-  border-radius: 10px;
-  margin-bottom: 0.5em;
-  padding: 0.5em 0.8em;
-} 
+  margin-bottom: 0.8em;
+}
+
+.hero-info {
+  line-height: 1.4rem;
+}
 
 
 /* End of hero/player section */
@@ -116,37 +143,61 @@ footer {
 .cards-container {
   flex:auto;
   color: #e6e6e6;
-  padding: 1.5em 3em;
+  padding: 3em 3em;
 }
 
 .card {
-  background-color: rgba(73, 73, 73, 0.452);
-  margin:1em 0 2em;
-  padding: 1em;
+  margin: 2em 0 3em;
+}
+
+/* hacer que los colores sean especificos de cada seccióm */
+.frontend_cards {
+  border-top: 4px solid #6BD1FF;
+}
+.backend_cards {
+  border-top: 4px solid #00C86F;
+}
+.uiux_cards {
+  border-top: 4px solid #FFBA05;
 }
 
 .card-img {
-  width: 230px;
+  width: 300px;
+  height: 180px;
   margin-bottom: 0.5em;
   object-fit: cover;
 }
 
 .card, .card-img {
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 .card-title {
   font-weight: normal;
-  font-size: 1.3em;
+}
+
+.card-action {
+  background-color: #2F2F2F;
+  display: flex;
+  padding: 1em;
+  justify-content: space-around;
+  margin-top: 1.5em;
+  border-radius: 7px;
+  font-size: 14px;
+  
+}
+
+.card-delete {
+  border-left: 1px solid gray;
+  padding-left: 2.2rem ;
 }
 
 .card-edit,
 .card-delete {
   display: flex;
   align-items: center;
-  gap: 0.3em;
+  gap: 0.8em;
   cursor: pointer;
-  margin-top: 0.8em;
   color: #A5A5A5;
 }
 
@@ -165,13 +216,6 @@ footer {
   display: flex;
   gap: 2em;
   
-}
-
-.card-action {
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid rgb(88, 88, 88);
-  margin-top: 1.5em;
 }
 
 /* Modal */
