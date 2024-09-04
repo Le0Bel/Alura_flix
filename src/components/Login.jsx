@@ -22,8 +22,8 @@ export default function Login({ loginRef, closeLogin }) {
 
     return (
         <dialog ref={loginRef}>
-            <div className="edit-container">
-                <h1>Login</h1>
+            <div className="edit-container login-container">
+                <h1 className="login-title">Iniciar Sesión</h1>
                 <form action="" className="edit-form" onSubmit={handleSubmit}>
 
                     <label htmlFor="name" >Nombre de Usuario</label>
@@ -43,7 +43,7 @@ export default function Login({ loginRef, closeLogin }) {
                     <div className="error-msg-container">
                         {error}
                     </div>
-                    <button type="submit" className='modal-btn-submit' >
+                    <button type="submit" className='login-btn-submit' >
                         Iniciar Sesión
                     </button>
                 </form>

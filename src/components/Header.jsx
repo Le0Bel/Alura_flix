@@ -33,7 +33,7 @@ export default function Header({ handleModal, activateEdition, openLogin }) {
                     </button>
                 </div>}
                 
-                {!user.isLogged ? <button className="btn home-btn" onClick={openLogin}> Login </button>
+                {!user.isLogged ? <button className=" login-btn" onClick={openLogin}> Login </button>
                     : <div className='logout'>
                         <h3 className="logged-user">{user.name}</h3>
                         <button className="log-btn" onClick={logout}> Logout </button>

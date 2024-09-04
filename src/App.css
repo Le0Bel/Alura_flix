@@ -9,6 +9,8 @@ body
 {
   background-color: rgb(17, 17, 17);
   font-family: "Roboto", sans-serif;
+/*   scroll-behavior: smooth;
+  scroll-padding: 200px; */
 }
 
 /* #root {
@@ -16,22 +18,26 @@ body
   
 } */
 
+button:focus {
+  outline: 1px solid rgb(122, 122, 122);
+}
+
 .fixed-top{
-  width: 100%;
   position: fixed;
   top: 0;
+  width: 100%;
   z-index: 100;
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: #262626;
+  box-shadow: 0 10px 29px #2271D1, 0 3px  #2271D1;
+  display: flex;
+  justify-content: space-between;
   padding: 1.1em;
   padding-left: 2em;
   margin: 0;
-  box-shadow: 0 10px 29px #2271D1, 0 3px  #2271D1;
 }
 
 .logo {
@@ -39,13 +45,27 @@ header {
 }
 
 .btn {
-  height: 40px;
-  width: 150px;
   background-color: #2F2F2F;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.212);
+  border: none;
   color: white;
   cursor: pointer;
+  height: 40px;
+  width: 150px;
+}
+
+.login-btn {
+  background: none;
   border: none;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.212)
+  color: rgb(197, 197, 197);
+  cursor: pointer;
+  padding: 0.5em 0;
+  font-size: 14px;
+  margin-right: 2em;
+}
+
+.login-btn:hover {
+  color: white;
 }
 
 .new-btn {
@@ -64,27 +84,29 @@ header {
 }
 
 .log-btn {
-  color: rgb(197, 197, 197);
   background:none;
   border: none;
-  border-radius: 10px;
+  color: rgb(197, 197, 197);
   cursor: pointer;
+}
 
+.log-btn:hover {
+  color: white;
 }
 
 .logged-user {
+  border-right: 1px solid rgb(143, 143, 143);
   font-weight: 300;
   font-size: 0.875rem;
-  border-right: 1px solid rgb(143, 143, 143);
   padding: 0.5em 1em;
 }
 
 .logout {
+  align-items: center;
   display:flex;
   color :white;
-  justify-content: center;
-  align-items: center;
   gap: 10px;
+  justify-content: center;
 }
 
 .video-controls-wrapper {
@@ -94,17 +116,17 @@ header {
 /* Video Player section */
 
 .hero {
-  align-items: center;
-  color: white;
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  gap: 2em;
   background: url("./public/a_frontend_background.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   border-bottom: 1px solid rgb(83, 83, 83);
-  gap: 2em;
+  color: white;
   height: 460px;
   padding: 0 2em;
+  justify-content: space-around;
   position:relative ;
 }
 
@@ -124,7 +146,6 @@ header {
 .video-player {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
   z-index: 200;
   position: absolute;
   left: 0;
@@ -161,18 +182,7 @@ footer {
 
 /* Card */
 
-.cards-container {
-  color: #e6e6e6;
-  margin-top: 530px;
-  padding: 3em 3em;
-
-}
-
-.card {
-  margin: 2em 0 3em;
-}
-
-/* hacer que los colores sean especificos de cada seccióm */
+/* colores para asignar a nuevas categorías */
 .category1-title {
   color: #6BD1FF;
 }
@@ -192,10 +202,22 @@ footer {
 .category3-cards {
   border-top: 5px solid #FFBA05;
 }
+/* fin de colores para asignar a nuevas categorías */
+
+.cards-container {
+  color: #e6e6e6;
+  margin-top: 530px;
+  padding: 3em 3em;
+}
+
+.card {
+  margin: 2em 0 3em;
+  width: 280px;
+}
 
 .card-img {
-  width: 300px;
-  height: 180px;
+  width: 280px;
+  height: 170px;
   margin-bottom: 0.5em;
   object-fit: cover;
   border-radius: 10px;
@@ -212,12 +234,12 @@ footer {
 }
 
 .card-action {
-  background-color: #2F2F2F;
   display: flex;
-  padding: 1em;
   justify-content: space-around;
+  background-color: #2F2F2F;
   border-radius: 7px;
   font-size: 14px;
+  padding: 1em;
   
 }
 
@@ -231,8 +253,8 @@ footer {
   display: flex;
   align-items: center;
   gap: 0.8em;
-  cursor: pointer;
   color: #A5A5A5;
+  cursor: pointer;
 }
 
 .card-edit:hover,
@@ -267,23 +289,31 @@ dialog {
 
 }
 
-dialog h1 {
-  font-size: 45px;
-  margin-bottom: 1em;
-  text-align: center;
-}
-
 .edit-container {
   background-color: #03122F;
-  color:#2271d1;
   border: 1px solid #133866;
   border-radius: 15px;
-  width: 80%;
+  color:#2271d1;
   height: 80%;
+  max-width: 800px;
   margin: auto auto;
   padding: 3em 5em;
+  position: relative;
 }
 
+dialog h1 {
+  font-size: 2.25em;
+  font-weight: 400;
+  margin-bottom: 0.4em;
+  text-align: left;
+}
+
+.close-btn {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  cursor: pointer;
+}
 
 .edit-form {
   display: flex;
@@ -293,32 +323,38 @@ dialog h1 {
 }
 
 .edit-form label{
-font-size: 18px;
+font-size: 14px;
 font-weight: 400;
+margin-top: 1em;
 }
 
-.edit-input {
-  background-color: #03122F;
-  border: 1px solid #1b5499;
-  border-radius: 10px;
-  color: #A5A5A5;
-  font-size: 20px;
-  height: 55px;
-  padding: 8px 10px;
-}
-
+.edit-input,
 .edit-text-area {
   background-color: #03122F;
   border: 1px solid #1b5499;
-  border-radius: 10px;
-  color: #A5A5A5;
-  font-size: 20px;
-  height: 120px;
+  border-radius: 5px;
+  color: #D5E5F8;
+  font-size: 16px;
   padding: 8px 10px;
+  font-family: inherit;
+  font-weight: 400;
+}
+
+.edit-input {
+  height: 45px;
+}
+
+.edit-text-area {
+  height: 120px;
   resize: none;
   scrollbar-color: #1b5499 #09255e;
 }
 
+.edit-input:focus,
+.edit-input:active,
+.edit-text-area:focus {
+  outline: 2px solid #347acf;
+}
 
 .modal-btn {
   margin: 0 0 0 auto ;
@@ -331,20 +367,15 @@ font-weight: 400;
   padding: 0.7em 1.3em;
   
 }
-.modal-btn-reset {
-  margin-left: 1em;
-}
 
 .modal-btn-submit {
-  background-color: rgb(17, 17, 17);
-  border: 1px solid #2271D1;
-  border-radius: 10px;
+  background-color: #215CAB;
+  border: 1px solid #215CAB;
   box-shadow: inset 0px 0px 10px #2271d17c;
-  color:#83bbff;
+  color: white;
   cursor: pointer;
   transition: 1s;
 }
-
 
 .modal-btn-submit:hover {
   border: 1px solid white;
@@ -354,20 +385,18 @@ font-weight: 400;
 
 .modal-btn-reset {
   background-color: #03122F;
-  border: none;
+  margin-right: 1em;
   border: 1px solid #97c4fca8;
-  border-radius: 10px;
   box-shadow: 0px 0px 30px rgb(20, 20, 20);
-  color: white;
+  color:#83bbff;
   cursor: pointer;
-  margin-left: 1em;
   transition: 0.5s;
 }
 
 .modal-btn-reset:hover {
   background-color: rgb(17, 17, 17);
-  border: 1px solid #2271D1;
-  color:#83bbff;
+  border: 1px solid white;
+  color: white;
   transition: 0.5s;
 }
 
@@ -380,4 +409,31 @@ font-weight: 400;
 }
 
 /* fin de modal */
+
+/* login screen */
+
+.login-container {
+  height: 55vh;
+  max-width: 550px;
+  margin-top: 4em;
+  background: linear-gradient(180deg, rgba(29,27,50,1) 44%, rgba(24,43,78,1) 100%);
+}
+
+.login-title {
+  margin-top: 0.4em;
+  font-weight: 400;
+  font-size: 2.25rem;
+  text-align: left;
+}
+
+.login-btn-submit {
+  background-color: #215CAB;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  margin: -2em 0 0 auto;
+  padding: 1em 1.5em;
+  cursor: pointer;
+}
 
