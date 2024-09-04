@@ -208,6 +208,10 @@ footer {
   color: #e6e6e6;
   margin-top: 530px;
   padding: 3em 3em;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -271,6 +275,8 @@ footer {
 .front-cards-container, .back-cards-container {
   display: flex;
   gap: 2em;
+  flex-wrap: wrap;
+  justify-content: space-around;
   
 }
 

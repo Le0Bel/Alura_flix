@@ -58,6 +58,7 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCar
     }
 
     function closeModal() {
+        cleanCardToEditState()
         editVideoRef.current.close()
     }
     
