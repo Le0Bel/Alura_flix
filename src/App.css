@@ -110,8 +110,15 @@ header {
 
 
 .video-player-wrapper {
-  width: fit-content;
-  height:fit-content;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(17, 17, 17, 0.7);
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .player-img {

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import ReactPlayer from 'react-player'
 
 export default function Home({ playingCardId, cardList }) {
 
@@ -24,15 +25,18 @@ export default function Home({ playingCardId, cardList }) {
         <>
             {playingCardId ?
 
-                <section className="hero" style={{background:`url(${playingCard.playerBackground}), url("/Images/fallback-background.jpg")` }}> {/*la segunda url es un fallback por si la primera falla */}
-                    
-                        {!playing ?
-                            <img src={playingCard?.image} className="player-img" alt="" onClick={() => setPlaying(true)} />
-                            : 
-                            <iframe   width="854px" height="368px" className="video-player" src={`${playingCard.video}?rel=0&autoplay=1`} title={playingCard.title} frameBorder="0" allow="autoplay;" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>
-                            </iframe>
-                        }
-                    
+                <section className="hero" style={{ background: `url(${playingCard.playerBackground}), url("/Images/fallback-background.jpg")` }}> {/*la segunda url es un fallback por si la primera falla */}
+
+                    {!playing ?
+                        <img src={playingCard?.image} className="player-img" alt="" onClick={() => setPlaying(true)} />
+                        :
+                        //<iframe   width="854px" height="368px" className="video-player" src={`${playingCard.video}?rel=0&autoplay=1`} title={playingCard.title} frameBorder="0" allow="autoplay;" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>
+                        //</iframe>
+                        <div className="video-player-wrapper">
+                            <ReactPlayer controls={true} height="100%" width="87%" url={playingCard.video} />
+                        </div>
+                    }
+
                     <div className="hero-info">
                         <h2 className="hero-info-title">{playingCard?.category.toUpperCase()}</h2>
                         <p className="hero-info-title">{playingCard?.title}</p>
