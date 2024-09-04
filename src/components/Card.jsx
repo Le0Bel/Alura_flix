@@ -3,12 +3,12 @@ import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 
 
-export default function Card({ image, title, id, handleEdit, handleDelete, selectAsActiveCard, editOn }) {
+export default function Card({ image, title, id, handleEdit, handleDelete, selectAsActiveCard, editOn, className }) {
 
   const { user } = useContext(AuthContext)
 
   return (
-    <div className='card'>
+    <div className={`card ${className} `}>
       <img className='card-img' src={image} alt="" onClick={() => selectAsActiveCard(id)} />
       <p className='card-title'>{title}</p>
       {user.role==="admin" && editOn &&

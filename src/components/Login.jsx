@@ -10,9 +10,13 @@ export default function Login({ loginRef, closeLogin }) {
     function handleSubmit(e) {
         e.preventDefault()
         const fieldsValues = Object.fromEntries(new FormData(e.target))
-        const res = login(fieldsValues.name, fieldsValues.password)
+        const res = login(fieldsValues.name, fieldsValues.password) //llamo a la API del backend para validar el ususario
         if (res === "error") setError("Nombre o contraseña incorrecta, intente nuevamente")
-        else closeLogin()
+        else {
+            e.target.reset() //limpio el formulario
+            setError("")
+            closeLogin()
+        }
     }
 
 
@@ -37,7 +41,7 @@ export default function Login({ loginRef, closeLogin }) {
                         id="password"
                     />
                     <div className="error-msg-container">
-                        {error} 
+                        {error}
                     </div>
                     <button type="submit" className='modal-btn-submit' >
                         Iniciar Sesión

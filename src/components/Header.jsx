@@ -19,8 +19,7 @@ export default function Header({ handleModal, activateEdition, openLogin }) {
     return (
         <header>
             <img src={flixLogo} className="logo" alt="Alura flix logo" />
-            <div>
-                
+           
                 {user.role === "admin" && <div className='video-controls-wrapper'>
                     <button
                          className="btn new-btn" 
@@ -40,7 +39,7 @@ export default function Header({ handleModal, activateEdition, openLogin }) {
                         <button className="log-btn" onClick={logout}> Logout </button>
                     </div>
                 }
-            </div>
+
         </header>
     )
 }

@@ -2,8 +2,8 @@
   "videos": [
     {
       "id": "1",
-      "title": "Video numero 1",
-      "image": "/home-fondo-player.png",
+      "title": "La revolución  dgital: Paradigmas",
+      "image": "/Images/img_video_code_1_s.jpg",
       "description": " Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.",
       "category": "frontend",
       "video": "https://www.youtube.com/embed/15JLxVzKMRQ?si=UauW6-wyoTAhCfI9",
@@ -12,7 +12,7 @@
     {
       "id": "2",
       "title": "Que es javascipt etc",
-      "image": "/card-2-back.png",
+      "image": "/Images/img_video_code_3_s.jpg",
       "description": " Como aprender backend rapidamente sin morir en el intento",
       "category": "backend",
       "video": "https://www.youtube.com/embed/KCuiNzGbGTE?si=qv0r4fDf076gzXsH",
@@ -21,28 +21,28 @@
     {
       "id": "3",
       "title": "Peli 3 backend",
-      "image": "/card-1.png",
+      "image": "/Images/img_video_code_4_s.jpg",
       "description": " Este capitulo considera el Bla bla bla",
       "category": "backend",
       "video": "https://www.youtube.com/embed/nMXEHfxYaQE?si=C1kigK9Yz8zfZ029",
       "playerBackground": "/Images/backend_background.jpg"
     },
     {
-      "id": "AYTuaqEW00ACKMV1i9HfP",
-      "title": "dwdwadawd",
+      "id": "QBF8VrJBB9pWQuXKh0Jaa",
+      "title": "Aprendiendo Javascript JS",
       "category": "frontend",
-      "image": "/home-fondo-1.png",
+      "image": "/Images/img_video_code_5_s.jpg",
       "video": "https://www.youtube.com/embed/15JLxVzKMRQ?si=UauW6-wyoTAhCfI9",
-      "description": "dawdawdawdw",
+      "description": " Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resoluciónde un problema para poder aplicar todos los conocimientos adquiridos en la formación React.",
       "playerBackground": "/Images/frontend_background.jpg"
     },
     {
-      "id": "QBF8VrJBB9pWQuXKh0Jaa",
-      "title": "LA casa azul",
+      "id": "Qz9wXPEeJx4gumVlLilFC",
+      "title": "Curso de React desde cero: Crea un videojuego desde cero",
       "category": "frontend",
-      "image": "/card-1.png",
-      "video": "https://www.youtube.com/embed/15JLxVzKMRQ?si=UauW6-wyoTAhCfI9",
-      "description": " Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resoluciónde un problema para poder aplicar todos los conocimientos adquiridos en la formación React.",
+      "image": "/Images/img_video_code_6_s.jpg",
+      "video": "https://www.youtube.com/embed/qkzcjwnueLA?si=YAFPSyM92TAs6XET",
+      "description": "¡Aprende a usar useState y useEffect desarrollando el videojuego de 3 en raya!.   - Introducción - Inicialización del proyecto  - Sobre los estilos del proyecto  - Dibujando el tablero  - Inicializar el estado  - Estado con los turnos  - Actualizando el tablero al hacer click  - Lógica del tablero  - Ajustando el final del juego  ",
       "playerBackground": "/Images/frontend_background.jpg"
     }
   ]

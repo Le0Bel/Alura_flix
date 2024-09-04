@@ -16,12 +16,19 @@ body
   
 } */
 
+.fixed-top{
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #262626;
-  padding: 1.3em;
+  padding: 1.1em;
   padding-left: 2em;
   margin: 0;
   box-shadow: 0 10px 29px #2271D1, 0 3px  #2271D1;
@@ -81,18 +88,13 @@ header {
 }
 
 .video-controls-wrapper {
-  position: fixed;
-  width: 100%;
-  right: 0;
-  top: 20px;
-  z-index: 10;
   text-align: center;
-  pointer-events: none;
 }
 
 /* Video Player section */
 
 .player-img {
+  max-height: 300px;
   width: 45%;
   object-fit: contain;
   border-radius: 10px;
@@ -107,7 +109,7 @@ header {
   background-repeat: no-repeat;
   color: white;
   padding: 2em 3em;
-  height: 500px;
+  height: 400px;
   border-bottom: 1px solid rgb(83, 83, 83);
 }
 
@@ -141,6 +143,7 @@ footer {
 /* Card */
 
 .cards-container {
+  margin-top: 450px;
   flex:auto;
   color: #e6e6e6;
   padding: 3em 3em;
@@ -151,21 +154,33 @@ footer {
 }
 
 /* hacer que los colores sean especificos de cada seccióm */
-.frontend_cards {
-  border-top: 4px solid #6BD1FF;
+.category1-title {
+  color: #6BD1FF;
 }
-.backend_cards {
-  border-top: 4px solid #00C86F;
+.category2-title {
+  color: #00C86F;
 }
-.uiux_cards {
-  border-top: 4px solid #FFBA05;
+.category3-title {
+  color: #FFBA05;
 }
+
+.category1-cards {
+  border-top: 5px solid #6BD1FF;
+}
+.category2-cards {
+  border-top: 5px solid #00C86F;
+}
+.category3-cards {
+  border-top: 5px solid #FFBA05;
+}
+
 
 .card-img {
   width: 300px;
   height: 180px;
   margin-bottom: 0.5em;
   object-fit: cover;
+  border-radius: 10px;
 }
 
 .card, .card-img {
@@ -173,6 +188,8 @@ footer {
 }
 
 .card-title {
+  width: 300px;
+  height: 40px;
   font-weight: normal;
 }
 
@@ -181,7 +198,6 @@ footer {
   display: flex;
   padding: 1em;
   justify-content: space-around;
-  margin-top: 1.5em;
   border-radius: 7px;
   font-size: 14px;
   
@@ -272,6 +288,19 @@ font-weight: 400;
   height: 55px;
   padding: 8px 10px;
 }
+
+.edit-text-area {
+  background-color: #03122F;
+  border: 1px solid #1b5499;
+  border-radius: 10px;
+  color: #A5A5A5;
+  font-size: 20px;
+  height: 120px;
+  padding: 8px 10px;
+  resize: none;
+  scrollbar-color: #1b5499 #09255e;
+}
+
 
 .modal-btn {
   margin: 0 0 0 auto ;
