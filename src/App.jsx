@@ -22,7 +22,7 @@ function App() {
   const editVideoRef = useRef(null)
   const loginRef = useRef(null)
 
-  //Fetch inicial de videos de JsonSrvr
+  //Fetch inicial de videos de JsonServer
 
   useEffect(() => {
     fetch("http://localhost:3000/videos")   // ** agregar mejor control de errores al fetch y pasarlo a un custom Hook useFetch
@@ -35,10 +35,10 @@ function App() {
   }
     , [])
 
+
   async function handleDelete(id) {
     // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la que se va a borrar
     if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
-
     // Llama la API para borrar el vido de la base de datos
     try {
       const response = await fetch(`http://localhost:3000/videos/${id}`, {
@@ -49,7 +49,6 @@ function App() {
       setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
     }
     catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
-
   }
 
   function handleEdit(id) {
@@ -61,8 +60,7 @@ function App() {
   }
 
   async function newVideo(video) {
-
-    // hace la llamada  a la Api del srvr para agregar en el nuevo
+    // hace la llamada  a la Api del server para agregar en el nuevo
     try {
       const response = await fetch("http://localhost:3000/videos", {
         method: "POST",
