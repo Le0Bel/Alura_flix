@@ -67,8 +67,8 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCar
             <div className="edit-container">
                 <h1>EDITAR VIDEO</h1>
                 <svg onClick={closeModal} className="close-btn" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" stroke="#1b5499" stroke-width="1.5"/>
-                    <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+                    <circle cx="12" cy="12" r="10" stroke="#1b5499" strokeWidth="1.5"/>
+                    <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
                 <form action="" className="edit-form" onSubmit={handleSubmit}>
 
