@@ -83,7 +83,7 @@ function App() {
         body: JSON.stringify(viewedVideo)
       })
       if (response.ok) {
-        console.log("Video agregado a vistos correctamente")
+
         setViewed(viewedVideo.viewed) // actualiza el estado con el nuevo video  
       }
     }
