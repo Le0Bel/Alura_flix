@@ -44,7 +44,7 @@ function App() {
       fetch(`http://localhost:3000/viewedlist/${user.name}`)
         .then(res => res.json())
         .then(data => setViewed(data.viewed))
-        .catch((error) => { alert("Error no se pudo obtener la lista de videos ya vistos para el usuario") })
+        .catch((error) => { console.log("Error no se pudo obtener la lista de videos ya vistos para el usuario", error) })
     }
     else setViewed([])
   }, [user])
@@ -70,7 +70,7 @@ function App() {
   }
 
 
-  async function handleToggleViewed(id) {
+  async function toggleViewed(id) {
     let viewedVideo // sy ya existe elimina la id del video y si no existe en la lista de vistos la agrega
     if (viewed.includes(id)) {
       viewedVideo = { id: user.name, viewed: viewed.filter(viewId => id !== viewId) } //elimina la id}
@@ -181,7 +181,7 @@ function App() {
         <div className='front-cards-container'>
           {cardList.filter(card => card.category === category).map(
             card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
-              className={`category${index + 1}-cards`} handleToggleViewed={handleToggleViewed} viewed={viewed.includes(card.id)}
+              className={`category${index + 1}-cards`} toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
               handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
         </div>
       </div>)
