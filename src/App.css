@@ -154,6 +154,8 @@ header {
 
 .hero-info {
   width: 40%;
+  line-height: 1.4rem;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.705);
 }
 
 .hero-info-title {
@@ -161,11 +163,6 @@ header {
   margin-bottom: 0.8em;
   line-height: 1;
 }
-
-.hero-info {
-  line-height: 1.4rem;
-}
-
 
 /* End of hero/player section */
 
@@ -178,7 +175,10 @@ footer {
   background-color: rgb(38, 38, 38);
   box-shadow: 0 -10px 29px #2271d1b9, 0 -3px  #2271D1;
   padding: 30px;
+  height: 80px;
 }
+
+
 
 /* Card */
 
