@@ -57,10 +57,19 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCar
         }
     }
 
+    function closeModal() {
+        cleanCardToEditState()
+        editVideoRef.current.close()
+    }
+    
     return (
         <dialog ref={editVideoRef}>
             <div className="edit-container">
                 <h1>EDITAR VIDEO</h1>
+                <svg onClick={closeModal} className="close-btn" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="#1b5499" stroke-width="1.5"/>
+                    <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
                 <form action="" className="edit-form" onSubmit={handleSubmit}>
 
                     <label htmlFor="title" >Titulo</label>
@@ -112,9 +121,9 @@ export default function EditVideo({ editVideoRef, cardEditId, cardList, cleanCar
                         value={formData.playerBackground}
                     />
 
-                    <div>
-                        <button type="submit">Guardar</button>
-                        <button>Limpiar</button>
+                    <div className="modal-btn">
+                        <button className="modal-btn-reset">Limpiar</button>
+                        <button type="submit" className="modal-btn-submit">Guardar</button>
                     </div>
 
 
