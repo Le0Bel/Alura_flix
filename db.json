@@ -45,5 +45,20 @@
       "description": "¡Aprende a usar useState y useEffect desarrollando el videojuego de 3 en raya!.   - Introducción - Inicialización del proyecto  - Sobre los estilos del proyecto  - Dibujando el tablero  - Inicializar el estado  - Estado con los turnos  - Actualizando el tablero al hacer click  - Lógica del tablero  - Ajustando el final del juego  ",
       "playerBackground": "/Images/frontend_background.jpg"
     }
+  ],
+  "viewedlist": [
+    {
+      "id": "user",
+      "viewed": [
+        "3",
+        "QBF8VrJBB9pWQuXKh0Jaa",
+        "1",
+        "Qz9wXPEeJx4gumVlLilFC"
+      ]
+    },
+    {
+      "id": "admin",
+      "viewed": []
+    }
   ]
 }

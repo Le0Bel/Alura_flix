@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import ReactPlayer from 'react-player'
 
-export default function Home({ playingCardId, cardList }) {
+export default function Home({ playingCardId, cardList, handleViewed }) {
 
     const [playing, setPlaying] = useState(false)
     const playingCard = cardList.filter(card => card.id === playingCardId)[0]
@@ -20,6 +20,13 @@ export default function Home({ playingCardId, cardList }) {
     }
         , [user.isLogged])
 
+
+    function handleEnded () {
+        if (user.isLogged && user.role === "user") {
+
+           handleViewed(playingCardId)
+        }
+    }        
 
     return (
         <>
@@ -45,7 +52,7 @@ export default function Home({ playingCardId, cardList }) {
                                 height="459px" width="816px"
                                 config={{ youtube: { playerVars: { rel: 0, color: "white" } }, }}
                                 url={playingCard.video}
-                                onEnded={()=>alert(`termino ${playingCard.title}`)}
+                                onEnded={handleEnded}
                                 />
 
 
