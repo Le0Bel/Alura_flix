@@ -32,7 +32,7 @@
       "title": "Aprendiendo Javascript JS",
       "category": "frontend",
       "image": "/Images/img_video_code_5_s.jpg",
-      "video": "https://www.youtube.com/embed/15JLxVzKMRQ?si=UauW6-wyoTAhCfI9",
+      "video": "https://vimeo.com/114839242",
       "description": " Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resoluciónde un problema para poder aplicar todos los conocimientos adquiridos en la formación React.",
       "playerBackground": "/Images/frontend_background.jpg"
     },
@@ -41,9 +41,20 @@
       "title": "Curso de React desde cero: Crea un videojuego desde cero",
       "category": "frontend",
       "image": "/Images/img_video_code_6_s.jpg",
-      "video": "https://www.youtube.com/embed/qkzcjwnueLA?si=YAFPSyM92TAs6XET",
+      "video": "https://www.youtube.com/embed/qkzcjwnueLA?si=YAFPSyM92TAs6XET?rel=0",
       "description": "¡Aprende a usar useState y useEffect desarrollando el videojuego de 3 en raya!.   - Introducción - Inicialización del proyecto  - Sobre los estilos del proyecto  - Dibujando el tablero  - Inicializar el estado  - Estado con los turnos  - Actualizando el tablero al hacer click  - Lógica del tablero  - Ajustando el final del juego  ",
       "playerBackground": "/Images/frontend_background.jpg"
+    }
+  ],
+  "viewedlist": [
+    {
+      "id": "user",
+      "viewed": [
+        "3",
+        "2",
+        "1",
+        "Qz9wXPEeJx4gumVlLilFC"
+      ]
     }
   ]
 }

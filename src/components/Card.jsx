@@ -3,15 +3,24 @@ import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 
 
-export default function Card({ image, title, id, handleEdit, handleDelete, selectAsActiveCard, editOn, className }) {
+export default function Card({ image, title, id, handleEdit, handleDelete, selectAsActiveCard, editOn, className, viewed, toggleViewed }) {
 
   const { user } = useContext(AuthContext)
+
+  function  handleToggleViewed () {
+    if (user.isLogged && user.role === "user") {
+      toggleViewed(id)
+    }
+}       
 
   return (
     <div className={`card ${className} `}>
       <img className='card-img' src={image} alt="" onClick={() => selectAsActiveCard(id)} />
-      <p className='card-title'>{title}</p>
-      {user.role==="admin" && editOn &&
+      <div className=" card-info ">
+        <p className='card-title'>{title}</p>
+        <div className={viewed ? "card-viewed" : "card-not-viewed"} onDoubleClick={handleToggleViewed} />
+      </div>
+      {user.role === "admin" && editOn &&
         <div className='card-action' >
           <div className='card-edit' onClick={() => handleEdit(id)}>
             <img className="svg svg-edit" src="edit.svg" alt="" />

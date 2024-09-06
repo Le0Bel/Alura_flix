@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import ReactPlayer from 'react-player'
 
-export default function Home({ playingCardId, cardList }) {
+export default function Home({ playingCardId, cardList, handleViewed }) {
 
     const [playing, setPlaying] = useState(false)
     const playingCard = cardList.filter(card => card.id === playingCardId)[0]
@@ -20,24 +21,45 @@ export default function Home({ playingCardId, cardList }) {
         , [user.isLogged])
 
 
+    function handleEnded () {
+        if (user.isLogged && user.role === "user") {
+
+           handleViewed(playingCardId)
+        }
+    }        
+
     return (
         <>
             {playingCardId ?
 
-                <section className="hero" style={{background:`url(${playingCard.playerBackground}), url("/Images/fallback-background.jpg")` }}> {/*la segunda url es un fallback por si la primera falla */}
-                    
-                        {!playing ?
+                <section className="hero" style={{ background: `url(${playingCard.playerBackground}), url("/Images/fallback-background.jpg")` }}> {/*la segunda url es un fallback por si la primera falla */}
+
+                    {!playing ?
+                        <div className="hero-wrapper">
                             <img src={playingCard?.image} className="player-img" alt="" onClick={() => setPlaying(true)} />
-                            : 
-                            <iframe   width="854px" height="368px" className="video-player" src={`${playingCard.video}?rel=0&autoplay=1`} title={playingCard.title} frameBorder="0" allow="autoplay;" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>
-                            </iframe>
-                        }
-                    
-                    <div className="hero-info">
-                        <h2 className="hero-info-title">{playingCard?.category.toUpperCase()}</h2>
-                        <p className="hero-info-title">{playingCard?.title}</p>
-                        <p className="hero-info-text">{playingCard?.description}</p>
-                    </div>
+                            <div className="hero-info">
+                                <h2 className="hero-info-title">{playingCard?.category.toUpperCase()}</h2>
+                                <p className="hero-info-title">{playingCard?.title}</p>
+                                <p className="hero-info-text">{playingCard?.description}</p>
+                            </div>
+                        </div>
+
+                        :
+                        //<iframe   width="854px" height="368px" className="video-player" src={`${playingCard.video}?rel=0&autoplay=1`} title={playingCard.title} frameBorder="0" allow="autoplay;" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>
+                        //</iframe>
+                        <div className="video-player-wrapper">
+                            <ReactPlayer controls={true} playing={playing}
+                                height="459px" width="816px"
+                                config={{ youtube: { playerVars: { rel: 0, color: "white" } }, }}
+                                url={playingCard.video}
+                                onEnded={handleEnded}
+                                />
+
+
+
+
+                        </div>
+                    }
 
                 </section>
                 : <section className="hero">

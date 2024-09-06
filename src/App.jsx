@@ -1,5 +1,5 @@
 
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import './App.css'
 import Header from "./components/Header"
 import Home from "./components/Home"
@@ -11,6 +11,7 @@ import NewVideoNoControlada from './components/NewVideoNoControlada'
 import EditVideo from './components/EditVideo'
 import Login from './components/Login'
 import Card from './components/Card'
+import { AuthContext } from './context/AuthContext'
 
 
 function App() {
@@ -18,12 +19,14 @@ function App() {
   const [cardEditId, setCardEditId] = useState("")
   const [playingCardId, setPlayingCardId] = useState("")
   const [editOn, setEditOn] = useState(false)
+  const [viewed, setViewed] = useState([])
   const dialogRef = useRef(null)
   const editVideoRef = useRef(null)
   const loginRef = useRef(null)
 
-  //Fetch inicial de videos de JsonServer
+  const { user } = useContext(AuthContext)
 
+  //Fetch inicial de videos de JsonServer
   useEffect(() => {
     fetch("http://localhost:3000/videos")   // ** agregar mejor control de errores al fetch y pasarlo a un custom Hook useFetch
       .then(res => res.json())
@@ -32,8 +35,60 @@ function App() {
         setPlayingCardId(videos[0].id)
       })
       .catch((error) => { alert("Lo lamentamos no se pudo obener las lista de videos del servidor") })
+  }, [])
+
+
+  // Obtener lista de ya vistos si el usuario esta logueado y el rol es user y limpia si no se cumplen ambas condiciones
+  useEffect(() => {
+    if (user.isLogged && user.role === "user") {
+      fetch(`http://localhost:3000/viewedlist/${user.name}`)
+        .then(res => res.json())
+        .then(data => setViewed(data.viewed))
+        .catch((error) => { console.log("Error no se pudo obtener la lista de videos ya vistos para el usuario", error) })
+    }
+    else setViewed([])
+  }, [user])
+
+
+  async function handleViewed(id) {
+    if (viewed.includes(id)) return //early return si el video ya fue visto previamente
+
+    try { // hace la llamada  a la Api del server para agregar el video visto a la lista
+      const viewedVideo = { id: user.name, viewed: [...viewed, id] }
+      const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(viewedVideo)
+      })
+      if (response.ok) {
+        console.log("Video agregado a vistos correctamente")
+        // actualiza el estado con el nuevo video  
+        setViewed(prev => [...prev, id])
+      }
+    }
+    catch { alert(" No se pudo registrar el video como visto en el servidor") }
   }
-    , [])
+
+
+  async function toggleViewed(id) {
+    let viewedVideo // sy ya existe elimina la id del video y si no existe en la lista de vistos la agrega
+    if (viewed.includes(id)) {
+      viewedVideo = { id: user.name, viewed: viewed.filter(viewId => id !== viewId) } //elimina la id}
+    }
+    else viewedVideo = { id: user.name, viewed: [...viewed, id] }  // agrega la id
+    try { // hace la llamada  a la Api del server para agregar el video visto a la lista
+      const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(viewedVideo)
+      })
+      if (response.ok) {
+
+        setViewed(viewedVideo.viewed) // actualiza el estado con el nuevo video  
+      }
+    }
+    catch { alert(" Fallo toggle Viewed no se pudo comunicar con en el servidor") }
+  }
 
 
   async function handleDelete(id) {
@@ -50,6 +105,7 @@ function App() {
     }
     catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
   }
+
 
   function handleEdit(id) {
     setCardEditId(id)
@@ -121,10 +177,11 @@ function App() {
     // create the containers for each category and fill them with the category cards
     cardElements = categories.map((category, index) => {
       return (<div key={category}>
-        <h1 className={`category${index+1}-title`}>{category.toUpperCase()}</h1>
+        <h1 className={`category${index + 1}-title`}>{category.toUpperCase()}</h1>
         <div className='front-cards-container'>
           {cardList.filter(card => card.category === category).map(
-            card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn} className={`category${index+1}-cards`}
+            card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
+              className={`category${index + 1}-cards`} toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
               handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
         </div>
       </div>)
@@ -141,7 +198,7 @@ function App() {
       { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
       <div className='fixed-top'>
         <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} />
-        <Home playingCardId={playingCardId} cardList={cardList} />
+        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} />
       </div>
       <div className='cards-container'>
         {cardElements}
