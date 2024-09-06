@@ -8,9 +8,8 @@ export default function Card({ image, title, id, handleEdit, handleDelete, selec
   const { user } = useContext(AuthContext)
 
   function  handleToggleViewed () {
-    if (user.isLogged && user.role === "user") {
-      toggleViewed(id)
-    }
+    
+    toggleViewed(id)
 }       
 
   return (

@@ -22,10 +22,8 @@ export default function Home({ playingCardId, cardList, handleViewed }) {
 
 
     function handleEnded () {
-        if (user.isLogged && user.role === "user") {
 
            handleViewed(playingCardId)
-        }
     }        
 
     return (
