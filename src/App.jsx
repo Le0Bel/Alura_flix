@@ -45,8 +45,11 @@ function App() {
         .then(data => setViewed(data.viewed))
         .catch((error) => { console.log("Error no se pudo obtener la lista de videos ya vistos para el usuario", error) })
     }
-    else if (user.role === "user")   setViewed(JSON.parse(localStorage.getItem('viewedAnonymous')))        // usuario anonimo
-    else  setViewed([]) //limpia para el caso de que haga login un Admin
+    else if (user.role === "user") {
+      const viewedFromLS = JSON.parse(localStorage.getItem('viewedAnonymous'))
+      if (viewedFromLS) setViewed(viewedFromLS)   // si hay info guardada  en LocalStorage de videos vistos la carga en el estado
+    }        // usuario anonimo
+    else setViewed([]) //limpia para el caso de que haga login un Admin
   }, [user])
 
 
@@ -87,7 +90,7 @@ function App() {
         viewedVideo = { id: user.name, viewed: viewed.filter(viewId => id !== viewId) } //elimina la id}
       }
       else viewedVideo = { id: user.name, viewed: [...viewed, id] }  // agrega la id
-    
+
       if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
         try { // hace la llamada  a la Api del server para agregar el video visto a la lista
           const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
@@ -199,7 +202,7 @@ function App() {
         <div className='front-cards-container'>
           {cardList.filter(card => card.category === category).map(
             card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
-              className={`category${index + 1}-cards`} toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
+              className={`category${index + 1}-cards`} toggleViewed={toggleViewed} viewed={viewed?.includes(card.id)}
               handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
         </div>
       </div>)
