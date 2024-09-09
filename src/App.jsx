@@ -22,10 +22,8 @@ function App() {
   const dialogRef = useRef(null)
   const editVideoRef = useRef(null)
   const loginRef = useRef(null)
-  const startTime = useRef(0)
+
   const { user } = useContext(AuthContext)
-
-
 
   //Fetch inicial de videos de JsonServer
   useEffect(() => {
@@ -33,46 +31,23 @@ function App() {
       .then(res => res.json())
       .then(videos => {
         setCardList(videos)
-
+        setPlayingCardId(videos[0].id)
       })
       .catch((error) => { alert("Lo lamentamos no se pudo obener las lista de videos del servidor") })
   }, [])
 
 
-  // Obtener el ultimo video visto de LS y lista de ya vistos si el usuario esta logueado del server y si es anonimo de localstorage 
+  // Obtener lista de ya vistos si el usuario esta logueado y el rol es user del server y si es anonimo de localstorage 
   useEffect(() => {
-    if (user.role === "user") {
-
-      if (cardList.length > 1) {   // lee el local storage y si hay info de el ultimo video activo la carga
-        if (localStorage.getItem(user.name)) {
-          const activeVideo = JSON.parse(localStorage.getItem(user.name))
-          setPlayingCardId(activeVideo.id)
-          startTime.current = activeVideo.playedSeconds
-        }
-        else {
-          setPlayingCardId(cardList[0].id)// si no hay info de el ultimo video visto en LS inicializa con el primero de la lista
-          startTime.current = 0
-        }
-
-      }
-
-      if (!user.isLogged) {  // usuario anonimo le la lista de vistos de LS
-        const viewedFromLS = JSON.parse(localStorage.getItem('viewedAnonymous'))
-        if (viewedFromLS) setViewed(viewedFromLS)   // si hay info guardada  en LocalStorage de videos vistos la carga en el estado
-      }
-
-      else {  //usuario loggeado pide la lista de videos vistos del server
-        fetch(`http://localhost:3000/viewedlist/${user.name}`)
-          .then(res => res.json())
-          .then(data => setViewed(data.viewed))
-          .catch((error) => { console.log("Error no se pudo obtener la lista de videos ya vistos para el usuario", error) });
-      }
-
+    if (user.isLogged && user.role === "user") {  //usuario loggeado
+      fetch(`http://localhost:3000/viewedlist/${user.name}`)
+        .then(res => res.json())
+        .then(data => setViewed(data.viewed))
+        .catch((error) => { console.log("Error no se pudo obtener la lista de videos ya vistos para el usuario", error) })
     }
-    else setViewed([]) //limpia para el caso de que haga login un Admin
-  }, [user, cardList])
-
-
+    else if (user.role === "user")   setViewed(JSON.parse(localStorage.getItem('viewedAnonymous')))        // usuario anonimo
+    else  setViewed([]) //limpia para el caso de que haga login un Admin
+  }, [user])
 
 
   async function handleViewed(id) {
@@ -112,7 +87,7 @@ function App() {
         viewedVideo = { id: user.name, viewed: viewed.filter(viewId => id !== viewId) } //elimina la id}
       }
       else viewedVideo = { id: user.name, viewed: [...viewed, id] }  // agrega la id
-
+    
       if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
         try { // hace la llamada  a la Api del server para agregar el video visto a la lista
           const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
@@ -156,7 +131,6 @@ function App() {
 
   function selectAsActiveCard(id) {
     setPlayingCardId(id)
-    startTime.current = 0
   }
 
   async function newVideo(video) {
@@ -225,7 +199,7 @@ function App() {
         <div className='front-cards-container'>
           {cardList.filter(card => card.category === category).map(
             card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
-              className={`category${index + 1}-cards`} toggleViewed={toggleViewed} viewed={viewed?.includes(card.id)}
+              className={`category${index + 1}-cards`} toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
               handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
         </div>
       </div>)
@@ -242,7 +216,7 @@ function App() {
       { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
       <div className='fixed-top'>
         <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} />
-        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime} />
+        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} />
       </div>
       <div className='cards-container'>
         {cardElements}
