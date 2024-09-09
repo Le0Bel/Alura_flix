@@ -8,7 +8,7 @@ export const AuthContext = createContext()
 
 export default function AuthProvider({ children }) {
 
-    const [user, setUser] = useState({ name: "", isLogged: false, role: "user" })
+    const [user, setUser] = useState({ name: "anonymous", isLogged: false, role: "user" })
 
 
     function login(username, pass) {
