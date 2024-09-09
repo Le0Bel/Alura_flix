@@ -22,8 +22,10 @@ function App() {
   const dialogRef = useRef(null)
   const editVideoRef = useRef(null)
   const loginRef = useRef(null)
-
+  const startTime = useRef(0)
   const { user } = useContext(AuthContext)
+
+
 
   //Fetch inicial de videos de JsonServer
   useEffect(() => {
@@ -31,26 +33,46 @@ function App() {
       .then(res => res.json())
       .then(videos => {
         setCardList(videos)
-        setPlayingCardId(videos[0].id)
+
       })
       .catch((error) => { alert("Lo lamentamos no se pudo obener las lista de videos del servidor") })
   }, [])
 
 
-  // Obtener lista de ya vistos si el usuario esta logueado y el rol es user del server y si es anonimo de localstorage 
+  // Obtener el ultimo video visto de LS y lista de ya vistos si el usuario esta logueado del server y si es anonimo de localstorage 
   useEffect(() => {
-    if (user.isLogged && user.role === "user") {  //usuario loggeado
-      fetch(`http://localhost:3000/viewedlist/${user.name}`)
-        .then(res => res.json())
-        .then(data => setViewed(data.viewed))
-        .catch((error) => { console.log("Error no se pudo obtener la lista de videos ya vistos para el usuario", error) })
+    if (user.role === "user") {
+
+      if (cardList.length > 1) {   // lee el local storage y si hay info de el ultimo video activo la carga
+        if (localStorage.getItem(user.name)) {
+          const activeVideo = JSON.parse(localStorage.getItem(user.name))
+          setPlayingCardId(activeVideo.id)
+          startTime.current = activeVideo.playedSeconds
+        }
+        else {
+          setPlayingCardId(cardList[0].id)// si no hay info de el ultimo video visto en LS inicializa con el primero de la lista
+          startTime.current = 0
+        }
+
+      }
+
+      if (!user.isLogged) {  // usuario anonimo le la lista de vistos de LS
+        const viewedFromLS = JSON.parse(localStorage.getItem('viewedAnonymous'))
+        if (viewedFromLS) setViewed(viewedFromLS)   // si hay info guardada  en LocalStorage de videos vistos la carga en el estado
+      }
+
+      else {  //usuario loggeado pide la lista de videos vistos del server
+        fetch(`http://localhost:3000/viewedlist/${user.name}`)
+          .then(res => res.json())
+          .then(data => setViewed(data.viewed))
+          .catch((error) => { console.log("Error no se pudo obtener la lista de videos ya vistos para el usuario", error) });
+      }
+
     }
-    else if (user.role === "user") {
-      const viewedFromLS = JSON.parse(localStorage.getItem('viewedAnonymous'))
-      if (viewedFromLS) setViewed(viewedFromLS)   // si hay info guardada  en LocalStorage de videos vistos la carga en el estado
-    }        // usuario anonimo
     else setViewed([]) //limpia para el caso de que haga login un Admin
-  }, [user])
+  }, [user, cardList])
+
+
 
 
   async function handleViewed(id) {
@@ -134,6 +156,7 @@ function App() {
 
   function selectAsActiveCard(id) {
     setPlayingCardId(id)
+    startTime.current = 0
   }
 
   async function newVideo(video) {
@@ -219,7 +242,7 @@ function App() {
       { /* <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
       <div className='fixed-top'>
         <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} />
-        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} />
+        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime} />
       </div>
       <div className='cards-container'>
         {cardElements}

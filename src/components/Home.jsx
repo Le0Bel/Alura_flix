@@ -3,13 +3,14 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import ReactPlayer from 'react-player'
 
-export default function Home({ playingCardId, cardList }) {
+export default function Home({ playingCardId, cardList, handleViewed, startTime = 0 }) {
 
     const [playing, setPlaying] = useState(false)
     const playingCard = cardList.filter(card => card.id === playingCardId)[0]
     const refPlayer = useRef(null)
 
     const { user } = useContext(AuthContext)
+
 
     useEffect(() => { // resetea el player si cambia de video seleccionado
         setPlaying(false)
@@ -22,11 +23,21 @@ export default function Home({ playingCardId, cardList }) {
         , [user.isLogged])
 
 
+    function checkStart() {   // Si el video ya estaba empezado lo constinua desde donde habia quedado (segun lo que guarda en LS la funcion savePlayedInfo)
+        if (startTime.current > 0) {
+            refPlayer.current.seekTo(startTime.current)
+        }
+    }
+
+    function handleOnEnded() {
+        handleViewed(playingCardId)
+        setPlaying(false)
+    }
+
     function savePlayedInfo(info) {  // guarda la informacion del video activo 
         if (user.role === "user") {
             let activeVideo = { id: playingCardId, playedSeconds: info.playedSeconds, playedPercent: info.played }
             localStorage.setItem(user.name, JSON.stringify(activeVideo))  //  guarda en localstorage el video activo y tiempo reproducido para el usuario actual
-            //refPlayer.current.seekTo(22)
         }
     }
 
@@ -55,12 +66,8 @@ export default function Home({ playingCardId, cardList }) {
                                 height="459px" width="816px"
                                 config={{ youtube: { playerVars: { rel: 0, color: "white" } }, }}
                                 url={playingCard.video} progressInterval={5000} onProgress={savePlayedInfo}
-                                onEnded={() => alert(`termino ${playingCard.title}`)}
+                                onReady={checkStart} onEnded={handleOnEnded}
                             />
-
-
-
-
                         </div>
                     }
 
