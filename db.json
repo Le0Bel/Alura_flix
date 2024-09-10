@@ -2,7 +2,7 @@
   "videos": [
     {
       "id": "1",
-      "title": "La revolución  dgital: Paradigmas",
+      "title": "La revolución  dgital: Paradigmas 1",
       "image": "/Images/img_video_code_1_s.jpg",
       "description": " Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.",
       "category": "frontend",
@@ -20,7 +20,7 @@
     },
     {
       "id": "3",
-      "title": "Peli 3 backend",
+      "title": "Clase  3 backend con Django",
       "image": "/Images/img_video_code_4_s.jpg",
       "description": " Este capitulo considera el Bla bla bla",
       "category": "backend",
@@ -29,7 +29,7 @@
     },
     {
       "id": "QBF8VrJBB9pWQuXKh0Jaa",
-      "title": "Aprendiendo Javascript JS",
+      "title": "Aprendiendo Javascript JS Clase 2 1",
       "category": "frontend",
       "image": "/Images/img_video_code_5_s.jpg",
       "video": "https://vimeo.com/114839242",

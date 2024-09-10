@@ -23,9 +23,9 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime 
         , [user.isLogged])
 
 
-    function checkStart() {   // Si el video ya estaba empezado lo constinua desde donde habia quedado (segun lo que guarda en LS la funcion savePlayedInfo)
-        if (startTime.current > 0) {
-            refPlayer.current.seekTo(startTime.current)
+    function checkStart() {   // Si el video ya estaba empezado lo continua desde donde habia quedado (segun lo que guarda en LS la funcion savePlayedInfo)
+        if (startTime > 0) {
+            refPlayer.current.seekTo(startTime)
         }
     }
 
