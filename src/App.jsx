@@ -244,6 +244,7 @@ function App() {
         <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} />
         <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime} />
       </div>
+      <div className='cards-container-spacer'></div>
       <div className='cards-container'>
         {cardElements}
       </div>

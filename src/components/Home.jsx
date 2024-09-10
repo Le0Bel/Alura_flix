@@ -48,7 +48,7 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime 
                 <section className="hero" style={{ background: `url(${playingCard.playerBackground}), url("/Images/fallback-background.jpg")` }}> {/*la segunda url es un fallback por si la primera falla */}
 
                     {!playing ?
-                        <div className="hero-wrapper">
+                        <div className="video-wrapper">
                             <img src={playingCard?.image} className="player-img" alt="" onClick={() => setPlaying(true)} />
                             <div className="hero-info">
                                 <h2 className="hero-info-title">{playingCard?.category.toUpperCase()}</h2>
@@ -63,7 +63,7 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime 
                         <div className="video-player-wrapper">
                             <ReactPlayer ref={refPlayer}
                                 controls={true} playing={playing}
-                                height="459px" width="816px"
+                                height="100%" width="100%"
                                 config={{ youtube: { playerVars: { rel: 0, color: "white" } }, }}
                                 url={playingCard.video} progressInterval={5000} onProgress={savePlayedInfo}
                                 onReady={checkStart} onEnded={handleOnEnded}
