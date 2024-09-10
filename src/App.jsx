@@ -221,7 +221,18 @@ function App() {
     // create the containers for each category and fill them with the category cards
     cardElements = categories.map((category, index) => {
       return (<div key={category}>
-        <h1 className={`category${index + 1}-title`}>{category.toUpperCase()}</h1>
+        <div className='section-frame'>
+          <div className='section-frame-side'>
+            <div className='section-frame-side-line'></div>
+            <div ></div>
+          </div>
+          <h1 className={`category${index + 1}-title`}>{category.toUpperCase()}</h1>
+          <div className='section-frame-side'>
+            <div className='section-frame-side-line'></div>
+            <div ></div>
+          </div>
+        </div>
+        
         <div className='front-cards-container'>
           {cardList.filter(card => card.category === category).map(
             card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}

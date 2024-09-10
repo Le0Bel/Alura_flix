@@ -208,33 +208,68 @@ header {
 /* fin de colores para asignar a nuevas categorías */
 
 .cards-container-spacer {
-  background-color: red;
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
 }
 
 .cards-container {
-  margin-top: 3em;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   background-color: #292929;
   color: #e6e6e6;
   padding: 2.2em 2em;
-  display: flex;
+  margin-top: 3em;
   width: 100%;
-  flex-direction: column;
-  flex-wrap: wrap;
 }
 
+.cards-container h1 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  text-align: center;
+  border: 1px solid gray;
+  display: inline;
+  padding: 0.3em 0.8em;
+  border-radius: 20px;
+}
+
+.section-frame {
+  display: flex;
+
+}
+
+.section-frame-side {
+  content: "";
+  width: 100%;
+
+}
+
+.section-frame-side-line {
+border-bottom: 1px solid gray;
+height: 50%;
+}
+
+.front-cards-container,
+.back-cards-container {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+
 .card {
-  margin: 2em 0 3em;
-  min-width: 260px;
-  max-width: 290px;
   flex: auto;
+  margin: 2em 0 3em;
+  min-width: 250px;
+  max-width: 260px;
+  height: auto;
 }
 
 .card-img {
   width: 100%;
-  height: 170px;
+  aspect-ratio: 16/9;
   margin-bottom: 0.5em;
   object-fit: cover;
   border-radius: 10px;
@@ -272,6 +307,7 @@ header {
   font-weight: normal;
   font-size: 14px;
   padding: 0;
+  height: 18px;
 }
 
 .card-action {
@@ -279,8 +315,9 @@ header {
   justify-content: space-around;
   background-color: #2F2F2F;
   border-radius: 7px;
-  font-size: 14px;
-  padding: 1em;
+  font-size: 0.75rem;
+  padding: 0.7em;
+  margin-top: 2em;
 
 }
 
@@ -309,14 +346,6 @@ header {
   filter: invert(48%) sepia(5%) saturate(397%) hue-rotate(25deg) brightness(116%) contrast(80%);
 }
 
-.front-cards-container,
-.back-cards-container {
-  display: flex;
-  gap: 1em;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-
-}
 
 /* Modal */
 
@@ -484,17 +513,17 @@ dialog h1 {
 
 /* Media query , different display size */
 
-@media (min-width:800px) {
+@media (min-width:900px) {
     
   .hero,
   header,
   .cards-container-spacer {
-   width: 800px;
+   width: 900px;
    margin: 0 auto;
   }
 
   .cards-container {
-    max-width: 800px;
+    max-width: 900px;
     justify-content: center;
     margin: 3em auto 0;
   }
@@ -510,17 +539,6 @@ footer {
   box-shadow: 0 -10px 29px #2271d1b9, 0 -3px #2271D1;
   padding: 30px;
   height: 80px;
-}
-
-
-
-
-
-@media (max-width:932px) {
-  .card {
-    max-width: 350px;
-  }
-
 }
 
 @media (max-width:625px) {
@@ -587,9 +605,5 @@ footer {
     position: absolute;
     top: 0;
 } */
-  .card {
-    margin: 0 auto;
-  }
-
 }
 

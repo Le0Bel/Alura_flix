@@ -60,6 +60,7 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime 
                         :
                         //<iframe   width="854px" height="368px" className="video-player" src={`${playingCard.video}?rel=0&autoplay=1`} title={playingCard.title} frameBorder="0" allow="autoplay;" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>
                         //</iframe>
+                        
                         <div className="video-player-wrapper">
                             <ReactPlayer ref={refPlayer}
                                 controls={true} playing={playing}
