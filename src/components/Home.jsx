@@ -30,8 +30,8 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime 
     }
 
     function handleOnEnded() {
-        handleViewed(playingCardId)
         setPlaying(false)
+        handleViewed(playingCardId)
     }
 
     function savePlayedInfo(info) {  // guarda la informacion del video activo 

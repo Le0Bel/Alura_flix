@@ -58,29 +58,35 @@ function App() {
   }, [user, cardList])
 
 
-  async function handleViewed(id) {  // agrega los videos ya listos a la lista en el srvr o en LS segun usuario logguead o anonimo
+  async function handleViewed(id) {  // agrega los videos ya listos a la lista en el srvr o en LS segun usuario loggueado o anonimo y reseta la info del video quw se estaba reproduciendo 
     if (user.role === "user") {
-      if (viewed.includes(id)) return //early return si el video ya fue visto previamente
+      
+      if (localStorage.getItem(user.name)) { // si el video termino resetea el startTime para que no comienze desde el final si el usuario vuelve clikear el mismo video
+        const activeVideo = JSON.parse(localStorage.getItem(user.name))
+        localStorage.setItem(user.name, JSON.stringify({ ...activeVideo, playedSeconds: 0, played: 0 }))  // resetea el tiempo reproducido
 
-      const viewedVideo = { id: user.name, viewed: [...viewed, id] }
+        if (viewed.includes(id)) return //early return si el video ya fue visto previamente
 
-      if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
-        try { // hace la llamada  a la Api del server para agregar el video visto a la lista
-          const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
-            method: "PATCH",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(viewedVideo)
-          })
-          if (response.ok) {
-            console.log("Video agregado a vistos correctamente")
-            setViewed(viewedVideo.viewed) // actualiza el estado con el nuevo video  
+        const viewedVideo = { id: user.name, viewed: [...viewed, id] }
+
+        if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
+          try { // hace la llamada  a la Api del server para agregar el video visto a la lista
+            const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
+              method: "PATCH",
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(viewedVideo)
+            })
+            if (response.ok) {
+              console.log("Video agregado a vistos correctamente")
+              setViewed(viewedVideo.viewed) // actualiza el estado con el nuevo video  
+            }
           }
+          catch { alert(" No se pudo registrar el video como visto en el servidor") }
         }
-        catch { alert(" No se pudo registrar el video como visto en el servidor") }
-      }
-      else {
-        localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideo.viewed))  // para usuario anonimo guarda en localStorage
-        setViewed(viewedVideo.viewed) // actualizo el estado con el nuevo video visto
+        else {
+          localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideo.viewed))  // para usuario anonimo guarda en localStorage
+          setViewed(viewedVideo.viewed) // actualizo el estado con el nuevo video visto
+        }
       }
     }
   }
@@ -132,7 +138,7 @@ function App() {
   }
 
 
-   function selectAsActiveCard(id) {
+  function selectAsActiveCard(id) {
     setPlayingCardId(id)
     startTime.current = 0 // cuando se cambia de video se resetea a 0 starime para que comienze desde el pricipio
   }
@@ -180,7 +186,7 @@ function App() {
     videoDataRef.current.showModal() // Abre el modal de editar card 
   }
 
-  
+
   function cleanCardToEditState() {
     setCardEditId("")
   }
@@ -219,8 +225,8 @@ function App() {
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
-      <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
-        cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />
+      {user.role === "admin" && <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
+        cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />}
       <div className='fixed-top'>
         <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} />
         <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime.current} />
