@@ -44,6 +44,15 @@
       "video": "https://www.youtube.com/embed/qkzcjwnueLA?si=YAFPSyM92TAs6XET?rel=0",
       "description": "¡Aprende a usar useState y useEffect desarrollando el videojuego de 3 en raya!.   - Introducción - Inicialización del proyecto  - Sobre los estilos del proyecto  - Dibujando el tablero  - Inicializar el estado  - Estado con los turnos  - Actualizando el tablero al hacer click  - Lógica del tablero  - Ajustando el final del juego  ",
       "playerBackground": "/Images/frontend_background.jpg"
+    },
+    {
+      "id": "i8KZIe-1SPcaV2QYWt9Ph",
+      "title": "Clase 4 de React",
+      "image": "/Images/img_video_code_1_s.jpg",
+      "description": "Cuarta clase de front end, probando nuevo modal combinado de edición y nuevo video",
+      "category": "frontend",
+      "video": "https://www.youtube.com/embed/qkzcjwnueLA?si=YAFPSyM92TAs6XET",
+      "playerBackground": "/Images/frontend_background.jpg"
     }
   ],
   "viewedlist": [

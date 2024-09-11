@@ -5,9 +5,6 @@ import Header from "./components/Header"
 import Home from "./components/Home"
 import Footer from "./components/Footer"
 import { useState } from 'react'
-import NewVideo from './components/NewVideo'
-import NewVideoNoControlada from './components/NewVideoNoControlada'
-import EditVideo from './components/EditVideo'
 import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
 import Card from './components/Card'
@@ -20,8 +17,6 @@ function App() {
   const [playingCardId, setPlayingCardId] = useState("")
   const [editOn, setEditOn] = useState(false)
   const [viewed, setViewed] = useState([])
-//  const dialogRef = useRef(null)
-// const editVideoRef = useRef(null)
   const videoDataRef = useRef(null)
   const loginRef = useRef(null)
   const startTime = useRef(0)
@@ -137,17 +132,13 @@ function App() {
   }
 
 
-  function handleEdit(id) {
-    setCardEditId(id)
-  }
-
-  function selectAsActiveCard(id) {
+   function selectAsActiveCard(id) {
     setPlayingCardId(id)
-    startTime.current=0 // cuando se cambia de video se resetea a 0 starime para que comienze desde el pricipio
+    startTime.current = 0 // cuando se cambia de video se resetea a 0 starime para que comienze desde el pricipio
   }
 
   async function newVideo(video) {
-    // hace la llamada  a la Api del server para agregar en el nuevo
+    // hace la llamada  a la Api del server para agregar en el nuevo video
     try {
       const response = await fetch("http://localhost:3000/videos", {
         method: "POST",
@@ -159,10 +150,6 @@ function App() {
       setCardList(prev => ([...prev, video]))
     }
     catch { alert(" Error de conexión con el servidor al agregar video") }
-  }
-
-  function cleanCardToEditState() {
-    setCardEditId("")
   }
 
   async function editCard(editedCard) {
@@ -188,20 +175,26 @@ function App() {
     setEditOn(prev => !prev)
   }
 
+  function handleEdit(id) {
+    setCardEditId(id)
+    videoDataRef.current.showModal() // Abre el modal de editar card 
+  }
+
+  
+  function cleanCardToEditState() {
+    setCardEditId("")
+  }
+
   function openNewVideoModal() {
     videoDataRef.current.showModal()
   }
-  function closeNewVideoModal() {
-    dialogRef.current.close()
-  }
+
   function openLogin() {
     loginRef.current.showModal()
   }
   function closeLogin() {
     loginRef.current.close()
   }
-
-  if (cardEditId) videoDataRef.current.showModal() // Abre el modal de editar card si hay alguna tarjeta a editar 
 
 
   let cardElements
@@ -214,26 +207,23 @@ function App() {
         <h1 className={`category${index + 1}-title`}>{category.toUpperCase()}</h1>
         <div className='front-cards-container'>
           {cardList.filter(card => card.category === category).map(
-            card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn} 
+            card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
               className={`category${index + 1}-cards`} toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
               handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
         </div>
       </div>)
     })
   }
-  
+
 
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
-      <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList} cleanCardToEditState={cleanCardToEditState} editCard={editCard} />
-      { /*
-       <EditVideo editVideoRef={editVideoRef} cardEditId={cardEditId} cardList={cardList} cleanCardToEditState={cleanCardToEditState} editCard={editCard} />
-       <NewVideoNoControlada newVideo={newVideo} dialogRef={dialogRef} closeNewVideoModal={closeNewVideoModal} />
-       <NewVideo newVideo={newVideo} dialogRef={dialogRef} /> */}
+      <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
+        cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />
       <div className='fixed-top'>
         <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} />
-        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime.current}/>
+        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime.current} />
       </div>
       <div className='cards-container'>
         {cardElements}

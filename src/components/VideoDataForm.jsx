@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState, useMemo } from "react";
+import { nanoid } from 'nanoid'
 
-export default function VideoDataForm({ videoDataRef, cardEditId, cardList, cleanCardToEditState, editCard }) {
+export default function VideoDataForm({ videoDataRef, cardEditId, cardList, cleanCardToEditState, editCard, newVideo }) {
 
-    const emptyCard = useMemo( ()=> ({
+    const emptyCard = useMemo(() => ({
         id: "",
         title: "",
         image: "",
@@ -11,22 +12,22 @@ export default function VideoDataForm({ videoDataRef, cardEditId, cardList, clea
         category: "",
         video: '',
         playerBackground: ""
-  }) ,[])
+    }), [])
 
     const [formData, setFormData] = useState(emptyCard)
-
+    
     useEffect(() => {
 
-        function escFunction(event) {
+        function escFunction(event) {             // Funcion para limpiar el cardEditId del estado si el usuario cncela la edicion apretando al tecla escape
             if (event.key === "Escape") {
                 cleanCardToEditState()
                 console.log("cancelada edicion")
             }
         }
-        if (cardEditId) {  // si hay activa una tarjeta para edicion lee los datos de la misma
+        if (cardEditId) {  // si hay activa una tarjeta para edicion carga los datos de la misma el formulario
             const cardToEdit = cardList.filter(card => card.id === cardEditId)[0]
             setFormData(cardToEdit)
-            document.addEventListener("keydown", escFunction, false)
+            document.addEventListener("keydown", escFunction, false)      // para escuchar las teclas apretadas y cancelar la edicion si se aprieta "esc"
             return () => {
                 document.removeEventListener("keydown", escFunction, false);
             };
@@ -48,23 +49,25 @@ export default function VideoDataForm({ videoDataRef, cardEditId, cardList, clea
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (cardEditId) {
+        if (cardEditId) {   // Esta en modo edicion si hay un id de tarjeta para editar
             const editedCard = { ...formData, id: cardEditId }
             editCard(editedCard)
-            e.target.reset() //Limpia los elementos html
-            closeModal()
+        } else {   // Si esta vacio cardToEditId estamso en modo nuevo video
+            const video = { ...formData, id: nanoid() }
+            newVideo(video)
         }
+        closeModal()
     }
 
     function closeModal() {
-        cleanCardToEditState()  //para limpiar el estado de App 
-        videoDataRef.current.close()
+        if (cardEditId) cleanCardToEditState()  //para limpiar el id de la tarjeta a editar de la app  
+        videoDataRef.current.close()           //si el usuario cancela y no estamso en mdodo de nuevo video
     }
 
     return (
         <dialog ref={videoDataRef}>
             <div className="edit-container">
-                <h1>EDITAR VIDEO</h1>
+                <h1>{cardEditId ? "EDITAR VIDEO" : "NUEVO VIDEO"}</h1>
                 <svg onClick={closeModal} className="close-btn" width="30px" height="30px" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="10" stroke="#1b5499" strokeWidth="1.5" />
                     <path d="M14.5 9.50002L9.5 14.5M9.49998 9.5L14.5 14.5" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" />
@@ -121,10 +124,9 @@ export default function VideoDataForm({ videoDataRef, cardEditId, cardList, clea
                     />
 
                     <div className="modal-btn">
-                        <button className="modal-btn-reset">Limpiar</button>
+                        <button type="button"  onClick={closeModal} className="modal-btn-reset">Cancelar</button>
                         <button type="submit" className="modal-btn-submit">Guardar</button>
                     </div>
-
 
                 </form>
             </div>
