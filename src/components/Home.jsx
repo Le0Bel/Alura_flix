@@ -48,10 +48,10 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime 
                 <section className="hero" style={{ background: `url(${playingCard.playerBackground}), url("/Images/fallback-background.jpg")` }}> {/*la segunda url es un fallback por si la primera falla */}
 
                     {!playing ?
-                        <div className="video-wrapper">
+                        <div className="video-img-wrapper">
                             <img src={playingCard?.image} className="player-img" alt="" onClick={() => setPlaying(true)} />
                             <div className="hero-info">
-                                <h2 className="hero-info-title">{playingCard?.category.toUpperCase()}</h2>
+                                <h2 className="hero-info-category">{playingCard?.category.toUpperCase()}</h2>
                                 <p className="hero-info-title">{playingCard?.title}</p>
                                 <p className="hero-info-text">{playingCard?.description}</p>
                             </div>
