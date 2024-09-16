@@ -1,10 +1,10 @@
 import React from "react";
-import flixLogo from '../assets/image1.svg'
+import lbLogo from "/logo-2.svg"
 
 export default function Footer() {
     return(
         <footer>
-             <img src={flixLogo} className="logo" alt="Alura flix logo" />
+             <img src={lbLogo} className="logo footer-logo" alt="Alura flix logo" />
         </footer>
     )
 }

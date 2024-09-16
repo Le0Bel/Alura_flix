@@ -3,6 +3,8 @@ import { useContext, useState } from 'react'
 import flixLogo from '../assets/image1.svg'
 import { AuthContext } from '../context/AuthContext'
 import editVideoSvg from '/edit.svg'
+import lbLogo from "/logo-2.svg"
+import lbLogoLetter from "/logo-2-text.svg"
 
 
 
@@ -19,7 +21,10 @@ export default function Header({ handleModal, activateEdition, openLogin }) {
     
     return (
         <header>
-            <img src={flixLogo} className="logo" alt="Alura flix logo" />
+            <div className='header-logo-container'>
+            <img src={lbLogo} className="logo" alt="Learning blocks logo" />
+            <p className='logo-letters'>imparo</p>
+            </div>
                 {user.role === "admin" && <div className='video-controls-wrapper'>
                     <button
                          className="btn new-btn" 

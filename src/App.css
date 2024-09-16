@@ -33,10 +33,18 @@ header {
   margin: 0;
 }
 
+
 .logo {
-  height: 25px;
+  height: 20px;
 }
 
+.logo-letters {
+  color: white;
+  display: inline;
+  font-size: 1.5rem;
+  margin-left: 0.4rem;
+  font-weight: 500;
+}
 .btn {
   background-color: #2F2F2F;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.212);
@@ -234,7 +242,7 @@ header {
 }
 
 .section-frame-side-line {
-border-bottom: 1px solid gray;
+border-bottom: 1px solid #5f5f5f;
 height: 50%;
 }
 
@@ -260,7 +268,7 @@ height: 50%;
   font-size: 1.1rem;
   font-weight: 400;
   text-align: center;
-  border: 1px solid gray;
+  border: 1px solid #5f5f5f;
   display: inline;
   padding: 0.3em 0.8em;
   border-radius: 20px;
@@ -536,8 +544,12 @@ footer {
   justify-content: center;
   background-color: rgb(36, 36, 36);
   box-shadow:0 -2px #2271D1;
-  padding: 30px;
   height: 70px;
+  align-items: center;
+}
+
+.footer-logo {
+  height: 30px;
 }
 
 
@@ -663,9 +675,7 @@ footer {
     margin: 0 0 1em;
   }
   
-  footer {
-    display: none;
-  }
+
   
 }
 
