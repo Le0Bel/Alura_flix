@@ -1,5 +1,5 @@
 
-import { useContext, useEffect, useRef } from 'react'
+import { useCallback, useContext, useEffect, useRef } from 'react'
 import './App.css'
 import Header from "./components/Header"
 import Home from "./components/Home"
@@ -9,6 +9,7 @@ import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
 import Card from './components/Card'
 import { AuthContext } from './context/AuthContext'
+import { deleteVideos, editVideo, getVideos } from './services/videosCrud'
 
 
 function App() {
@@ -17,21 +18,23 @@ function App() {
   const [playingCardId, setPlayingCardId] = useState("")
   const [editOn, setEditOn] = useState(false)
   const [viewed, setViewed] = useState([])
+  const [playing, setPlaying] = useState(false)
+
   const videoDataRef = useRef(null)
   const loginRef = useRef(null)
   const startTime = useRef(0)
 
   const { user } = useContext(AuthContext)
 
+
+
   //Fetch inicial de videos de JsonServer
   useEffect(() => {
-    fetch("http://localhost:3000/videos")   // ** agregar mejor control de errores al fetch y pasarlo a un custom Hook useFetch
-      .then(res => res.json())
-      .then(videos => {
-        setCardList(videos)
-        setPlayingCardId(videos[0].id)
-      })
-      .catch((error) => { alert("Lo lamentamos no se pudo obener las lista de videos del servidor", error.message) })
+    getVideos().then(videos => {
+      if (videos){  // si hubo algun error al recibir los videos recibe undefined y no setea los estados
+      setCardList(videos)
+      setPlayingCardId(videos[0].id)}
+    })
   }, [])
 
 
@@ -60,7 +63,7 @@ function App() {
 
   async function handleViewed(id) {  // agrega los videos ya listos a la lista en el srvr o en LS segun usuario loggueado o anonimo y reseta la info del video quw se estaba reproduciendo 
     if (user.role === "user") {
-      
+
       if (localStorage.getItem(user.name)) { // si el video termino resetea el startTime para que no comienze desde el final si el usuario vuelve clikear el mismo video
         const activeVideo = JSON.parse(localStorage.getItem(user.name))
         localStorage.setItem(user.name, JSON.stringify({ ...activeVideo, playedSeconds: 0, played: 0 }))  // resetea el tiempo reproducido
@@ -127,9 +130,7 @@ function App() {
     if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
     // Llama la API para borrar el vido de la base de datos
     try {
-      const response = await fetch(`http://localhost:3000/videos/${id}`, {
-        method: "DELETE",
-      })
+      const response = await deleteVideos(id)
       if (response.ok) console.log("Video eliminado correctamente")
       // actualiza el estado sin la tarjeta eliminada
       setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
@@ -139,9 +140,17 @@ function App() {
 
 
   function selectAsActiveCard(id) {
-    setPlayingCardId(id)
-    startTime.current = 0 // cuando se cambia de video se resetea a 0 starime para que comienze desde el pricipio
+    if (id === playingCardId) setPlaying(false)  // si se esta viendo un video y se clickea la tarjeta de ese mismo video se corta la reproduccion 
+    else { // Este caso corresponde a si se clickea otra tarjeta diferente de la que esta elegida actualmente (PlayingCardId)
+      setPlayingCardId(id)
+      startTime.current = 0 // cuando se cambia de video activo se resetea a 0 startime para que comienze desde el pricipio
+    }
   }
+
+  const isPlaying = useCallback((value) => {
+    setPlaying(value)
+  }, [])
+
 
   async function newVideo(video) {
     // hace la llamada  a la Api del server para agregar en el nuevo video
@@ -160,11 +169,7 @@ function App() {
 
   async function editCard(editedCard) {
     try {
-      const response = await fetch(`http://localhost:3000/videos/${editedCard.id}`, {
-        method: "PATCH",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editedCard)
-      })
+      const response = await editVideo(editedCard)
       if (response.ok) console.log("Video editado correctamente")
       // Actualiza el estado con la card editada
       setCardList(prevCardList => prevCardList.map(
@@ -221,7 +226,7 @@ function App() {
             <div ></div>
           </div>
         </div>
-        
+
         <div className='front-cards-container'>
           {cardList.filter(card => card.category === category).map(
             card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
@@ -239,8 +244,9 @@ function App() {
       {user.role === "admin" && <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
         cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />}
       <div className='fixed-top'>
-        <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} />
-        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime.current} />
+        <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} isPlaying={isPlaying} />
+        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime}
+          playing={playing} isPlaying={isPlaying} />
       </div>
       <div className='cards-container-spacer'></div>
       <div className='cards-container'>

@@ -33,6 +33,10 @@ header {
   margin: 0;
 }
 
+.header-logo-container {
+cursor: default;
+user-select: none;
+}
 
 .logo {
   height: 20px;
