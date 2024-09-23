@@ -13,7 +13,7 @@ export async function getVideos() {
 }
 
 export async function deleteVideos(id) {
-  const response = await fetch(`http://localhost:3000/videos/${id}`, {
+  const response = await fetch(`${API_VIDEOS_BASE_URL}/${id}`, {
     method: "DELETE",
   })
   return response
@@ -21,7 +21,7 @@ export async function deleteVideos(id) {
 
 export async function editVideo(editedCard) {
   const response = await fetch(
-    `http://localhost:3000/videos/${editedCard.id}`,
+    `${API_VIDEOS_BASE_URL}/${editedCard.id}`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -30,3 +30,13 @@ export async function editVideo(editedCard) {
   )
   return response
 }
+
+export async function saveNewVideo(video) {
+  const response = await fetch(`${API_VIDEOS_BASE_URL}`, {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(video)
+  })
+  return response
+}
+

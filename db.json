@@ -53,6 +53,15 @@
       "category": "frontend",
       "video": "https://www.youtube.com/embed/qkzcjwnueLA?si=YAFPSyM92TAs6XET",
       "playerBackground": "/Images/frontend_background.jpg"
+    },
+    {
+      "id": "ICw8LbS_HXrC9OgrALtUS",
+      "title": "kuyouy",
+      "image": "/Images/img_video_code_6_s.jpg",
+      "description": "",
+      "category": "backend",
+      "video": "https://www.youtube.com/embed/qkzcjwnueLA?si=YAFPSyM92TAs6XET",
+      "playerBackground": "/Images/img_video_code_3_s.jpg"
     }
   ],
   "viewedlist": [

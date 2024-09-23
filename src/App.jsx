@@ -9,7 +9,7 @@ import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
 import Card from './components/Card'
 import { AuthContext } from './context/AuthContext'
-import { deleteVideos, editVideo, getVideos } from './services/videosCrud'
+import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/videosCrud'
 
 
 function App() {
@@ -31,9 +31,10 @@ function App() {
   //Fetch inicial de videos de JsonServer
   useEffect(() => {
     getVideos().then(videos => {
-      if (videos){  // si hubo algun error al recibir los videos recibe undefined y no setea los estados
-      setCardList(videos)
-      setPlayingCardId(videos[0].id)}
+      if (videos) {  // si hubo algun error al recibir los videos recibe undefined y no setea los estados
+        setCardList(videos)
+        setPlayingCardId(videos[0].id)
+      }
     })
   }, [])
 
@@ -112,7 +113,6 @@ function App() {
             body: JSON.stringify(viewedVideo)
           })
           if (response.ok) {
-
             setViewed(viewedVideo.viewed) // actualiza el estado con el nuevo video  
           }
         }
@@ -125,20 +125,7 @@ function App() {
     }
   }
 
-  async function handleDelete(id) {
-    // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la que se va a borrar
-    if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
-    // Llama la API para borrar el vido de la base de datos
-    try {
-      const response = await deleteVideos(id)
-      if (response.ok) console.log("Video eliminado correctamente")
-      // actualiza el estado sin la tarjeta eliminada
-      setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
-    }
-    catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
-  }
-
-
+  
   function selectAsActiveCard(id) {
     if (id === playingCardId) setPlaying(false)  // si se esta viendo un video y se clickea la tarjeta de ese mismo video se corta la reproduccion 
     else { // Este caso corresponde a si se clickea otra tarjeta diferente de la que esta elegida actualmente (PlayingCardId)
@@ -155,16 +142,28 @@ function App() {
   async function newVideo(video) {
     // hace la llamada  a la Api del server para agregar en el nuevo video
     try {
-      const response = await fetch("http://localhost:3000/videos", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(video)
-      })
-      if (response.ok) console.log("Video agregado correctamente")
-      // actualiza el estado con el nuevo video  
-      setCardList(prev => ([...prev, video]))
+      const response = await saveNewVideo(video)
+      if (response.ok) {
+        console.log("Video agregado correctamente")
+        setCardList(prev => ([...prev, video])) // actualiza el estado con el nuevo video  
+      }
     }
     catch { alert(" Error de conexión con el servidor al agregar video") }
+  }
+
+  async function handleDelete(id) {
+    // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la que se va a borrar
+    if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
+    // Llama la API para borrar el vido de la base de datos
+    try {
+      const response = await deleteVideos(id)
+      if (response.ok) {
+        console.log("Video eliminado correctamente")
+        // actualiza el estado sin la tarjeta eliminada
+        setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
+      }
+    }
+    catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
   }
 
   async function editCard(editedCard) {
