@@ -10,6 +10,7 @@ import Login from './components/Login'
 import Card from './components/Card'
 import { AuthContext } from './context/AuthContext'
 import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/videosCrud'
+import { getViewedList, saveViewed } from './services/viewedList'
 
 
 function App() {
@@ -42,22 +43,20 @@ function App() {
   // Obtener el ultimo video activo de LS, si esta, y lista de ya vistos si el usuario esta logueado del server y si es anonimo de localstorage 
   useEffect(() => {
     if (user.role === "user") {
-      if (cardList.length > 0) {                 // lee el local storage y si hay info del ultimo video activo la carga
-        if (localStorage.getItem(user.name)) {
+      if (cardList.length > 0) {
+        if (localStorage.getItem(user.name)) { // lee el local storage y si hay info del ultimo video activo la carga
           const activeVideo = JSON.parse(localStorage.getItem(user.name))
           setPlayingCardId(activeVideo.id)
           startTime.current = (activeVideo.playedSeconds)
         }
       }
       if (user.isLogged) {  //usuario loggeado, lee la lista de videos ya vistos del server            
-        fetch(`http://localhost:3000/viewedlist/${user.name}`)
-          .then(res => res.json())
-          .then(data => setViewed(data.viewed))
-          .catch((error) => { console.log("Error no se pudo obtener la lista de videos ya vistos para el usuario", error) })
+        getViewedList(user.name).then(viewedList => {
+          if (viewedList) setViewed(viewedList)
+        })
       }
       else setViewed(JSON.parse(localStorage.getItem('viewedAnonymous')))  // usuario anonimo, lee la lista de videos ya vistos de localStorage  
     }
-
     else setViewed([]) //limpia para el caso de que haga login un Admin (cuando user.role no es user) 
   }, [user, cardList])
 
@@ -71,25 +70,21 @@ function App() {
 
         if (viewed.includes(id)) return //early return si el video ya fue visto previamente
 
-        const viewedVideo = { id: user.name, viewed: [...viewed, id] }
+        const viewedVideos = { id: user.name, viewed: [...viewed, id] }
 
         if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
           try { // hace la llamada  a la Api del server para agregar el video visto a la lista
-            const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
-              method: "PATCH",
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(viewedVideo)
-            })
+            const response = await saveViewed(user.name, viewedVideos)
             if (response.ok) {
               console.log("Video agregado a vistos correctamente")
-              setViewed(viewedVideo.viewed) // actualiza el estado con el nuevo video  
+              setViewed(viewedVideos.viewed) // actualiza el estado con el nuevo video  
             }
           }
           catch { alert(" No se pudo registrar el video como visto en el servidor") }
         }
         else {
-          localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideo.viewed))  // para usuario anonimo guarda en localStorage
-          setViewed(viewedVideo.viewed) // actualizo el estado con el nuevo video visto
+          localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideos.viewed))  // para usuario anonimo guarda en localStorage
+          setViewed(viewedVideos.viewed) // actualizo el estado con el nuevo video visto
         }
       }
     }
@@ -99,33 +94,29 @@ function App() {
 
   async function toggleViewed(id) {
     if (user.role === "user") {
-      let viewedVideo // si ya existe elimina la id del video y si no existe en la lista de vistos la agrega
+      let viewedVideos // si ya existe elimina la id del video y si no existe en la lista de vistos la agrega
       if (viewed.includes(id)) {
-        viewedVideo = { id: user.name, viewed: viewed.filter(viewId => id !== viewId) } //elimina la id}
+        viewedVideos = { id: user.name, viewed: viewed.filter(viewId => id !== viewId) } //elimina la id}
       }
-      else viewedVideo = { id: user.name, viewed: [...viewed, id] }  // agrega la id
+      else viewedVideos = { id: user.name, viewed: [...viewed, id] }  // agrega la id
 
       if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
         try { // hace la llamada  a la Api del server para agregar el video visto a la lista
-          const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
-            method: "PATCH",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(viewedVideo)
-          })
+          const response = await saveViewed(user.name, viewedVideos)
           if (response.ok) {
-            setViewed(viewedVideo.viewed) // actualiza el estado con el nuevo video  
+            setViewed(viewedVideos.viewed) // actualiza el estado con el nuevo video  
           }
         }
         catch { alert(" Fallo toggle Viewed no se pudo comunicar con en el servidor") }
       }
       else {
-        localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideo.viewed))  // para usuario anonimo guarda en localstorage
-        setViewed(viewedVideo.viewed) // actualizo el estado con el nueo video visto
+        localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideos.viewed))  // para usuario anonimo guarda en localstorage
+        setViewed(viewedVideos.viewed) // actualizo el estado con el nueo video visto
       }
     }
   }
 
-  
+
   function selectAsActiveCard(id) {
     if (id === playingCardId) setPlaying(false)  // si se esta viendo un video y se clickea la tarjeta de ese mismo video se corta la reproduccion 
     else { // Este caso corresponde a si se clickea otra tarjeta diferente de la que esta elegida actualmente (PlayingCardId)
