@@ -199,7 +199,6 @@ user-select: none;
   line-height: 1;
 }
 .hero-info-text {
-
 }
 
 
@@ -236,7 +235,7 @@ user-select: none;
 
 .section-frame {
   display: flex;
-
+  white-space: nowrap;
 }
 
 .section-frame-side {
