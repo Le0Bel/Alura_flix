@@ -16,7 +16,7 @@ import { getViewedList, saveViewed } from './services/viewedList'
 function App() {
   const [cardList, setCardList] = useState([])
   const [cardEditId, setCardEditId] = useState("")
-  const [playingCardId, setPlayingCardId] = useState("")
+  const [playingCardId, setPlayingCardId] = useState(null)
   const [editOn, setEditOn] = useState(false)
   const [viewed, setViewed] = useState([])
   const [playing, setPlaying] = useState(false)
@@ -28,20 +28,20 @@ function App() {
   const { user } = useContext(AuthContext)
 
 
-
+  console.log(playingCardId)
   //Fetch inicial de videos de JsonServer
   useEffect(() => {
     getVideos().then(videos => {
       if (videos) {  // si hubo algun error al recibir los videos recibe undefined y no setea los estados
         setCardList(videos)
-        setPlayingCardId(videos[0].id)
+        //setPlayingCardId(videos[0].id)
       }
     })
   }, [])
 
 
   // Obtener el ultimo video activo de LS, si esta, y lista de ya vistos si el usuario esta logueado del server y si es anonimo de localstorage 
-  useEffect(() => {
+  /* useEffect(() => {
     if (user.role === "user") {
       if (cardList.length > 0) {
         if (localStorage.getItem(user.name)) { // lee el local storage y si hay info del ultimo video activo la carga
@@ -58,7 +58,7 @@ function App() {
       else setViewed(JSON.parse(localStorage.getItem('viewedAnonymous')))  // usuario anonimo, lee la lista de videos ya vistos de localStorage  
     }
     else setViewed([]) //limpia para el caso de que haga login un Admin (cuando user.role no es user) 
-  }, [user, cardList])
+  }, [user, cardList]) */
 
 
   async function handleViewed(id) {  // agrega los videos ya listos a la lista en el srvr o en LS segun usuario loggueado o anonimo y reseta la info del video quw se estaba reproduciendo 
@@ -128,6 +128,10 @@ function App() {
   const isPlaying = useCallback((value) => {
     setPlaying(value)
   }, [])
+
+  function resetPlayingCardId() {
+    setPlayingCardId(null)
+  }
 
 
   async function newVideo(video) {
@@ -227,21 +231,38 @@ function App() {
     })
   }
 
+  let playingList = []
+  if (playingCardId) {
+
+    const activeCategory = cardList.filter(card => card.id === playingCardId)[0].category
+    console.log("activecat", activeCategory)
+    playingList = cardList.filter(card => card.category === activeCategory).map(
+      card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
+        toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
+        handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)
+  }
 
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
       {user.role === "admin" && <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
-        cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />}
-      <div className='fixed-top'>
-        <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} isPlaying={isPlaying} />
-        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime}
-          playing={playing} isPlaying={isPlaying} />
-      </div>
-      <div className='cards-container-spacer'></div>
-      <div className='cards-container'>
+        cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />
+      }
+      <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin}
+        isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
+      {playingCardId &&
+        <div style={{ display: "flex" }}>
+          <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime}
+            playing={playing} isPlaying={isPlaying} />
+          <div style={{ display: "flex", flexDirection:"column", background:"#becbe9" }}> 
+             {playingList}
+          </div>
+        </div>
+
+      }
+      {!playingCardId && <div className='cards-container'>
         {cardElements}
-      </div>
+      </div>}
       <Footer />
 
     </>

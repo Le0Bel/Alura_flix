@@ -7,7 +7,7 @@ import lbLogo from "/logo-2.svg"
 
 
 
-export default function Header({ handleModal, activateEdition, openLogin, isPlaying }) {
+export default function Header({ handleModal, activateEdition, openLogin, isPlaying, resetPlayingCardId }) {
 
     const { user, logout } = useContext(AuthContext)
     const [editVideoBtn, setEditVideoBtn] = useState(false)
@@ -20,7 +20,7 @@ export default function Header({ handleModal, activateEdition, openLogin, isPlay
     
     return (
         <header>
-            <div className='header-logo-container' onClick={()=> isPlaying(false)}>
+            <div className='header-logo-container' onClick={()=> resetPlayingCardId()}>
             <img src={lbLogo} className="logo" alt="Learning blocks logo" />
             <p className='logo-letters'>imparo</p>
             </div>

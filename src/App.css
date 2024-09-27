@@ -252,8 +252,8 @@ height: 50%;
 .cards-container-spacer {
   background-color: #292929;
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
+  height: 60px;
+  /* aspect-ratio: 16 / 9; */
 }
 
 .cards-container {
