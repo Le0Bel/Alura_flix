@@ -232,9 +232,10 @@ function App() {
   }
 
   let playingList = []
+  let activeCategory
   if (playingCardId) {
 
-    const activeCategory = cardList.filter(card => card.id === playingCardId)[0].category
+    activeCategory = cardList.filter(card => card.id === playingCardId)[0].category
     console.log("activecat", activeCategory)
     playingList = cardList.filter(card => card.category === activeCategory).map(
       card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
@@ -251,11 +252,13 @@ function App() {
       <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin}
         isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
       {playingCardId &&
-        <div style={{ display: "flex" }}>
+        <div className='player-dashboard-container'>
           <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime}
             playing={playing} isPlaying={isPlaying} />
-          <div style={{ display: "flex", flexDirection:"column", background:"#becbe9" }}> 
-             {playingList}
+          <div className='playing-list-container'>
+
+            <h1 className='category1-title'> {activeCategory.toUpperCase()}</h1>
+            {playingList}
           </div>
         </div>
 

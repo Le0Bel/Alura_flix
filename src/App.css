@@ -8,18 +8,14 @@
 body {
   background-color: rgb(31, 31, 31);
   font-family: "Roboto", sans-serif;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 button:focus {
   outline: 1px solid rgb(122, 122, 122);
 }
 
-.fixed-top {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 100;
-}
 
 /* ------ Header ------ */
 
@@ -34,8 +30,8 @@ header {
 }
 
 .header-logo-container {
-cursor: default;
-user-select: none;
+  cursor: default;
+  user-select: none;
 }
 
 .logo {
@@ -49,6 +45,7 @@ user-select: none;
   margin-left: 0.4rem;
   font-weight: 500;
 }
+
 .btn {
   background-color: #2F2F2F;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.212);
@@ -124,18 +121,54 @@ user-select: none;
   text-align: center;
 }
 
-/* ------------------ Video Player section ------------------ */
 
+/* ------------------- Video Player Dashboard ---------------*/
+.player-dashboard-container {
+  background-color: rgb(31, 31, 31);
+  display: flex;
+}
+
+/*-------- Playing List (active in player mode only) --------- */
+.playing-list-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  margin-top: 15px;
+}
+
+
+
+.playing-list-container h1 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  text-align: center;
+  border: 1px solid #5f5f5f;
+  background-color: rgb(52, 52, 52);
+  display: inline;
+  padding: 0.3em 0.8em;
+  border-radius: 7px;
+  width: 100%;
+}
+
+.playing-list-container .card {
+  flex: auto;
+  margin: 1em 0 0.5em;
+  min-width: 250px;
+  max-width: 260px;
+  height: auto;
+}
+
+/* ------------------ Video Player section ------------------ */
 .hero {
-  background: url("./public/a_frontend_background.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
   color: white;
   position: relative;
-  aspect-ratio: 16 / 9;
   width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
   overflow: hidden;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.205);
+  padding: 9px 15px;
 }
 
 .video-img-wrapper {
@@ -144,10 +177,13 @@ user-select: none;
   display: flex;
   align-items: center;
   gap: 1.5em;
-  height: 100%;
+  height: auto;
   width: 100%;
+  aspect-ratio: 16/ 9;
   padding: 0 2em;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.295);
+  border-radius: 7px;
+  margin-top: 5px;
 }
 
 .video-player-wrapper {
@@ -163,6 +199,7 @@ user-select: none;
   top: 0;
   aspect-ratio: 16/ 9;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.295);
+  padding: 9px 16px;
 }
 
 
@@ -170,7 +207,7 @@ user-select: none;
   border-radius: 10px;
   object-fit: cover;
   width: 50%;
-  
+
 }
 
 /* .video-player {
@@ -198,8 +235,8 @@ user-select: none;
   margin-bottom: 0.8em;
   line-height: 1;
 }
-.hero-info-text {
-}
+
+.hero-info-text {}
 
 
 /* End of hero/player section */
@@ -245,8 +282,8 @@ user-select: none;
 }
 
 .section-frame-side-line {
-border-bottom: 1px solid #5f5f5f;
-height: 50%;
+  border-bottom: 1px solid #5f5f5f;
+  height: 50%;
 }
 
 .cards-container-spacer {
@@ -546,7 +583,7 @@ footer {
   display: flex;
   justify-content: center;
   background-color: rgb(36, 36, 36);
-  box-shadow:0 -2px #2271D1;
+  box-shadow: 0 -2px #2271D1;
   height: 70px;
   align-items: center;
 }
@@ -559,33 +596,29 @@ footer {
 /* ------------------ Media query , different display size ------------------ */
 
 @media (min-width:900px) {
-    
+
   header,
   .cards-container-spacer,
   .cards-container,
   footer {
-   width: 1200px;
-   margin: 0 auto;
+    margin: 0 auto;
   }
-  
+
 
   .hero {
-   width: 1200px;
-   margin: 0 auto;
-   position: relative;
-   overflow: visible;
-   aspect-ratio:  unset;
+    width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    overflow: visible;
+    aspect-ratio: unset;
   }
-  
+
   .video-img-wrapper {
-    height: 506.25px;
     padding: 0 4em;
   }
-  
+
   .video-player-wrapper {
     background-color: rgb(24, 24, 24);
-    width: 1200px;
-    height: 506.25px;
     z-index: 200;
   }
 
@@ -601,18 +634,18 @@ footer {
   } */
 
   .cards-container-spacer {
-    max-height: 564px;  
+    max-height: 564px;
   }
-  
+
 }
 
 
 @media (max-width:600px) {
-  
+
   header {
     padding: 1em;
   }
-  
+
   .logo {
     height: 20px;
   }
@@ -631,18 +664,18 @@ footer {
     width: 100%;
     box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.26);
   }
-    
+
   .video-img-wrapper {
     height: 100%;
     padding: 1em;
     width: 100%;
   }
-  
+
   .player-img,
   .hero-info {
     width: 50%;
   }
-  
+
   .player-img {
     border-radius: 5px;
   }
@@ -650,16 +683,16 @@ footer {
   .hero-info-category {
     font-size: 1rem;
   }
-  
+
   .hero-info-title {
     margin-bottom: 0.5em;
     font-size: 0.875rem;
   }
-  
+
   .hero-info {
     overflow: hidden;
   }
-  
+
   .hero-info {
     font-size: 0.7rem;
     line-height: 1.3;
@@ -670,48 +703,48 @@ footer {
     padding: 2em 1em 5.5em;
   }
 
-  .section-frame  {
+  .section-frame {
     margin: 20px 0 25px;
   }
-  
+
   .card {
     margin: 0 0 1em;
   }
-  
 
-  
+
+
 }
 
 
 @media (max-width:470px) {
-  
+
   /* login screen */
 
   dialog {
-  padding: 0;
-}
+    padding: 0;
+  }
 
-.edit-container {
-  border-radius: 0;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  margin: auto auto;
-  padding: 3em 3em;
+  .edit-container {
+    border-radius: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin: auto auto;
+    padding: 3em 3em;
 
-}
+  }
 
-.login-container {
-  height: 55vh;
-  width: 100%;
-}
+  .login-container {
+    height: 55vh;
+    width: 100%;
+  }
 
-.edit-input {
-  height: 40px;
-}
+  .edit-input {
+    height: 40px;
+  }
 
-.card {
-  max-width: 85%;
-  aspect-ratio: unset;
-}
+  .card {
+    max-width: 85%;
+    aspect-ratio: unset;
+  }
 
 }
