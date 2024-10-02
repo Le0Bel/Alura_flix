@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useContext, useState } from 'react'
-import flixLogo from '../assets/image1.svg'
 import { AuthContext } from '../context/AuthContext'
 import editVideoSvg from '/edit.svg'
 import lbLogo from "/logo-2.svg"
-import lbLogoLetter from "/logo-2-text.svg"
 
 
 
-export default function Header({ handleModal, activateEdition, openLogin }) {
+
+export default function Header({ handleModal, activateEdition, openLogin, isPlaying, resetPlayingCardId }) {
 
     const { user, logout } = useContext(AuthContext)
     const [editVideoBtn, setEditVideoBtn] = useState(false)
@@ -21,7 +20,7 @@ export default function Header({ handleModal, activateEdition, openLogin }) {
     
     return (
         <header>
-            <div className='header-logo-container'>
+            <div className='header-logo-container' onClick={()=> resetPlayingCardId()}>
             <img src={lbLogo} className="logo" alt="Learning blocks logo" />
             <p className='logo-letters'>imparo</p>
             </div>

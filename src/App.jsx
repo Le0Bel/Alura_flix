@@ -1,5 +1,5 @@
 
-import { useContext, useEffect, useRef } from 'react'
+import { useCallback, useContext, useEffect, useRef } from 'react'
 import './App.css'
 import Header from "./components/Header"
 import Home from "./components/Home"
@@ -9,83 +9,82 @@ import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
 import Card from './components/Card'
 import { AuthContext } from './context/AuthContext'
+import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/videosCrud'
+import { getViewedList, saveViewed } from './services/viewedList'
 
 
 function App() {
   const [cardList, setCardList] = useState([])
   const [cardEditId, setCardEditId] = useState("")
-  const [playingCardId, setPlayingCardId] = useState("")
+  const [playingCardId, setPlayingCardId] = useState(null)
   const [editOn, setEditOn] = useState(false)
   const [viewed, setViewed] = useState([])
+  const [playing, setPlaying] = useState(false)
+
   const videoDataRef = useRef(null)
   const loginRef = useRef(null)
   const startTime = useRef(0)
 
   const { user } = useContext(AuthContext)
 
+
+  console.log(playingCardId)
   //Fetch inicial de videos de JsonServer
   useEffect(() => {
-    fetch("http://localhost:3000/videos")   // ** agregar mejor control de errores al fetch y pasarlo a un custom Hook useFetch
-      .then(res => res.json())
-      .then(videos => {
+    getVideos().then(videos => {
+      if (videos) {  // si hubo algun error al recibir los videos recibe undefined y no setea los estados
         setCardList(videos)
-        setPlayingCardId(videos[0].id)
-      })
-      .catch((error) => { alert("Lo lamentamos no se pudo obener las lista de videos del servidor", error.message) })
+        //setPlayingCardId(videos[0].id)
+      }
+    })
   }, [])
 
 
   // Obtener el ultimo video activo de LS, si esta, y lista de ya vistos si el usuario esta logueado del server y si es anonimo de localstorage 
-  useEffect(() => {
+  /* useEffect(() => {
     if (user.role === "user") {
-      if (cardList.length > 0) {                 // lee el local storage y si hay info del ultimo video activo la carga
-        if (localStorage.getItem(user.name)) {
+      if (cardList.length > 0) {
+        if (localStorage.getItem(user.name)) { // lee el local storage y si hay info del ultimo video activo la carga
           const activeVideo = JSON.parse(localStorage.getItem(user.name))
           setPlayingCardId(activeVideo.id)
           startTime.current = (activeVideo.playedSeconds)
         }
       }
       if (user.isLogged) {  //usuario loggeado, lee la lista de videos ya vistos del server            
-        fetch(`http://localhost:3000/viewedlist/${user.name}`)
-          .then(res => res.json())
-          .then(data => setViewed(data.viewed))
-          .catch((error) => { console.log("Error no se pudo obtener la lista de videos ya vistos para el usuario", error) })
+        getViewedList(user.name).then(viewedList => {
+          if (viewedList) setViewed(viewedList)
+        })
       }
       else setViewed(JSON.parse(localStorage.getItem('viewedAnonymous')))  // usuario anonimo, lee la lista de videos ya vistos de localStorage  
     }
-
     else setViewed([]) //limpia para el caso de que haga login un Admin (cuando user.role no es user) 
-  }, [user, cardList])
+  }, [user, cardList]) */
 
 
   async function handleViewed(id) {  // agrega los videos ya listos a la lista en el srvr o en LS segun usuario loggueado o anonimo y reseta la info del video quw se estaba reproduciendo 
     if (user.role === "user") {
-      
+
       if (localStorage.getItem(user.name)) { // si el video termino resetea el startTime para que no comienze desde el final si el usuario vuelve clikear el mismo video
         const activeVideo = JSON.parse(localStorage.getItem(user.name))
         localStorage.setItem(user.name, JSON.stringify({ ...activeVideo, playedSeconds: 0, played: 0 }))  // resetea el tiempo reproducido
 
         if (viewed.includes(id)) return //early return si el video ya fue visto previamente
 
-        const viewedVideo = { id: user.name, viewed: [...viewed, id] }
+        const viewedVideos = { id: user.name, viewed: [...viewed, id] }
 
         if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
           try { // hace la llamada  a la Api del server para agregar el video visto a la lista
-            const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
-              method: "PATCH",
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(viewedVideo)
-            })
+            const response = await saveViewed(user.name, viewedVideos)
             if (response.ok) {
               console.log("Video agregado a vistos correctamente")
-              setViewed(viewedVideo.viewed) // actualiza el estado con el nuevo video  
+              setViewed(viewedVideos.viewed) // actualiza el estado con el nuevo video  
             }
           }
           catch { alert(" No se pudo registrar el video como visto en el servidor") }
         }
         else {
-          localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideo.viewed))  // para usuario anonimo guarda en localStorage
-          setViewed(viewedVideo.viewed) // actualizo el estado con el nuevo video visto
+          localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideos.viewed))  // para usuario anonimo guarda en localStorage
+          setViewed(viewedVideos.viewed) // actualizo el estado con el nuevo video visto
         }
       }
     }
@@ -95,31 +94,56 @@ function App() {
 
   async function toggleViewed(id) {
     if (user.role === "user") {
-      let viewedVideo // si ya existe elimina la id del video y si no existe en la lista de vistos la agrega
+      let viewedVideos // si ya existe elimina la id del video y si no existe en la lista de vistos la agrega
       if (viewed.includes(id)) {
-        viewedVideo = { id: user.name, viewed: viewed.filter(viewId => id !== viewId) } //elimina la id}
+        viewedVideos = { id: user.name, viewed: viewed.filter(viewId => id !== viewId) } //elimina la id}
       }
-      else viewedVideo = { id: user.name, viewed: [...viewed, id] }  // agrega la id
+      else viewedVideos = { id: user.name, viewed: [...viewed, id] }  // agrega la id
 
       if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
         try { // hace la llamada  a la Api del server para agregar el video visto a la lista
-          const response = await fetch(`http://localhost:3000/viewedlist/${user.name}`, {
-            method: "PATCH",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(viewedVideo)
-          })
+          const response = await saveViewed(user.name, viewedVideos)
           if (response.ok) {
-
-            setViewed(viewedVideo.viewed) // actualiza el estado con el nuevo video  
+            setViewed(viewedVideos.viewed) // actualiza el estado con el nuevo video  
           }
         }
         catch { alert(" Fallo toggle Viewed no se pudo comunicar con en el servidor") }
       }
       else {
-        localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideo.viewed))  // para usuario anonimo guarda en localstorage
-        setViewed(viewedVideo.viewed) // actualizo el estado con el nueo video visto
+        localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideos.viewed))  // para usuario anonimo guarda en localstorage
+        setViewed(viewedVideos.viewed) // actualizo el estado con el nueo video visto
       }
     }
+  }
+
+
+  function selectAsActiveCard(id) {
+    if (id === playingCardId) setPlaying(false)  // si se esta viendo un video y se clickea la tarjeta de ese mismo video se corta la reproduccion 
+    else { // Este caso corresponde a si se clickea otra tarjeta diferente de la que esta elegida actualmente (PlayingCardId)
+      setPlayingCardId(id)
+      startTime.current = 0 // cuando se cambia de video activo se resetea a 0 startime para que comienze desde el pricipio
+    }
+  }
+
+  const isPlaying = useCallback((value) => {
+    setPlaying(value)
+  }, [])
+
+  function resetPlayingCardId() {
+    setPlayingCardId(null)
+  }
+
+
+  async function newVideo(video) {
+    // hace la llamada  a la Api del server para agregar en el nuevo video
+    try {
+      const response = await saveNewVideo(video)
+      if (response.ok) {
+        console.log("Video agregado correctamente")
+        setCardList(prev => ([...prev, video])) // actualiza el estado con el nuevo video  
+      }
+    }
+    catch { alert(" Error de conexión con el servidor al agregar video") }
   }
 
   async function handleDelete(id) {
@@ -127,44 +151,19 @@ function App() {
     if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
     // Llama la API para borrar el vido de la base de datos
     try {
-      const response = await fetch(`http://localhost:3000/videos/${id}`, {
-        method: "DELETE",
-      })
-      if (response.ok) console.log("Video eliminado correctamente")
-      // actualiza el estado sin la tarjeta eliminada
-      setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
+      const response = await deleteVideos(id)
+      if (response.ok) {
+        console.log("Video eliminado correctamente")
+        // actualiza el estado sin la tarjeta eliminada
+        setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
+      }
     }
     catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
   }
 
-
-  function selectAsActiveCard(id) {
-    setPlayingCardId(id)
-    startTime.current = 0 // cuando se cambia de video se resetea a 0 starime para que comienze desde el pricipio
-  }
-
-  async function newVideo(video) {
-    // hace la llamada  a la Api del server para agregar en el nuevo video
-    try {
-      const response = await fetch("http://localhost:3000/videos", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(video)
-      })
-      if (response.ok) console.log("Video agregado correctamente")
-      // actualiza el estado con el nuevo video  
-      setCardList(prev => ([...prev, video]))
-    }
-    catch { alert(" Error de conexión con el servidor al agregar video") }
-  }
-
   async function editCard(editedCard) {
     try {
-      const response = await fetch(`http://localhost:3000/videos/${editedCard.id}`, {
-        method: "PATCH",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editedCard)
-      })
+      const response = await editVideo(editedCard)
       if (response.ok) console.log("Video editado correctamente")
       // Actualiza el estado con la card editada
       setCardList(prevCardList => prevCardList.map(
@@ -221,7 +220,7 @@ function App() {
             <div ></div>
           </div>
         </div>
-        
+
         <div className='front-cards-container'>
           {cardList.filter(card => card.category === category).map(
             card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
@@ -232,20 +231,38 @@ function App() {
     })
   }
 
+  let playingList = []
+  if (playingCardId) {
+
+    const activeCategory = cardList.filter(card => card.id === playingCardId)[0].category
+    console.log("activecat", activeCategory)
+    playingList = cardList.filter(card => card.category === activeCategory).map(
+      card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
+        toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
+        handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)
+  }
 
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
       {user.role === "admin" && <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
-        cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />}
-      <div className='fixed-top'>
-        <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin} />
-        <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime.current} />
-      </div>
-      <div className='cards-container-spacer'></div>
-      <div className='cards-container'>
+        cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />
+      }
+      <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin}
+        isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
+      {playingCardId &&
+        <div style={{ display: "flex" }}>
+          <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime}
+            playing={playing} isPlaying={isPlaying} />
+          <div style={{ display: "flex", flexDirection:"column", background:"#becbe9" }}> 
+             {playingList}
+          </div>
+        </div>
+
+      }
+      {!playingCardId && <div className='cards-container'>
         {cardElements}
-      </div>
+      </div>}
       <Footer />
 
     </>

@@ -33,6 +33,10 @@ header {
   margin: 0;
 }
 
+.header-logo-container {
+cursor: default;
+user-select: none;
+}
 
 .logo {
   height: 20px;
@@ -195,7 +199,6 @@ header {
   line-height: 1;
 }
 .hero-info-text {
-
 }
 
 
@@ -232,7 +235,7 @@ header {
 
 .section-frame {
   display: flex;
-
+  white-space: nowrap;
 }
 
 .section-frame-side {
@@ -249,8 +252,8 @@ height: 50%;
 .cards-container-spacer {
   background-color: #292929;
   width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
+  height: 60px;
+  /* aspect-ratio: 16 / 9; */
 }
 
 .cards-container {

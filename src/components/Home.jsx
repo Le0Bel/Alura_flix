@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import ReactPlayer from 'react-player'
 
-export default function Home({ playingCardId, cardList, handleViewed, startTime = 0 }) {
+export default function Home({ playingCardId, cardList, handleViewed, startTime, playing, isPlaying }) {
 
-    const [playing, setPlaying] = useState(false)
+    
     const playingCard = cardList.filter(card => card.id === playingCardId)[0]
     const refPlayer = useRef(null)
 
@@ -13,24 +13,24 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime 
 
 
     useEffect(() => { // resetea el player si cambia de video seleccionado
-        setPlaying(false)
+        isPlaying(false)
     }
-        , [playingCardId])
+        , [playingCardId, isPlaying ])
 
     useEffect(() => { // resetea el player si de desloguea el usuario
-        !user.isLogged && setPlaying(false)
+        if(!user.isLogged) isPlaying(false)
     }
-        , [user.isLogged])
+        , [user.isLogged, isPlaying])
 
 
     function checkStart() {   // Si el video ya estaba empezado lo continua desde donde habia quedado (segun lo que guarda en LS la funcion savePlayedInfo)
-        if (startTime > 0) {
-            refPlayer.current.seekTo(startTime)
+        if (startTime.current > 0) {
+            refPlayer.current.seekTo(startTime.current)
         }
     }
 
     function handleOnEnded() {
-        setPlaying(false)
+        isPlaying(false)
         handleViewed(playingCardId)
     }
 
@@ -38,6 +38,7 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime 
         if (user.role === "user") {
             let activeVideo = { id: playingCardId, playedSeconds: info.playedSeconds, playedPercent: info.played }
             localStorage.setItem(user.name, JSON.stringify(activeVideo))  //  guarda en localstorage el video activo y tiempo reproducido para el usuario actual
+            startTime.current = info.playedSeconds // actualiza la referencia de startime para que si se activa y desactiva el play el video comienze de donde estaba
         }
     }
 
@@ -49,7 +50,7 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime 
 
                     {!playing ?
                         <div className="video-img-wrapper">
-                            <img src={playingCard?.image} className="player-img" alt="" onClick={() => setPlaying(true)} />
+                            <img src={playingCard?.image} className="player-img" alt="" onClick={() => isPlaying(true)} />
                             <div className="hero-info">
                                 <h2 className="hero-info-category">{playingCard?.category.toUpperCase()}</h2>
                                 <p className="hero-info-title">{playingCard?.title}</p>
