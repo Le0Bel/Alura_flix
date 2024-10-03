@@ -239,7 +239,7 @@ function App() {
     console.log("activecat", activeCategory)
     playingList = cardList.filter(card => card.category === activeCategory).map(
       card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
-        toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
+      className="category1-cards" toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
         handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)
   }
 
@@ -256,7 +256,6 @@ function App() {
           <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime}
             playing={playing} isPlaying={isPlaying} />
           <div className='playing-list-container'>
-
             <h1 className='category1-title'> {activeCategory.toUpperCase()}</h1>
             {playingList}
           </div>

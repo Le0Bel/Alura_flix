@@ -27,6 +27,7 @@ header {
   justify-content: space-between;
   padding: 1em 2em;
   margin: 0;
+  border-bottom: 1px solid #969696;
 }
 
 .header-logo-container {
@@ -134,7 +135,7 @@ header {
   align-items: center;
   flex-direction: column;
   color: white;
-  margin-top: 15px;
+  margin: 15px;
 }
 
 
@@ -172,10 +173,11 @@ header {
 }
 
 .video-img-wrapper {
-  border-top: 1px solid rgb(180, 180, 180);
+  background-image: url("./Images/frontend_background.jpg") ;
   border-bottom: 1px solid rgb(83, 83, 83);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1.5em;
   height: auto;
   width: 100%;
@@ -183,7 +185,7 @@ header {
   padding: 0 2em;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.295);
   border-radius: 7px;
-  margin-top: 5px;
+  margin-top: 5px; 
 }
 
 .video-player-wrapper {
@@ -193,13 +195,12 @@ header {
   background-color: rgb(24, 24, 24);
   width: 100%;
   height: auto;
-  z-index: 200;
-  position: absolute;
-  left: 0;
-  top: 0;
   aspect-ratio: 16/ 9;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.295);
-  padding: 9px 16px;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-top: 5px; 
+
 }
 
 
@@ -210,34 +211,85 @@ header {
 
 }
 
-/* .video-player {
-  width: 100%;
-  height: 100%;
-  z-index: 200;
-  position: absolute;
-  left: 0;
-  top: 0;
-} */
-
 .hero-info {
-  width: 50%;
-  line-height: 1.4rem;
+  background-color: #2B2B2B ;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.705);
+  border-radius: 7px;
+  margin-top: 15px;
+  padding: 1.5em;
+  color: #F5F5F5;
+  display: flex;
+  flex-direction: column;
+}
+.hero-info-top{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid rgb(83, 83, 83);
+  padding-bottom: 20px;
+  line-height: 1.4rem;
 }
 
-.hero-info-category {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.hero-info-top-left {
+width: 75%;
 }
 
-.hero-info-title {
+.hero-info-top-right {
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.hero-info-top-right .video-counter{
   font-size: 1.5rem;
-  margin-bottom: 0.8em;
+  font-weight: 300;
+}
+
+
+.hero-info-top-left .hero-info-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.5em;
   line-height: 1;
 }
 
-.hero-info-text {}
+.hero-info-top-left .hero-info-text {
+  font-weight: 300;
+  font-size: 1.0rem;
+  font-weight: 300;
+}
 
+.progress-bar-container {
+  margin-top: 15px;
+}
+.progress {
+  width: 85%;
+  height: 1.3rem;
+}
+
+.progress-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  font-size: 0.8rem;
+}
+
+.favorite-container {
+width: 80%;
+  display: flex; 
+align-items: center;
+justify-content: space-around;
+font-size: 1.0rem;
+font-weight: 400;
+}
+
+.favorite-star-filled{
+  fill: rgba(203, 180, 6, 0.904);
+ stroke: #fdff8cd3;
+
+}
 
 /* End of hero/player section */
 
@@ -335,7 +387,7 @@ header {
 .card-img {
   width: 100%;
   aspect-ratio: 16/9;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.1em;
   object-fit: cover;
   border-radius: 10px;
 }
@@ -357,6 +409,7 @@ header {
   height: 10px;
   background-color: rgba(73, 255, 18, 0.863);
   box-shadow: 0 0 10px 0px rgb(25, 231, 6);
+  margin-left: 4px;
 }
 
 .card-not-viewed {
@@ -365,6 +418,7 @@ header {
   height: 10px;
   border: 2px solid #333333;
   background-color: rgb(25, 25, 25);
+  margin-left: 4px;
 }
 
 .card-title {
@@ -611,10 +665,6 @@ footer {
     position: relative;
     overflow: visible;
     aspect-ratio: unset;
-  }
-
-  .video-img-wrapper {
-    padding: 0 4em;
   }
 
   .video-player-wrapper {
