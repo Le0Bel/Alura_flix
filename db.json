@@ -28,15 +28,6 @@
       "playerBackground": "/Images/frontend_background.jpg"
     },
     {
-      "id": "i8KZIe-1SPcaV2QYWt9Ph",
-      "title": "Clase 4 de React",
-      "image": "/Images/img_video_code_1_s.jpg",
-      "description": "Cuarta clase de front end, probando nuevo modal combinado de edición y nuevo video",
-      "category": "frontend",
-      "video": "https://www.youtube.com/embed/qkzcjwnueLA?si=YAFPSyM92TAs6XET",
-      "playerBackground": "/Images/frontend_background.jpg"
-    },
-    {
       "id": "bd-51rF-_kO4cDm3gcwhN",
       "title": "Clase 1 -  Introducción",
       "image": "https://img.youtube.com/vi/r7Gf0XC4k9E/hq720.jpg",

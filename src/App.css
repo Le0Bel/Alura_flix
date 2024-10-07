@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 * {
   box-sizing: border-box;
@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: rgb(31, 31, 31);
+  background-color: rgb(89, 88, 88);
   font-family: "Roboto", sans-serif;
   max-width: 1440px;
   margin: 0 auto;
@@ -15,7 +15,6 @@ body {
 button:focus {
   outline: 1px solid rgb(122, 122, 122);
 }
-
 
 /* ------ Header ------ */
 
@@ -48,7 +47,7 @@ header {
 }
 
 .btn {
-  background-color: #2F2F2F;
+  background-color: #2f2f2f;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.212);
   border: none;
   color: white;
@@ -122,7 +121,6 @@ header {
   text-align: center;
 }
 
-
 /* ------------------- Video Player Dashboard ---------------*/
 .player-dashboard-container {
   background-color: rgb(31, 31, 31);
@@ -134,11 +132,12 @@ header {
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: start;
+  height: 100%;
   color: white;
-  margin: 15px;
+  margin-right: 1em;
+  margin-top: 0.8em ;
 }
-
-
 
 .playing-list-container h1 {
   font-size: 1.1rem;
@@ -150,11 +149,11 @@ header {
   padding: 0.3em 0.8em;
   border-radius: 7px;
   width: 100%;
+  margin-bottom: 0.5em;
 }
 
 .playing-list-container .card {
   flex: auto;
-  margin: 1em 0 0.5em;
   min-width: 250px;
   max-width: 260px;
   height: auto;
@@ -173,7 +172,7 @@ header {
 }
 
 .video-img-wrapper {
-  background-image: url("./Images/frontend_background.jpg") ;
+  background-image: url("./Images/frontend_background.jpg");
   border-bottom: 1px solid rgb(83, 83, 83);
   display: flex;
   align-items: center;
@@ -185,7 +184,7 @@ header {
   padding: 0 2em;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.295);
   border-radius: 7px;
-  margin-top: 5px; 
+  margin-top: 5px;
 }
 
 .video-player-wrapper {
@@ -199,29 +198,27 @@ header {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.295);
   border-radius: 7px;
   overflow: hidden;
-  margin-top: 5px; 
-
+  margin-top: 5px;
 }
-
 
 .player-img {
   border-radius: 10px;
   object-fit: cover;
   width: 50%;
-
 }
 
 .hero-info {
-  background-color: #2B2B2B ;
+  background-color: #2b2b2b;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.705);
   border-radius: 7px;
   margin-top: 15px;
   padding: 1.5em;
-  color: #F5F5F5;
+  color: #f5f5f5;
   display: flex;
   flex-direction: column;
 }
-.hero-info-top{
+
+.hero-info-top {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -231,7 +228,7 @@ header {
 }
 
 .hero-info-top-left {
-width: 75%;
+  width: 75%;
 }
 
 .hero-info-top-right {
@@ -242,11 +239,10 @@ width: 75%;
   gap: 30px;
 }
 
-.hero-info-top-right .video-counter{
-  font-size: 1.5rem;
+.hero-info-top-right .video-counter {
+  font-size: 1.8rem;
   font-weight: 300;
 }
-
 
 .hero-info-top-left .hero-info-title {
   font-size: 1.6rem;
@@ -257,7 +253,7 @@ width: 75%;
 
 .hero-info-top-left .hero-info-text {
   font-weight: 300;
-  font-size: 1.0rem;
+  font-size: 1rem;
   font-weight: 300;
 }
 
@@ -276,48 +272,33 @@ width: 75%;
   font-size: 0.8rem;
 }
 
-.favorite-container {
-width: 80%;
-  display: flex; 
-align-items: center;
-justify-content: space-around;
-font-size: 1.0rem;
-font-weight: 400;
-}
-
-.favorite-star-filled{
-  fill: rgba(203, 180, 6, 0.904);
- stroke: #fdff8cd3;
-
-}
-
 /* End of hero/player section */
 
 /* ------------------ Cards ------------------ */
 
 /* colores para asignar a nuevas categorías */
 .category1-title {
-  color: #6BD1FF;
+  color: #6bd1ff;
 }
 
 .category2-title {
-  color: #00C86F;
+  color: #00c86f;
 }
 
 .category3-title {
-  color: #FFBA05;
+  color: #ffba05;
 }
 
 .category1-cards {
-  border-top: 5px solid #6BD1FF;
+  border-top: 5px solid #6bd1ff;
 }
 
 .category2-cards {
-  border-top: 5px solid #00C86F;
+  border-top: 5px solid #00c86f;
 }
 
 .category3-cards {
-  border-top: 5px solid #FFBA05;
+  border-top: 5px solid #ffba05;
 }
 
 /* fin de colores para asignar a nuevas categorías */
@@ -330,7 +311,6 @@ font-weight: 400;
 .section-frame-side {
   content: "";
   width: 100%;
-
 }
 
 .section-frame-side-line {
@@ -366,7 +346,6 @@ font-weight: 400;
   border-radius: 20px;
 }
 
-
 .front-cards-container,
 .back-cards-container {
   display: flex;
@@ -375,15 +354,17 @@ font-weight: 400;
   justify-content: space-around;
 }
 
-
 .card {
   flex: auto;
-  margin: 2em 0 3em;
   min-width: 250px;
   max-width: 260px;
   height: auto;
+  padding: 0.8em 0.8em 1.3em 0.8em;
 }
 
+.card.selected-card {
+  background-color: #8a8a8a2b;
+}
 .card-img {
   width: 100%;
   aspect-ratio: 16/9;
@@ -394,7 +375,7 @@ font-weight: 400;
 
 .card,
 .card-img {
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .card-info {
@@ -410,15 +391,17 @@ font-weight: 400;
   background-color: rgba(73, 255, 18, 0.863);
   box-shadow: 0 0 10px 0px rgb(25, 231, 6);
   margin-left: 4px;
+  transition: all 0.5s ease-in-out;
 }
 
 .card-not-viewed {
   border-radius: 5px;
   min-width: 20px;
   height: 10px;
-  border: 2px solid #333333;
+  border: 2px solid #3c3c3c;
   background-color: rgb(25, 25, 25);
   margin-left: 4px;
+  transition: all 0.5s ease-in-out;
 }
 
 .card-title {
@@ -437,7 +420,6 @@ font-weight: 400;
   font-size: 0.75rem;
   padding: 0.7em;
   margin-top: 2em;
-
 }
 
 .card-delete {
@@ -450,21 +432,22 @@ font-weight: 400;
   display: flex;
   align-items: center;
   gap: 0.8em;
-  color: #A5A5A5;
+  color: #a5a5a5;
   cursor: pointer;
 }
 
 .card-edit:hover,
 .card-delete:hover {
   color: white;
-  filter: invert(48%) sepia(0%) saturate(397%) hue-rotate(25deg) brightness(116%) contrast(1000%);
+  filter: invert(48%) sepia(0%) saturate(397%) hue-rotate(25deg)
+    brightness(116%) contrast(1000%);
 }
 
 .svg {
   width: 20px;
-  filter: invert(48%) sepia(5%) saturate(397%) hue-rotate(25deg) brightness(116%) contrast(80%);
+  filter: invert(48%) sepia(5%) saturate(397%) hue-rotate(25deg)
+    brightness(116%) contrast(80%);
 }
-
 
 /* ------------------ Modal ------------------ */
 
@@ -478,11 +461,10 @@ dialog {
   border: none;
   min-width: 100%;
   min-height: 100%;
-
 }
 
 .edit-container {
-  background-color: #03122F;
+  background-color: #03122f;
   border: 1px solid #133866;
   border-radius: 15px;
   color: #2271d1;
@@ -522,10 +504,10 @@ dialog h1 {
 
 .edit-input,
 .edit-text-area {
-  background-color: #03122F;
+  background-color: #03122f;
   border: 1px solid #1b5499;
   border-radius: 5px;
-  color: #D5E5F8;
+  color: #d5e5f8;
   font-size: 16px;
   padding: 8px 10px;
   font-family: inherit;
@@ -557,12 +539,11 @@ dialog h1 {
   border: none;
   border-radius: 5px;
   padding: 0.7em 1.3em;
-
 }
 
 .modal-btn-submit {
-  background-color: #215CAB;
-  border: 1px solid #215CAB;
+  background-color: #215cab;
+  border: 1px solid #215cab;
   box-shadow: inset 0px 0px 10px #2271d17c;
   color: white;
   cursor: pointer;
@@ -576,7 +557,7 @@ dialog h1 {
 }
 
 .modal-btn-reset {
-  background-color: #03122F;
+  background-color: #03122f;
   margin-right: 1em;
   border: 1px solid #97c4fca8;
   box-shadow: 0px 0px 30px rgb(20, 20, 20);
@@ -608,7 +589,11 @@ dialog h1 {
   height: 50vh;
   max-width: 500px;
   margin-top: 4em;
-  background: linear-gradient(180deg, rgba(29, 27, 50, 1) 44%, rgba(24, 43, 78, 1) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(29, 27, 50, 1) 44%,
+    rgba(24, 43, 78, 1) 100%
+  );
 }
 
 .login-title {
@@ -619,7 +604,7 @@ dialog h1 {
 }
 
 .login-btn-submit {
-  background-color: #215CAB;
+  background-color: #215cab;
   border: none;
   border-radius: 5px;
   color: white;
@@ -637,7 +622,7 @@ footer {
   display: flex;
   justify-content: center;
   background-color: rgb(36, 36, 36);
-  box-shadow: 0 -2px #2271D1;
+  box-shadow: 0 -2px #2271d1;
   height: 70px;
   align-items: center;
 }
@@ -646,18 +631,15 @@ footer {
   height: 30px;
 }
 
-
 /* ------------------ Media query , different display size ------------------ */
 
-@media (min-width:900px) {
-
+@media (min-width: 900px) {
   header,
   .cards-container-spacer,
   .cards-container,
   footer {
     margin: 0 auto;
   }
-
 
   .hero {
     width: 1200px;
@@ -686,12 +668,9 @@ footer {
   .cards-container-spacer {
     max-height: 564px;
   }
-
 }
 
-
-@media (max-width:600px) {
-
+@media (max-width: 600px) {
   header {
     padding: 1em;
   }
@@ -760,14 +739,9 @@ footer {
   .card {
     margin: 0 0 1em;
   }
-
-
-
 }
 
-
-@media (max-width:470px) {
-
+@media (max-width: 470px) {
   /* login screen */
 
   dialog {
@@ -780,7 +754,6 @@ footer {
     border-bottom-right-radius: 10px;
     margin: auto auto;
     padding: 3em 3em;
-
   }
 
   .login-container {
@@ -796,5 +769,4 @@ footer {
     max-width: 85%;
     aspect-ratio: unset;
   }
-
 }

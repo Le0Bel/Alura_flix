@@ -7,10 +7,11 @@ import Footer from "./components/Footer"
 import { useState } from 'react'
 import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
-import Card from './components/Card'
 import { AuthContext } from './context/AuthContext'
 import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/videosCrud'
 import { getViewedList, saveViewed } from './services/viewedList'
+import PlayList from './components/PlayList'
+import Card from './components/Card'
 
 
 function App() {
@@ -28,7 +29,6 @@ function App() {
   const { user } = useContext(AuthContext)
 
 
-  console.log(playingCardId)
   //Fetch inicial de videos de JsonServer
   useEffect(() => {
     getVideos().then(videos => {
@@ -233,14 +233,11 @@ function App() {
 
   let playingList = []
   let activeCategory
+  let viewdCounter = 0
   if (playingCardId) {
-
     activeCategory = cardList.filter(card => card.id === playingCardId)[0].category
-    console.log("activecat", activeCategory)
-    playingList = cardList.filter(card => card.category === activeCategory).map(
-      card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
-      className="category1-cards" toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
-        handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)
+    playingList = cardList.filter(card => card.category === activeCategory)
+    viewdCounter = playingList.filter(video => viewed.includes(video.id)).length
   }
 
   return (
@@ -251,14 +248,16 @@ function App() {
       }
       <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin}
         isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
+      
       {playingCardId &&
         <div className='player-dashboard-container'>
-          <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime}
+
+          <Home playingCardId={playingCardId} playingList={playingList} viewedCounter={viewdCounter} handleViewed={handleViewed} startTime={startTime}
             playing={playing} isPlaying={isPlaying} />
-          <div className='playing-list-container'>
-            <h1 className='category1-title'> {activeCategory.toUpperCase()}</h1>
-            {playingList}
-          </div>
+
+          <PlayList playingList={playingList} toggleViewed={toggleViewed} viewed={viewed} activeCategory={activeCategory}
+            handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} playingCardId={playingCardId} />
+
         </div>
 
       }

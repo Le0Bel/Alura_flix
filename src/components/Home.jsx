@@ -3,15 +3,13 @@ import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import ReactPlayer from 'react-player'
 
-export default function Home({ playingCardId, cardList, handleViewed, startTime, playing, isPlaying }) {
+export default function Home({ playingCardId, playingList, viewedCounter, handleViewed, startTime, playing, isPlaying }) {
 
-
-    const playingCard = cardList.filter(card => card.id === playingCardId)[0]
+    const playingCard = playingList.filter(card => card.id === playingCardId)[0]
     const refPlayer = useRef(null)
 
     const { user } = useContext(AuthContext)
-
-
+   
     useEffect(() => { // resetea el player si cambia de video seleccionado
         isPlaying(false)
     }
@@ -71,23 +69,16 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime,
                                 <p className="hero-info-text">{playingCard?.description}</p>
                             </div>
                             <div className="hero-info-top-right">
-                                <p className="video-counter"> Videos 1/8</p>
-                                <div className="favorite-container">
-                                    <p>Favoritos</p>
-                                    <svg width="25" height="25" viewBox="0 0 25 25" >
-                                        <path className="favorite-star-filled" d="M11.0734 2.00861C11.5224 0.626642 13.4776 0.626641 13.9266 2.00861L15.5044 6.86475C15.8391 7.8948 16.799 8.5922 17.8821 8.5922L22.9881 8.5922C24.4412 8.5922 25.0454 10.4516 23.8698 11.3057L19.7389 14.307C18.8627 14.9436 18.4961 16.072 18.8307 17.1021L20.4086 21.9582C20.8576 23.3402 19.2759 24.4894 18.1003 23.6353L13.9695 20.634C13.0932 19.9974 11.9068 19.9974 11.0305 20.634L6.89966 23.6353C5.72409 24.4894 4.14237 23.3402 4.5914 21.9582L6.16925 17.1021C6.50394 16.072 6.13729 14.9436 5.26107 14.307L1.1302 11.3057C-0.045373 10.4516 0.558788 8.5922 2.01188 8.5922L7.11792 8.5922C8.20099 8.5922 9.16088 7.8948 9.49556 6.86475L11.0734 2.00861Z" stroke="#656565" />
-                                    </svg>
-                                </div>
-
+                                <p className="video-counter"> {`Videos ${viewedCounter}/${playingList.length}`}</p>
                             </div>
                         </div>
                         <div className="progress-bar-container">
                             <p>Progreso de la colección</p>
-                            <progress max="100" value="70" className="progress">70% </progress>
+                            <progress  value={viewedCounter/playingList.length} className="progress"> </progress>
                             <div className="progress-bar-labels">
                                 <p>0%</p>
                                 <p>25%</p>
-                                <p>5%</p>
+                                <p>50%</p>
                                 <p>100%</p>
                             </div>
 
