@@ -12,6 +12,7 @@ import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/vid
 import { getViewedList, saveViewed } from './services/viewedList'
 import PlayList from './components/PlayList'
 import Card from './components/Card'
+import Course from './components/Course'
 
 
 function App() {
@@ -248,7 +249,7 @@ function App() {
       }
       <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin}
         isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
-      
+
       {playingCardId &&
         <div className='player-dashboard-container'>
 
@@ -261,9 +262,26 @@ function App() {
         </div>
 
       }
-      {!playingCardId && <div className='cards-container'>
-        {cardElements}
-      </div>}
+      {!playingCardId &&
+        <div className='front-page-main' >
+          <div className='banner'>
+            <div className='banner-info'>
+              <h1 className='banner-title'>Home</h1>
+              <p className='banner-main-text'> Te damos la bienvenida a imparo! , un espacio en donde puedes aprender nuevas habilidades y aumentar tus conocimientos!  </p>
+            </div>
+          </div>
+          <div className='courses-main-container'>
+            <h2 className='courses-main-container-title'>Cursos</h2>
+            <div className='courses-card-container'>
+              <Course />
+              <Course />
+              <Course />
+            </div>
+          </div>
+          <div className='cards-container'>
+            {cardElements}
+          </div>
+        </div>}
       <Footer />
 
     </>
