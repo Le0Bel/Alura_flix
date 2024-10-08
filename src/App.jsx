@@ -9,6 +9,7 @@ import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
 import { AuthContext } from './context/AuthContext'
 import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/videosCrud'
+import { getCourses } from './services/couses'
 import { getViewedList, saveViewed } from './services/viewedList'
 import PlayList from './components/PlayList'
 import Card from './components/Card'
@@ -16,7 +17,7 @@ import Course from './components/Course'
 
 
 function App() {
-  const [cardList, setCardList] = useState([])
+  const [courseList, setCourseList] = useState([])
   const [cardEditId, setCardEditId] = useState("")
   const [playingCardId, setPlayingCardId] = useState(null)
   const [editOn, setEditOn] = useState(false)
@@ -32,10 +33,9 @@ function App() {
 
   //Fetch inicial de videos de JsonServer
   useEffect(() => {
-    getVideos().then(videos => {
-      if (videos) {  // si hubo algun error al recibir los videos recibe undefined y no setea los estados
-        setCardList(videos)
-        //setPlayingCardId(videos[0].id)
+    getCourses().then(courses => {
+      if (courses) {  // si hubo algun error al recibir los videos recibe undefined y no setea los estados
+        setCourseList(courses)
       }
     })
   }, [])
@@ -202,36 +202,6 @@ function App() {
     loginRef.current.close()
   }
 
-
-  let cardElements
-  if (cardList.length > 0) {
-    // Makes a list of the categories contained in cardlist
-    const categories = [...new Set(cardList.map(card => card?.category))]
-    // create the containers for each category and fill them with the category cards
-    cardElements = categories.map((category, index) => {
-      return (<div key={category}>
-        <div className='section-frame'>
-          <div className='section-frame-side'>
-            <div className='section-frame-side-line'></div>
-            <div ></div>
-          </div>
-          <h1 className={`category${index + 1}-title`}>{category.toUpperCase()}</h1>
-          <div className='section-frame-side'>
-            <div className='section-frame-side-line'></div>
-            <div ></div>
-          </div>
-        </div>
-
-        <div className='front-cards-container'>
-          {cardList.filter(card => card.category === category).map(
-            card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
-              className={`category${index + 1}-cards`} toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
-              handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
-        </div>
-      </div>)
-    })
-  }
-
   let playingList = []
   let activeCategory
   let viewdCounter = 0
@@ -260,8 +230,8 @@ function App() {
             handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} playingCardId={playingCardId} />
 
         </div>
-
       }
+
       {!playingCardId &&
         <div className='front-page-main' >
           <div className='banner'>
@@ -273,13 +243,8 @@ function App() {
           <div className='courses-main-container'>
             <h2 className='courses-main-container-title'>Cursos</h2>
             <div className='courses-card-container'>
-              <Course />
-              <Course />
-              <Course />
+              {courseList.map(course => <Course key={course.id} {...course}  />)}
             </div>
-          </div>
-          <div className='cards-container'>
-            {cardElements}
           </div>
         </div>}
       <Footer />

@@ -103,5 +103,104 @@
         "i8KZIe-1SPcaV2QYWt9Ph"
       ]
     }
+  ],
+  "courses": [
+    {
+      "id": "1",
+      "name": "Conceptos básicos de HTML",
+      "description": "Descripción del curso, no hace falta que sea muy larga la descripción, dos o tres líneas de texto estaría bastante bien",
+      "image": "./logos/html.svg",
+      "duration": "5h 15 min",
+      "level": "Principiante",
+      "videos": [
+        {
+          "id": "bd-51rF-_kO4cDm3gcwhN",
+          "title": "Clase 1 -  Introducción",
+          "image": "https://img.youtube.com/vi/r7Gf0XC4k9E/hq720.jpg",
+          "description": "Qué es Figma y por qué es la herramienta de diseño elegida por profesionales",
+          "video": "https://www.youtube.com/watch?v=r7Gf0XC4k9E&list=PLmZz71GEibBwEeo6DvdKs6FtE9r7CqYz6&index=1"
+        },
+        {
+          "id": "2NCjmC0zdeCgeTvaOLNHc",
+          "title": "Clase 2 -  Crea tu cuenta",
+          "image": "https://img.youtube.com/vi/9NKC_v5Ej6k/hq720.jpg",
+          "description": "\nCreación de una cuenta de Figma, ya sea con tu correo electrónico o con tu cuenta de Google.\nEl acceso a Figma desde la web, para que puedas empezar a trabajar de inmediato.\nLa descarga e instalación de la versión de escritorio de Figma, para una experiencia más completa.\nEl inicio de sesión en Figma una vez instalada la versión de escritorio.",
+          "video": "https://www.youtube.com/embed/9NKC_v5Ej6k?si=rjIb7z0bMh93ufCR"
+        },
+        {
+          "id": "jQGwEMufTtfEE8z5SeoJZ",
+          "title": "Clase 3 - Organiza, gestiona y accede a tus proyectos",
+          "image": "https://img.youtube.com/vi/GV1yu_RzLBE/hq720.jpg",
+          "description": "En este video, te llevaremos a un tour completo por el Explorador de archivos de Figma, tu centro de control para organizar, gestionar y acceder a todos tus proyectos, archivos y recursos de diseño.",
+          "video": "https://www.youtube.com/embed/GV1yu_RzLBE?si=PChoeKdeklmUZknY"
+        },
+        {
+          "id": "yhvXV4AIFpDnYNlGsYiSS",
+          "title": "Clase 4 -  Crear nuevos archivos - Importar archivos",
+          "image": "https://img.youtube.com/vi/Fgs4I5mPswQ/mqdefault.jpg",
+          "description": "Crear nuevos archivos de diseño y Jam: ¡Comienza tus proyectos desde cero con solo un clic!\nElegir la ubicación perfecta: Guarda tus archivos en el lugar ideal para mantener tu organización impecable.\nAcceder a tus creaciones recientes: Encuentra tus archivos más recientes de forma rápida y sencilla.\nNavegar con fluidez: Cambia entre tus documentos, la comunidad de Figma y el explorador de archivos sin perder el hilo.\nImportar archivos de otros formatos: Integra archivos Sketch, Miro, Figma, FigJam, PDF, PNG y JPG a tus proyectos.\nVisualizar tus archivos importados: Accede a tus archivos importados desde la sección de borradores.",
+          "video": "https://www.youtube.com/embed/Fgs4I5mPswQ?si=70J75nchN8Sno5xa"
+        },
+        {
+          "id": "O7dAeFqU30YoDbTewPvPh",
+          "title": "Clase 5 - Nueva interfaz de usuario Figma 2024",
+          "image": "https://img.youtube.com/vi/GV1yu_RzLBE/maxresdefault.jpg",
+          "description": "En este video te ofrecemos un recorrido guiado por la nueva interfaz de Figma UI3  para que puedas familiarizarte con sus herramientas y empezar a diseñar y colaborar eficientemente con tu equipo. Exploraremos las regiones clave: barra de herramientas, barras laterales y el lienzo, explicando cómo interactuar con capas, activos y propiedades de tus diseños.",
+          "video": "https://www.youtube.com/embed/GV1yu_RzLBE?si=Bbwua4W0vUtXRYBC"
+        },
+        {
+          "id": "Vy3Le8xXn8g5RiiAEtH7i",
+          "title": "Clase 6 - Selección de objetos , transformar",
+          "image": "https://img.youtube.com/vi/phWDG1tDocs/maxresdefault.jpg",
+          "description": "Aprende a navegar por tu canvas, seleccionar y mover objetos, y ajustar su tamaño de forma precisa. ¡Descubre la diferencia entre escalar y transformar y crea diseños profesionales con facilidad! Tutorial ideal para principiantes.",
+          "video": "https://www.youtube.com/embed/phWDG1tDocs?si=WQ2k30nep3Z2SRpM"
+        },
+        {
+          "id": "6lYkakQ94FV6_Y31i5ulz",
+          "title": "Clase 7 - Opciones avanzadas de la herramienta de selección",
+          "image": "https://img.youtube.com/vi/GBJOx87teOw/maxresdefault.jpg",
+          "description": "Selección individual: Haz clic sobre un objeto para seleccionarlo. Si el objeto está dentro de un grupo o frame, usa doble clic hasta acceder a él.\nSelección rápida: Haz clic en un objeto y presiona la tecla \"Enter\" para una selección más rápida.\nSeleccionar capas: Usa el botón derecho para abrir el menú contextual y seleccionar capas directamente desde una lista.\nPanel de capas: La forma más sencilla de seleccionar capas es desde el panel de capas, donde puedes ver y elegir las capas que necesites.\nSelección múltiple: Mantén presionada la tecla \"Shift\" y haz clic en los objetos que deseas seleccionar para mover, redimensionar o agrupar.",
+          "video": "https://youtu.be/GBJOx87teOw?si=zsVCs7Tw1_lN-11C"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": " HTML Avanzado",
+      "description": "Descripción del curso, no hace falta que sea muy larga la descripción, dos o tres líneas de texto estaría bastante bien",
+      "image": "./logos/html.svg",
+      "duration": "500h",
+      "level": "Principiante",
+      "videos": [
+        {
+          "id": "bd-51rF-_kO4cDm3gcwhN",
+          "title": "Clase 1 -  Introducción",
+          "image": "https://img.youtube.com/vi/r7Gf0XC4k9E/hq720.jpg",
+          "description": "Qué es Figma y por qué es la herramienta de diseño elegida por profesionales",
+          "video": "https://www.youtube.com/watch?v=r7Gf0XC4k9E&list=PLmZz71GEibBwEeo6DvdKs6FtE9r7CqYz6&index=1"
+        },
+        {
+          "id": "2NCjmC0zdeCgeTvaOLNHc",
+          "title": "Clase 2 -  Crea tu cuenta",
+          "image": "https://img.youtube.com/vi/9NKC_v5Ej6k/hq720.jpg",
+          "description": "\nCreación de una cuenta de Figma, ya sea con tu correo electrónico o con tu cuenta de Google.\nEl acceso a Figma desde la web, para que puedas empezar a trabajar de inmediato.\nLa descarga e instalación de la versión de escritorio de Figma, para una experiencia más completa.\nEl inicio de sesión en Figma una vez instalada la versión de escritorio.",
+          "video": "https://www.youtube.com/embed/9NKC_v5Ej6k?si=rjIb7z0bMh93ufCR"
+        },
+        {
+          "id": "jQGwEMufTtfEE8z5SeoJZ",
+          "title": "Clase 3 - Organiza, gestiona y accede a tus proyectos",
+          "image": "https://img.youtube.com/vi/GV1yu_RzLBE/hq720.jpg",
+          "description": "En este video, te llevaremos a un tour completo por el Explorador de archivos de Figma, tu centro de control para organizar, gestionar y acceder a todos tus proyectos, archivos y recursos de diseño.",
+          "video": "https://www.youtube.com/embed/GV1yu_RzLBE?si=PChoeKdeklmUZknY"
+        },
+        {
+          "id": "yhvXV4AIFpDnYNlGsYiSS",
+          "title": "Clase 4 -  Crear nuevos archivos - Importar archivos",
+          "image": "https://img.youtube.com/vi/Fgs4I5mPswQ/mqdefault.jpg",
+          "description": "Crear nuevos archivos de diseño y Jam: ¡Comienza tus proyectos desde cero con solo un clic!\nElegir la ubicación perfecta: Guarda tus archivos en el lugar ideal para mantener tu organización impecable.\nAcceder a tus creaciones recientes: Encuentra tus archivos más recientes de forma rápida y sencilla.\nNavegar con fluidez: Cambia entre tus documentos, la comunidad de Figma y el explorador de archivos sin perder el hilo.\nImportar archivos de otros formatos: Integra archivos Sketch, Miro, Figma, FigJam, PDF, PNG y JPG a tus proyectos.\nVisualizar tus archivos importados: Accede a tus archivos importados desde la sección de borradores.",
+          "video": "https://www.youtube.com/embed/Fgs4I5mPswQ?si=70J75nchN8Sno5xa"
+        } 
+      ]
+    }
   ]
 }
