@@ -1,5 +1,12 @@
 /* eslint-disable react/prop-types */
-export default function Course({name, description, image, duration, level}) {
+
+import { useContext } from "react"
+import { AuthContext } from "../context/AuthContext"
+
+export default function Course({id, name, description, image, duration, level, deleteCourse, editCourse }) {
+
+
+    const { user } = useContext(AuthContext)
 
     return (
         <div className="course-card">
@@ -12,6 +19,18 @@ export default function Course({name, description, image, duration, level}) {
                 <p>Duracion: {duration}</p>
                 <p>Nivel: {level}</p>
             </div>
+            {user.role === "admin" &&
+                <div className='card-action' >
+                    <div className='card-edit' onClick={() => editCourse(id)}>
+                        <img className="svg svg-edit" src="edit.svg" alt="" />
+                        <p>Editar Curso</p>
+                    </div>
+                    <div className='card-delete' onClick={() => deleteCourse(id)}>
+                        <img className="svg svg-delete" src="delete.svg" alt="" />
+                        <p>Borrar</p>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

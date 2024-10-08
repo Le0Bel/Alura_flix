@@ -134,6 +134,13 @@ function App() {
     setPlayingCardId(null)
   }
 
+  function deleteCourse(){
+
+  }
+
+  function editCourse(){
+
+  } 
 
   async function newVideo(video) {
     // hace la llamada  a la Api del server para agregar en el nuevo video
@@ -191,6 +198,7 @@ function App() {
     setCardEditId("")
   }
 
+
   function openNewVideoModal() {
     videoDataRef.current.showModal()
   }
@@ -214,9 +222,9 @@ function App() {
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
-      {user.role === "admin" && <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
+      {/*user.role === "admin" && <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
         cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />
-      }
+      */}
       <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin}
         isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
 
@@ -243,7 +251,7 @@ function App() {
           <div className='courses-main-container'>
             <h2 className='courses-main-container-title'>Cursos</h2>
             <div className='courses-card-container'>
-              {courseList.map(course => <Course key={course.id} {...course}  />)}
+              {courseList.map(course => <Course key={course.id} id={course.id} {...course} deleteCourse={deleteCourse} editCourse={editCourse} />)}
             </div>
           </div>
         </div>}

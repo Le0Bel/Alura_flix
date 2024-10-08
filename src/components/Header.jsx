@@ -28,15 +28,9 @@ export default function Header({ handleModal, activateEdition, openLogin, isPlay
                     <button
                          className="btn new-btn" 
                          onClick={handleModal}
-                         > <span>NUEVO VIDEO</span>
-                    </button>
-                    
-                    <button 
-                        className={editVideoBtn?"btn edit-btn edit-btn-active":"btn edit-btn"} 
-                        onClick={switchEdit}
-                    ><img src={editVideoSvg} alt="" className='edit-btn-logo'/> 
-                    <span>{editVideoBtn?"EDITANDO VIDEOS":"EDITAR VIDEOS"}</span>
-                    </button>
+                         > <span>➕ NUEVO CURSO </span>
+                    </button>          
+
                 </div>}
                 
                 {!user.isLogged ? <button className=" login-btn" onClick={openLogin}> Login </button>
