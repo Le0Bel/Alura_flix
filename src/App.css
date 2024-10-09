@@ -354,6 +354,23 @@ margin-top: 1em;
 
 /* End of hero/player section */
 
+
+/* ------------------ New/Edit Course --------*/
+.course-form-container{
+  display: flex;
+background-color: #03122f;
+padding: 2em;
+gap: 20px;
+justify-content: center;
+}
+
+.course-data-form{
+  width: 40%;
+}
+
+.course-preview-card{
+  width: 40%;
+}
 /* ------------------ Cards ------------------ */
 
 /* colores para asignar a nuevas categorías */

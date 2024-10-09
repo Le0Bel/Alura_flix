@@ -14,6 +14,7 @@ import { getViewedList, saveViewed } from './services/viewedList'
 import PlayList from './components/PlayList'
 import Card from './components/Card'
 import Course from './components/Course'
+import CourseDataForm from './components/CourseDataForm'
 
 
 function App() {
@@ -148,7 +149,7 @@ function App() {
       const response = await saveNewVideo(video)
       if (response.ok) {
         console.log("Video agregado correctamente")
-        setCardList(prev => ([...prev, video])) // actualiza el estado con el nuevo video  
+       // setCardList(prev => ([...prev, video])) // actualiza el estado con el nuevo video  
       }
     }
     catch { alert(" Error de conexión con el servidor al agregar video") }
@@ -253,6 +254,7 @@ function App() {
             <div className='courses-card-container'>
               {courseList.map(course => <Course key={course.id} id={course.id} {...course} deleteCourse={deleteCourse} editCourse={editCourse} />)}
             </div>
+            <CourseDataForm/>
           </div>
         </div>}
       <Footer />
