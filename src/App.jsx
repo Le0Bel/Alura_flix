@@ -7,14 +7,18 @@ import Footer from "./components/Footer"
 import { useState } from 'react'
 import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
-import Card from './components/Card'
 import { AuthContext } from './context/AuthContext'
 import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/videosCrud'
+import { getCourses } from './services/couses'
 import { getViewedList, saveViewed } from './services/viewedList'
+import PlayList from './components/PlayList'
+import Card from './components/Card'
+import Course from './components/Course'
+import CourseDataForm from './components/CourseDataForm'
 
 
 function App() {
-  const [cardList, setCardList] = useState([])
+  const [courseList, setCourseList] = useState([])
   const [cardEditId, setCardEditId] = useState("")
   const [playingCardId, setPlayingCardId] = useState(null)
   const [editOn, setEditOn] = useState(false)
@@ -28,13 +32,11 @@ function App() {
   const { user } = useContext(AuthContext)
 
 
-  console.log(playingCardId)
   //Fetch inicial de videos de JsonServer
   useEffect(() => {
-    getVideos().then(videos => {
-      if (videos) {  // si hubo algun error al recibir los videos recibe undefined y no setea los estados
-        setCardList(videos)
-        //setPlayingCardId(videos[0].id)
+    getCourses().then(courses => {
+      if (courses) {  // si hubo algun error al recibir los videos recibe undefined y no setea los estados
+        setCourseList(courses)
       }
     })
   }, [])
@@ -133,6 +135,13 @@ function App() {
     setPlayingCardId(null)
   }
 
+  function deleteCourse(){
+
+  }
+
+  function editCourse(){
+
+  } 
 
   async function newVideo(video) {
     // hace la llamada  a la Api del server para agregar en el nuevo video
@@ -140,7 +149,7 @@ function App() {
       const response = await saveNewVideo(video)
       if (response.ok) {
         console.log("Video agregado correctamente")
-        setCardList(prev => ([...prev, video])) // actualiza el estado con el nuevo video  
+       // setCardList(prev => ([...prev, video])) // actualiza el estado con el nuevo video  
       }
     }
     catch { alert(" Error de conexión con el servidor al agregar video") }
@@ -190,6 +199,7 @@ function App() {
     setCardEditId("")
   }
 
+
   function openNewVideoModal() {
     videoDataRef.current.showModal()
   }
@@ -201,68 +211,52 @@ function App() {
     loginRef.current.close()
   }
 
-
-  let cardElements
-  if (cardList.length > 0) {
-    // Makes a list of the categories contained in cardlist
-    const categories = [...new Set(cardList.map(card => card?.category))]
-    // create the containers for each category and fill them with the category cards
-    cardElements = categories.map((category, index) => {
-      return (<div key={category}>
-        <div className='section-frame'>
-          <div className='section-frame-side'>
-            <div className='section-frame-side-line'></div>
-            <div ></div>
-          </div>
-          <h1 className={`category${index + 1}-title`}>{category.toUpperCase()}</h1>
-          <div className='section-frame-side'>
-            <div className='section-frame-side-line'></div>
-            <div ></div>
-          </div>
-        </div>
-
-        <div className='front-cards-container'>
-          {cardList.filter(card => card.category === category).map(
-            card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
-              className={`category${index + 1}-cards`} toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
-              handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)}
-        </div>
-      </div>)
-    })
-  }
-
   let playingList = []
+  let activeCategory
+  let viewdCounter = 0
   if (playingCardId) {
-
-    const activeCategory = cardList.filter(card => card.id === playingCardId)[0].category
-    console.log("activecat", activeCategory)
-    playingList = cardList.filter(card => card.category === activeCategory).map(
-      card => <Card key={card.id} title={card.title} image={card.image} id={card.id} editOn={editOn}
-        toggleViewed={toggleViewed} viewed={viewed.includes(card.id)}
-        handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} />)
+    activeCategory = cardList.filter(card => card.id === playingCardId)[0].category
+    playingList = cardList.filter(card => card.category === activeCategory)
+    viewdCounter = playingList.filter(video => viewed.includes(video.id)).length
   }
 
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
-      {user.role === "admin" && <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
+      {/*user.role === "admin" && <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
         cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />
-      }
+      */}
       <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin}
         isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
-      {playingCardId &&
-        <div style={{ display: "flex" }}>
-          <Home playingCardId={playingCardId} cardList={cardList} handleViewed={handleViewed} startTime={startTime}
-            playing={playing} isPlaying={isPlaying} />
-          <div style={{ display: "flex", flexDirection:"column", background:"#becbe9" }}> 
-             {playingList}
-          </div>
-        </div>
 
+      {playingCardId &&
+        <div className='player-dashboard-container'>
+
+          <Home playingCardId={playingCardId} playingList={playingList} viewedCounter={viewdCounter} handleViewed={handleViewed} startTime={startTime}
+            playing={playing} isPlaying={isPlaying} />
+
+          <PlayList playingList={playingList} toggleViewed={toggleViewed} viewed={viewed} activeCategory={activeCategory}
+            handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} playingCardId={playingCardId} />
+
+        </div>
       }
-      {!playingCardId && <div className='cards-container'>
-        {cardElements}
-      </div>}
+
+      {!playingCardId &&
+        <div className='front-page-main' >
+          <div className='banner'>
+            <div className='banner-info'>
+              <h1 className='banner-title'>Home</h1>
+              <p className='banner-main-text'> Te damos la bienvenida a imparo! , un espacio en donde puedes aprender nuevas habilidades y aumentar tus conocimientos!  </p>
+            </div>
+          </div>
+          <div className='courses-main-container'>
+            <h2 className='courses-main-container-title'>Cursos</h2>
+            <div className='courses-card-container'>
+              {courseList.map(course => <Course key={course.id} id={course.id} {...course} deleteCourse={deleteCourse} editCourse={editCourse} />)}
+            </div>
+            <CourseDataForm/>
+          </div>
+        </div>}
       <Footer />
 
     </>

@@ -3,22 +3,20 @@ import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import ReactPlayer from 'react-player'
 
-export default function Home({ playingCardId, cardList, handleViewed, startTime, playing, isPlaying }) {
+export default function Home({ playingCardId, playingList, viewedCounter, handleViewed, startTime, playing, isPlaying }) {
 
-    
-    const playingCard = cardList.filter(card => card.id === playingCardId)[0]
+    const playingCard = playingList.filter(card => card.id === playingCardId)[0]
     const refPlayer = useRef(null)
 
     const { user } = useContext(AuthContext)
-
-
+   
     useEffect(() => { // resetea el player si cambia de video seleccionado
         isPlaying(false)
     }
-        , [playingCardId, isPlaying ])
+        , [playingCardId, isPlaying])
 
     useEffect(() => { // resetea el player si de desloguea el usuario
-        if(!user.isLogged) isPlaying(false)
+        if (!user.isLogged) isPlaying(false)
     }
         , [user.isLogged, isPlaying])
 
@@ -46,22 +44,13 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime,
         <>
             {playingCardId ?
 
-                <section className="hero" style={{ background: `url(${playingCard.playerBackground}), url("/Images/fallback-background.jpg")` }}> {/*la segunda url es un fallback por si la primera falla */}
+                <section className="hero">
 
                     {!playing ?
-                        <div className="video-img-wrapper">
-                            <img src={playingCard?.image} className="player-img" alt="" onClick={() => isPlaying(true)} />
-                            <div className="hero-info">
-                                <h2 className="hero-info-category">{playingCard?.category.toUpperCase()}</h2>
-                                <p className="hero-info-title">{playingCard?.title}</p>
-                                <p className="hero-info-text">{playingCard?.description}</p>
-                            </div>
+                        <div className="video-img-wrapper" onClick={() => isPlaying(true)} >
+                            <img src="./playButton.svg" alt="" />
                         </div>
-
                         :
-                        //<iframe   width="854px" height="368px" className="video-player" src={`${playingCard.video}?rel=0&autoplay=1`} title={playingCard.title} frameBorder="0" allow="autoplay;" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen>
-                        //</iframe>
-                        
                         <div className="video-player-wrapper">
                             <ReactPlayer ref={refPlayer}
                                 controls={true} playing={playing}
@@ -72,6 +61,29 @@ export default function Home({ playingCardId, cardList, handleViewed, startTime,
                             />
                         </div>
                     }
+
+                    <div className="hero-info">
+                        <div className="hero-info-top">
+                            <div className="hero-info-top-left">
+                                <p className="hero-info-title">{playingCard?.title}</p>
+                                <p className="hero-info-text">{playingCard?.description}</p>
+                            </div>
+                            <div className="hero-info-top-right">
+                                <p className="video-counter"> {`Videos ${viewedCounter}/${playingList.length}`}</p>
+                            </div>
+                        </div>
+                        <div className="progress-bar-container">
+                            <p>Progreso de la colección</p>
+                            <progress  value={viewedCounter/playingList.length} className="progress"> </progress>
+                            <div className="progress-bar-labels">
+                                <p>0%</p>
+                                <p>25%</p>
+                                <p>50%</p>
+                                <p>100%</p>
+                            </div>
+
+                        </div>
+                    </div>
 
                 </section>
                 : <section className="hero">
