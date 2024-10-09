@@ -9,7 +9,7 @@ import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
 import { AuthContext } from './context/AuthContext'
 import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/videosCrud'
-import { getCourses } from './services/couses'
+import { deleteCourse, getCourses, saveNewCurso } from './services/courses'
 import { getViewedList, saveViewed } from './services/viewedList'
 import PlayList from './components/PlayList'
 import Card from './components/Card'
@@ -19,6 +19,7 @@ import CourseDataForm from './components/CourseDataForm'
 
 function App() {
   const [courseList, setCourseList] = useState([])
+  const[courseEditId, setCourseEditId] = useState("")
   const [cardEditId, setCardEditId] = useState("")
   const [playingCardId, setPlayingCardId] = useState(null)
   const [editOn, setEditOn] = useState(false)
@@ -135,8 +136,16 @@ function App() {
     setPlayingCardId(null)
   }
 
-  function deleteCourse(){
-
+  async function handleDeleteCourse(id){
+    try {
+      const response = await deleteCourse(id)
+      if (response.ok) {
+        console.log("Curso eliminado correctamente")
+        // actualiza el estado sin el curso eliminada
+        setCourseList(prev => prev.filter(course => course.id !== id))
+      }
+    }
+    catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
   }
 
   function editCourse(){
@@ -155,6 +164,20 @@ function App() {
     catch { alert(" Error de conexión con el servidor al agregar video") }
   }
 
+  async function newCurso(curso) {
+    // hace la llamada  a la Api del server para agregar en el nuevo video
+    try {
+      const response = await saveNewCurso(curso)
+      if (response.ok) {
+        console.log("Curso agregado correctamente")
+        setCourseList(prev => ([...prev, curso])) // actualiza el estado con el nuevo video  
+      }
+    }
+    catch { alert(" Error de conexión con el servidor al agregar el curso") }
+  }
+
+
+  
   async function handleDelete(id) {
     // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la que se va a borrar
     if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
@@ -252,9 +275,9 @@ function App() {
           <div className='courses-main-container'>
             <h2 className='courses-main-container-title'>Cursos</h2>
             <div className='courses-card-container'>
-              {courseList.map(course => <Course key={course.id} id={course.id} {...course} deleteCourse={deleteCourse} editCourse={editCourse} />)}
+              {courseList.map(course => <Course key={course.id} id={course.id} {...course} handleDeleteCourse={handleDeleteCourse} editCourse={editCourse} />)}
             </div>
-            <CourseDataForm/>
+            <CourseDataForm courseEditId={courseEditId} newCurso={newCurso}/>
           </div>
         </div>}
       <Footer />
