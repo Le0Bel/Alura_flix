@@ -7,7 +7,7 @@ import lbLogo from "/logo-2.svg"
 
 
 
-export default function Header({ handleModal, activateEdition, openLogin, isPlaying, resetPlayingCardId }) {
+export default function Header({ activateEdition, openLogin, isPlaying, resetPlayingCardId }) {
 
     const { user, logout } = useContext(AuthContext)
     const [editVideoBtn, setEditVideoBtn] = useState(false)
@@ -27,7 +27,7 @@ export default function Header({ handleModal, activateEdition, openLogin, isPlay
                 {user.role === "admin" && <div className='video-controls-wrapper'>
                     <button
                          className="btn new-btn" 
-                         onClick={handleModal}
+                         onClick={null} 
                          > <span>➕ NUEVO CURSO </span>
                     </button>          
 

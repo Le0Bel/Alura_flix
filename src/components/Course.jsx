@@ -3,7 +3,7 @@
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 
-export default function Course({ id, name, description, image, duration, level, handleDeleteCourse, editCourse, editable=true }) {
+export default function Course({ id, name, description, image, duration, level, handleDeleteCourse, selectCourseToEdit, editable=true }) {
 
 
     const { user } = useContext(AuthContext)
@@ -23,7 +23,7 @@ export default function Course({ id, name, description, image, duration, level, 
             </div>
             {user.role === "admin" && editable &&
                 <div className='card-action' >
-                    <div className='card-edit' onClick={() => editCourse(id)}>
+                    <div className='card-edit' onClick={() => selectCourseToEdit(id)}>
                         <img className="svg svg-edit" src="edit.svg" alt="" />
                         <p>Editar Curso</p>
                     </div>
