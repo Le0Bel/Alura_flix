@@ -18,7 +18,7 @@ export default function VideoDataForm({ videoDataRef, cardEditId, cardList, clea
     
     useEffect(() => {
 
-        function escFunction(event) {             // Funcion para limpiar el cardEditId del estado si el usuario cncela la edicion apretando al tecla escape
+        function escFunction(event) {             // Funcion para limpiar el cardEditId del estado si el usuario cancela la edicion apretando al tecla escape
             if (event.key === "Escape") {
                 cleanCardToEditState()
                 console.log("cancelada edicion")

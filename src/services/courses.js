@@ -12,7 +12,7 @@ export async function getCourses() {
     })
 }
 
-export async function deleteVideos(id) {
+export async function deleteCourse(id) {
   const response = await fetch(`${API_VIDEOS_BASE_URL}/${id}`, {
     method: "DELETE",
   })
@@ -31,11 +31,11 @@ export async function editVideo(editedCard) {
   return response
 }
 
-export async function saveNewVideo(video) {
+export async function saveNewCurso(course) {
   const response = await fetch(`${API_VIDEOS_BASE_URL}`, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(video)
+    body: JSON.stringify(course)
   })
   return response
 }

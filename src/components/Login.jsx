@@ -29,7 +29,7 @@ export default function Login({ loginRef, closeLogin }) {
                     <label htmlFor="name" >Nombre de Usuario</label>
                     <input
                         className="edit-input"
-                        type="text" name="name" id="name"
+                        type="text" name="name" 
                         required
                     />
 
