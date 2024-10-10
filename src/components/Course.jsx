@@ -18,8 +18,8 @@ export default function Course({ id, name, description, image, duration, level, 
                 </div>
             </div>
             <div className="course-main-bottom">
-                <p className="course-main-bottom-duration">Duracion: {duration}</p>
-                <p >Nivel: {level}</p>
+                <p className="course-main-bottom-duration">Duracion: <span>{duration}</span></p>
+                <p className="course-main-bottom-nivel">Nivel: <span>{level}</span></p>
             </div>
             {user.role === "admin" && editable &&
                 <div className='card-action' >
