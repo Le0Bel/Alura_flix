@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 import { nanoid } from 'nanoid'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Course from './Course';
 
-const DOT_30=  "........................"
-const DOT_3L=  "....................................................\n....................................................\n......................................."
+const DOT_30 = "........................"
+const DOT_3L = "....................................................\n" +
+    "....................................................\n......................................."
 
-export default function CourseDataForm({courseEditId, newCurso}) {
+export default function CourseDataForm({ courseEditId, courseList, newCurso }) {
 
     const emptyCourse = useMemo(() => ({
         id: "",
@@ -15,23 +16,31 @@ export default function CourseDataForm({courseEditId, newCurso}) {
         description: "",
         duration: '',
         level: "",
-        videos:[]
+        videos:[],
     }), [])
 
     const [formData, setFormData] = useState(emptyCourse)
 
+    useEffect(()=>{
+        if(courseEditId){
+            const activeCourse = courseList.filter(course => course.id===courseEditId )[0]
+            console.log(activeCourse)
+            setFormData(activeCourse)
+        }else setFormData(emptyCourse)
+    }
+    ,[courseEditId,courseList,emptyCourse])
 
     function handleSubmit(e) {
         e.preventDefault();
-          if (courseEditId) { 
-            console.log("form submited courid true",courseEditId)
+        if (courseEditId) {
+            console.log("form submited courid true", courseEditId)
             // Esta en modo edicion si hay un id de tarjeta para editar
-             //const editedCard = { ...formData, id: cardEditId }
-             //editCard(editedCard)
-         }  else {   // Si esta vacio cardToEditId estamso en modo nuevo video
+            //const editedCard = { ...formData, id: cardEditId }
+            //editCard(editedCard)
+        } else {   // Si esta vacio cardToEditId estamso en modo nuevo video
             const curso = { ...formData, id: nanoid() }
-             newCurso(curso) 
-         } 
+            newCurso(curso)
+        }
     }
 
     function handleChange(event) {
@@ -104,14 +113,14 @@ export default function CourseDataForm({courseEditId, newCurso}) {
                     <Course name={formData.name ? formData.name : DOT_30}
                         image={formData.image ? formData.image : "./logos/logo_placeholder.png"}
                         description={formData.description ? formData.description : DOT_3L}
-                        duration={formData.duration ? formData.duration :DOT_30}
+                        duration={formData.duration ? formData.duration : DOT_30}
                         level={formData.level ? formData.level : DOT_30}
                         editable={false}
-                        />
+                    />
                 </div>
             </div>
-            <div className="course-video-list-container">
-
+            <div className="course-video-list-container" style={{ height: "200px", padding: "30px", color: "black", backgroundColor: "whitesmoke" }}>
+                Aqui va la lista de videos del curso
             </div>
         </div>
     )

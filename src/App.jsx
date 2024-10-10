@@ -148,9 +148,14 @@ function App() {
     catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
   }
 
-  function editCourse(){
-
+  function editCourse(id){
+    console.log(id)
+    setCourseEditId(id)
   } 
+
+  function cleanCourseToEditState() {
+    setCourseEditId("")
+  }
 
   async function newVideo(video) {
     // hace la llamada  a la Api del server para agregar en el nuevo video
@@ -277,7 +282,7 @@ function App() {
             <div className='courses-card-container'>
               {courseList.map(course => <Course key={course.id} id={course.id} {...course} handleDeleteCourse={handleDeleteCourse} editCourse={editCourse} />)}
             </div>
-            <CourseDataForm courseEditId={courseEditId} newCurso={newCurso}/>
+            <CourseDataForm courseEditId={courseEditId} courseList={courseList} newCurso={newCurso}/>
           </div>
         </div>}
       <Footer />
