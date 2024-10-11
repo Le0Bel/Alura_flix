@@ -12,7 +12,6 @@ import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/vid
 import { deleteCourse, getCourses, saveNewCourse, saveEditedCourse } from './services/courses'
 import { getViewedList, saveViewed } from './services/viewedList'
 import PlayList from './components/PlayList'
-import Card from './components/Card'
 import Course from './components/Course'
 import CourseDataForm from './components/CourseDataForm'
 
@@ -21,7 +20,7 @@ function App() {
   const [courseList, setCourseList] = useState([])
   const [courseEditId, setCourseEditId] = useState("")
   const [playingCardId, setPlayingCardId] = useState(null)
-  const [editOn, setEditOn] = useState(false)
+  const [activeCourseId, setActiveCourseId] = useState("")
   const [viewed, setViewed] = useState([])
   const [playing, setPlaying] = useState(false)
 
@@ -135,7 +134,8 @@ function App() {
     setPlayingCardId(null)
   }
 
-  async function handleDeleteCourse(id) {
+  async function handleDeleteCourse(e,id) {
+    e.stopPropagation()
     try {
       const response = await deleteCourse(id)
       if (response.ok) {
@@ -164,7 +164,8 @@ function App() {
     catch { alert(" Error de conexión con el servidor al agregar video") }
   }
 
-  function selectCourseToEdit(id) {
+  function selectCourseToEdit(e,id) {
+    e.stopPropagation()
     setCourseEditId(id)
   }
 
@@ -210,16 +211,25 @@ function App() {
     loginRef.current.close()
   }
 
-  let playingList = []
-  let activeCategory
-  let viewdCounter = 0
-  if (playingCardId) {
-    activeCategory = cardList.filter(card => card.id === playingCardId)[0].category
-    playingList = cardList.filter(card => card.category === activeCategory)
-    viewdCounter = playingList.filter(video => viewed.includes(video.id)).length
+ 
+
+  
+
+  function selectActiveCourse(id) {
+    setActiveCourseId(id)
+    setPlayingCardId(courseList.filter(course => course.id === id)[0].videos[0].id)
   }
 
-
+  let playingList = []
+  let activeCourseName
+  let viewdCounter = 0
+  if (playingCardId){
+    const activeCourse = courseList.filter(course => course.id === activeCourseId)[0]
+    playingList = activeCourse.videos
+    activeCourseName = activeCourse.name
+    viewdCounter = playingList.filter(video => viewed.includes(video.id)).length
+  }
+  
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
@@ -233,7 +243,7 @@ function App() {
           <Home playingCardId={playingCardId} playingList={playingList} viewedCounter={viewdCounter} handleViewed={handleViewed} startTime={startTime}
             playing={playing} isPlaying={isPlaying} />
 
-          <PlayList playingList={playingList} toggleViewed={toggleViewed} viewed={viewed} activeCategory={activeCategory}
+          <PlayList playingList={playingList} toggleViewed={toggleViewed} viewed={viewed} activeCourseName={activeCourseName}
             selectAsActiveCard={selectAsActiveCard} playingCardId={playingCardId} />
 
         </div>
@@ -252,11 +262,11 @@ function App() {
           <div className='courses-main-container'>
             <h2 className='courses-main-container-title'>Cursos</h2>
             <div className='courses-card-container'>
-              {courseList.map(course => <Course key={course.id} id={course.id} {...course}
+              {courseList.map(course => <Course key={course.id} id={course.id} {...course} selectActiveCourse={selectActiveCourse}
                 handleDeleteCourse={handleDeleteCourse} selectCourseToEdit={selectCourseToEdit} />)}
             </div>
-            <CourseDataForm courseEditId={courseEditId} courseList={courseList} newCurso={newCurso} 
-            editCourse={editCourse} cleanCourseToEditState={cleanCourseToEditState}/>
+            <CourseDataForm courseEditId={courseEditId} courseList={courseList} newCurso={newCurso}
+              editCourse={editCourse} cleanCourseToEditState={cleanCourseToEditState} />
           </div>
         </div>}
       <Footer />

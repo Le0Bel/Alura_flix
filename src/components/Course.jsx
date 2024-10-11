@@ -3,13 +3,14 @@
 import { useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
 
-export default function Course({ id, name, description, image, duration, level, handleDeleteCourse, selectCourseToEdit, editable=true }) {
+export default function Course({ id, name, description, image, duration, level, handleDeleteCourse, 
+    selectActiveCourse, selectCourseToEdit, editable=true }) {
 
 
     const { user } = useContext(AuthContext)
 
     return (
-        <div className="course-card">
+        <div className="course-card" onClick={()=> selectActiveCourse(id)}>
             <h1 className="course-title">{name}</h1>
             <div className="course-main-top">
                 <p className="course-description">{description} </p>
@@ -23,11 +24,11 @@ export default function Course({ id, name, description, image, duration, level, 
             </div>
             {user.role === "admin" && editable &&
                 <div className='card-action' >
-                    <div className='card-edit' onClick={() => selectCourseToEdit(id)}>
+                    <div className='card-edit' onClick={(e) => selectCourseToEdit(e,id)}>
                         <img className="svg svg-edit" src="edit.svg" alt="" />
                         <p>Editar Curso</p>
                     </div>
-                    <div className='card-delete' onClick={() => handleDeleteCourse(id)}>
+                    <div className='card-delete' onClick={(e) => handleDeleteCourse(e, id)}>
                         <img className="svg svg-delete" src="delete.svg" alt="" />
                         <p>Borrar</p>
                     </div>
