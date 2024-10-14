@@ -258,6 +258,16 @@ function App() {
                 un espacio en donde puedes aprender nuevas habilidades y aumentar tus conocimientos!
               </p>
             </div>
+            <div className='banner-logos-container'>
+              <img className='banner-logo' src="./logo_html5.svg" alt="" />
+              <img className='banner-logo' src="./logo_figma.svg" alt="" />
+              <img className='banner-logo' src="./logo_angular.svg" alt="" />
+              <img className='banner-logo' src="./logo_css3.svg" alt="" />
+              <img className='banner-logo' src="./logo_JS.svg" alt="" />
+              <img className='banner-logo' src="./logo_react.svg" alt="" />
+              <img className='banner-logo' src="./logo_sql.svg" alt="" />
+              <img className='banner-logo' src="./logo_adobe_xd.svg" alt="" />
+            </div>
           </div>
           <div className='courses-main-container'>
             <h2 className='courses-main-container-title'>Cursos</h2>
