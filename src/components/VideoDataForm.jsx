@@ -2,16 +2,14 @@
 import { useEffect, useState, useMemo } from "react";
 import { nanoid } from 'nanoid'
 
-export default function VideoDataForm({ videoDataRef, cardEditId, cardList, cleanCardToEditState, editCard, newVideo }) {
+export default function VideoDataForm({ videoDataRef, cardEditId, videoToEdit, cleanCardToEditState, saveEditedVideoList, addNewVideo }) {
 
     const emptyCard = useMemo(() => ({
         id: "",
         title: "",
         image: "",
         description: "",
-        category: "",
         video: '',
-        playerBackground: ""
     }), [])
 
     const [formData, setFormData] = useState(emptyCard)
@@ -25,14 +23,13 @@ export default function VideoDataForm({ videoDataRef, cardEditId, cardList, clea
             }
         }
         if (cardEditId) {  // si hay activa una tarjeta para edicion carga los datos de la misma el formulario
-            const cardToEdit = cardList.filter(card => card.id === cardEditId)[0]
-            setFormData(cardToEdit)
+            setFormData(videoToEdit)
             document.addEventListener("keydown", escFunction, false)      // para escuchar las teclas apretadas y cancelar la edicion si se aprieta "esc"
             return () => {
                 document.removeEventListener("keydown", escFunction, false);
             };
         } else setFormData(emptyCard)
-    }, [cardEditId, cardList, cleanCardToEditState, emptyCard])
+    }, [cardEditId, videoToEdit, cleanCardToEditState, emptyCard])
 
 
 
@@ -50,11 +47,12 @@ export default function VideoDataForm({ videoDataRef, cardEditId, cardList, clea
     function handleSubmit(e) {
         e.preventDefault();
         if (cardEditId) {   // Esta en modo edicion si hay un id de tarjeta para editar
-            const editedCard = { ...formData, id: cardEditId }
-            editCard(editedCard)
+            const editedVideo= { ...formData }
+            saveEditedVideoList(editedVideo)
+            console.log(editedVideo)
         } else {   // Si esta vacio cardToEditId estamso en modo nuevo video
             const video = { ...formData, id: nanoid() }
-            newVideo(video)
+            addNewVideo(video)
         }
         closeModal()
     }
@@ -82,14 +80,6 @@ export default function VideoDataForm({ videoDataRef, cardEditId, cardList, clea
                         value={formData.title}
                     />
 
-                    <label htmlFor="category">Categoria</label>
-                    <input
-                        className="edit-input"
-                        type="text"
-                        id="category"
-                        onChange={handleChange}
-                        value={formData.category}
-                    />
 
                     <label htmlFor="image">Imagen</label>
                     <input
@@ -113,14 +103,6 @@ export default function VideoDataForm({ videoDataRef, cardEditId, cardList, clea
                         rows="4" id="description"
                         onChange={handleChange}
                         value={formData.description}
-                    />
-
-                    <label htmlFor="playerBackground">Fondo del reproductor</label>
-                    <input
-                        className="edit-input"
-                        type="text" id="playerBackground"
-                        onChange={handleChange}
-                        value={formData.playerBackground}
                     />
 
                     <div className="modal-btn">

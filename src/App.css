@@ -391,6 +391,24 @@ justify-content: space-around;
 .course-preview-card{
   width: 40%;
 }
+
+.course-video-list-container {
+  display: flex;
+  align-items: center;
+}
+
+.add-new-course-plus{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  color: #f8f8f8;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #2f2f2f71;
+  cursor: pointer;
+}
 /* ------------------ Cards ------------------ */
 
 /* colores para asignar a nuevas categorías */

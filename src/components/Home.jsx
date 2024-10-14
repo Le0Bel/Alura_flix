@@ -7,7 +7,7 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
 
     const playingCard = playingList.filter(card => card.id === playingCardId)[0]
     const refPlayer = useRef(null)
-
+   
     const { user } = useContext(AuthContext)
    
     useEffect(() => { // resetea el player si cambia de video seleccionado
@@ -74,7 +74,7 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
                         </div>
                         <div className="progress-bar-container">
                             <p>Progreso de la colección</p>
-                            <progress  value={viewedCounter/playingList.length} className="progress"> </progress>
+                            <progress  value={playingList.length!==0 ?viewedCounter/playingList.length : 0 } className="progress"> </progress>
                             <div className="progress-bar-labels">
                                 <p>0%</p>
                                 <p>25%</p>

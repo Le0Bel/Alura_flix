@@ -9,24 +9,22 @@ import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
 import { AuthContext } from './context/AuthContext'
 import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/videosCrud'
-import { deleteCourse, getCourses, saveNewCurso } from './services/courses'
+import { deleteCourse, getCourses, saveNewCourse, saveEditedCourse } from './services/courses'
 import { getViewedList, saveViewed } from './services/viewedList'
 import PlayList from './components/PlayList'
-import Card from './components/Card'
 import Course from './components/Course'
 import CourseDataForm from './components/CourseDataForm'
 
 
 function App() {
   const [courseList, setCourseList] = useState([])
-  const[courseEditId, setCourseEditId] = useState("")
-  const [cardEditId, setCardEditId] = useState("")
+  const [courseEditId, setCourseEditId] = useState("")
   const [playingCardId, setPlayingCardId] = useState(null)
-  const [editOn, setEditOn] = useState(false)
+  const [activeCourseId, setActiveCourseId] = useState("")
   const [viewed, setViewed] = useState([])
   const [playing, setPlaying] = useState(false)
 
-  const videoDataRef = useRef(null)
+
   const loginRef = useRef(null)
   const startTime = useRef(0)
 
@@ -136,7 +134,8 @@ function App() {
     setPlayingCardId(null)
   }
 
-  async function handleDeleteCourse(id){
+  async function handleDeleteCourse(e,id) {
+    e.stopPropagation()
     try {
       const response = await deleteCourse(id)
       if (response.ok) {
@@ -148,14 +147,10 @@ function App() {
     catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
   }
 
-  function editCourse(id){
-    console.log(id)
-    setCourseEditId(id)
-  } 
-
   function cleanCourseToEditState() {
     setCourseEditId("")
   }
+
 
   async function newVideo(video) {
     // hace la llamada  a la Api del server para agregar en el nuevo video
@@ -163,73 +158,50 @@ function App() {
       const response = await saveNewVideo(video)
       if (response.ok) {
         console.log("Video agregado correctamente")
-       // setCardList(prev => ([...prev, video])) // actualiza el estado con el nuevo video  
+        // setCardList(prev => ([...prev, video])) // actualiza el estado con el nuevo video  
       }
     }
     catch { alert(" Error de conexión con el servidor al agregar video") }
   }
 
+  function selectCourseToEdit(e,id) {
+    e.stopPropagation()
+    setCourseEditId(id)
+  }
+
   async function newCurso(curso) {
     // hace la llamada  a la Api del server para agregar en el nuevo video
     try {
-      const response = await saveNewCurso(curso)
+      const response = await saveNewCourse(curso)
       if (response.ok) {
         console.log("Curso agregado correctamente")
         setCourseList(prev => ([...prev, curso])) // actualiza el estado con el nuevo video  
+        setCourseEditId(curso.id)
+      }
+    }
+    catch { alert(" Error de conexión con el servidor al agregar el curso") }
+  }
+
+  async function editCourse(editedCourse) {
+    // hace la llamada  a la Api del server para guardar el curso editado
+    try {
+      const response = await saveEditedCourse(editedCourse)
+      if (response.ok) {
+        console.log("Curso editado correctamente en sl Srvr")
+        setCourseList(prevCourseList => prevCourseList.map(    // actualiza el estado con el nuevo curso 
+          course => {
+            if (course.id !== editedCourse.id) { return course }
+            else { return editedCourse }
+          }
+        ))
       }
     }
     catch { alert(" Error de conexión con el servidor al agregar el curso") }
   }
 
 
-  
-  async function handleDelete(id) {
-    // si la tarjeta aborrar es la que esta en reproducir, cambia primero la activa a reproducir por la primera de cardlist sin incluir la que se va a borrar
-    if (id === playingCardId) setPlayingCardId(cardList.filter(card => card.id !== id)[0]?.id)
-    // Llama la API para borrar el vido de la base de datos
-    try {
-      const response = await deleteVideos(id)
-      if (response.ok) {
-        console.log("Video eliminado correctamente")
-        // actualiza el estado sin la tarjeta eliminada
-        setCardList(prevCardList => prevCardList.filter(card => card.id !== id))
-      }
-    }
-    catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
-  }
-
-  async function editCard(editedCard) {
-    try {
-      const response = await editVideo(editedCard)
-      if (response.ok) console.log("Video editado correctamente")
-      // Actualiza el estado con la card editada
-      setCardList(prevCardList => prevCardList.map(
-        card => {
-          if (card.id !== editedCard.id) { return card }
-          else { return editedCard }
-        }
-      ))
-    }
-    catch { alert(" Error de conexión con el servidor al editer video") }
-  }
-
   function activateEdition() {
     setEditOn(prev => !prev)
-  }
-
-  function handleEdit(id) {
-    setCardEditId(id)
-    videoDataRef.current.showModal() // Abre el modal de editar card 
-  }
-
-
-  function cleanCardToEditState() {
-    setCardEditId("")
-  }
-
-
-  function openNewVideoModal() {
-    videoDataRef.current.showModal()
   }
 
   function openLogin() {
@@ -239,22 +211,30 @@ function App() {
     loginRef.current.close()
   }
 
-  let playingList = []
-  let activeCategory
-  let viewdCounter = 0
-  if (playingCardId) {
-    activeCategory = cardList.filter(card => card.id === playingCardId)[0].category
-    playingList = cardList.filter(card => card.category === activeCategory)
-    viewdCounter = playingList.filter(video => viewed.includes(video.id)).length
+ 
+
+  
+
+  function selectActiveCourse(id) {
+    setActiveCourseId(id)
+    setPlayingCardId(courseList.filter(course => course.id === id)[0].videos[0].id)
   }
 
+  let playingList = []
+  let activeCourseName
+  let viewdCounter = 0
+  if (playingCardId){
+    const activeCourse = courseList.filter(course => course.id === activeCourseId)[0]
+    playingList = activeCourse.videos
+    activeCourseName = activeCourse.name
+    viewdCounter = playingList.filter(video => viewed.includes(video.id)).length
+  }
+  
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
-      {/*user.role === "admin" && <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} cardList={cardList}
-        cleanCardToEditState={cleanCardToEditState} editCard={editCard} newVideo={newVideo} />
-      */}
-      <Header handleModal={openNewVideoModal} activateEdition={activateEdition} openLogin={openLogin}
+
+      <Header activateEdition={activateEdition} openLogin={openLogin}
         isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
 
       {playingCardId &&
@@ -263,8 +243,8 @@ function App() {
           <Home playingCardId={playingCardId} playingList={playingList} viewedCounter={viewdCounter} handleViewed={handleViewed} startTime={startTime}
             playing={playing} isPlaying={isPlaying} />
 
-          <PlayList playingList={playingList} toggleViewed={toggleViewed} viewed={viewed} activeCategory={activeCategory}
-            handleDelete={handleDelete} handleEdit={handleEdit} selectAsActiveCard={selectAsActiveCard} playingCardId={playingCardId} />
+          <PlayList playingList={playingList} toggleViewed={toggleViewed} viewed={viewed} activeCourseName={activeCourseName}
+            selectAsActiveCard={selectAsActiveCard} playingCardId={playingCardId} />
 
         </div>
       }
@@ -274,15 +254,19 @@ function App() {
           <div className='banner'>
             <div className='banner-info'>
               <h1 className='banner-title'>Home</h1>
-              <p className='banner-main-text'> Te damos la bienvenida a imparo! , un espacio en donde puedes aprender nuevas habilidades y aumentar tus conocimientos!  </p>
+              <p className='banner-main-text'> Te damos la bienvenida a imparo! ,
+                un espacio en donde puedes aprender nuevas habilidades y aumentar tus conocimientos!
+              </p>
             </div>
           </div>
           <div className='courses-main-container'>
             <h2 className='courses-main-container-title'>Cursos</h2>
             <div className='courses-card-container'>
-              {courseList.map(course => <Course key={course.id} id={course.id} {...course} handleDeleteCourse={handleDeleteCourse} editCourse={editCourse} />)}
+              {courseList.map(course => <Course key={course.id} id={course.id} {...course} selectActiveCourse={selectActiveCourse}
+                handleDeleteCourse={handleDeleteCourse} selectCourseToEdit={selectCourseToEdit} />)}
             </div>
-            <CourseDataForm courseEditId={courseEditId} courseList={courseList} newCurso={newCurso}/>
+            <CourseDataForm courseEditId={courseEditId} courseList={courseList} newCurso={newCurso}
+              editCourse={editCourse} cleanCourseToEditState={cleanCourseToEditState} />
           </div>
         </div>}
       <Footer />
