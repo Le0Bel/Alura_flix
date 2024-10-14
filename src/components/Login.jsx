@@ -28,14 +28,14 @@ export default function Login({ loginRef, closeLogin }) {
 
                     <label htmlFor="name" >Nombre de Usuario</label>
                     <input
-                        className="edit-input"
+                        className="login-input"
                         type="text" name="name" 
                         required
                     />
 
                     <label htmlFor="password">Contraseña</label>
                     <input
-                        className="edit-input"
+                        className="login-input"
                         type="password"
                         name="password"
                         id="password"

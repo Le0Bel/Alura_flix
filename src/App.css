@@ -8,7 +8,7 @@
 body {
   background-color: rgb(89, 88, 88);
   font-family: "Roboto", sans-serif;
-  max-width: 1440px;
+  
   margin: 0 auto;
 }
 
@@ -30,7 +30,7 @@ header {
 }
 
 .header-logo-container {
-  cursor: default;
+  cursor: pointer;
   user-select: none;
 }
 
@@ -132,7 +132,7 @@ header {
 .banner{
   background-image: url("./Images/img_video_code_8_m.jpg");
   background-position: center;
-  height: 318px;
+  height: 325px;
   color:#f5f5f5 ;
   padding: 1.5em;
 } 
@@ -155,18 +155,20 @@ text-shadow: 1px 3px 3px rgba(0, 0, 0, 0.774);
 .courses-main-container {
   justify-content: space-evenly;
   color: #f5f5f5;
+
 }
 
 .courses-main-container-title {
   margin-left: 1em;
-  margin-top: 0.5em;
+  margin-top: 1.5em;
 }
 
 .courses-card-container {
   display: flex;
-  justify-content: space-evenly;
-  padding-top: 2em;
-  padding-bottom: 2em;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 2em;
+  padding: 2em;
 }
 
 /* ------------------- Courses card ---------------*/
@@ -178,8 +180,9 @@ height: 270px;
 background: linear-gradient(180deg, rgba(58,54,69,1) 44%, rgba(43,40,51,1) 100%);
 padding: 2em;
 border-radius: 7px;
-color:#A7A9BA ;
-box-shadow: 4px 4px 15px  rgba(0, 0, 0, 0.25) ;
+color:#A7A9BA;
+box-shadow: 4px 4px 15px  rgba(0, 0, 0, 0.25);
+cursor: pointer;
 }
 
 .course-main-top {
@@ -400,23 +403,29 @@ width: 320px;
 /* ------------------ New/Edit Course --------*/
 .course-form-container{
   display: flex;
-background-color: #03122f;
-padding: 2em;
-gap: 20px;
-justify-content: space-around;
+  background-color: #131313;
+  padding: 2em 2em 4em;
+  gap: 20px;
+  justify-content: space-around;
 }
 
 .course-data-form{
-  width: 40%;
+  width: 50%;
 }
 
 .course-preview-card{
   width: 40%;
+  margin-top: 2.5em;
 }
 
 .course-video-list-container {
   display: flex;
   align-items: center;
+  background-color: #2B2B2B;
+  border: 1px solid #3F3F3F;
+  padding: 2em 2em;
+  gap: 2em;
+  height: 350px;
 }
 
 .add-new-course-plus{
@@ -572,8 +581,9 @@ justify-content: space-around;
 .card-action {
   display: flex;
   justify-content: space-around;
-  background-color: #222222;
+  background-color: #313131;
   border-radius: 7px;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.164);
   font-size: 0.75rem;
   padding: 0.7em;
   margin-top: 2em;
@@ -651,6 +661,8 @@ dialog h1 {
   flex-direction: column;
   color: azure;
   gap: 10px;
+  max-width: 600px;
+  min-width: 350px;
 }
 
 .edit-form label {
@@ -661,8 +673,8 @@ dialog h1 {
 
 .edit-input,
 .edit-text-area {
-  background-color: #03122f;
-  border: 1px solid #1b5499;
+  background-color: #1d1d1d;
+  border: 1px solid #4A4A4A;
   border-radius: 5px;
   color: #d5e5f8;
   font-size: 16px;
@@ -714,11 +726,11 @@ dialog h1 {
 }
 
 .modal-btn-reset {
-  background-color: #03122f;
+  background-color: #2c2c2c;
   margin-right: 1em;
-  border: 1px solid #97c4fca8;
+  border: 1px solid #2c2c2c;
   box-shadow: 0px 0px 30px rgb(20, 20, 20);
-  color: #83bbff;
+  color: #a8a8a8;
   cursor: pointer;
   transition: 0.5s;
 }
@@ -771,17 +783,30 @@ dialog h1 {
   cursor: pointer;
 }
 
+.login-input {
+  border: none;
+  background-color: #153969;
+  height: 45px;
+  border-radius: 5px;
+  color: #d5e5f8;
+  font-size: 16px;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-weight: 400;
+}
+
+
 /* ------------------------- footer ------------------------- */
 
 footer {
-  /* position: absolute;
-  bottom: 0; */
+
   display: flex;
   justify-content: center;
   background-color: rgb(36, 36, 36);
   box-shadow: 0 -2px #2271d1;
   height: 70px;
   align-items: center;
+  width: 100%;
 }
 
 .footer-logo {

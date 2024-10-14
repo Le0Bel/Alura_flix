@@ -171,7 +171,7 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
                     </div>
                 </div>
                 {courseEditId &&
-                    <div className="course-video-list-container" style={{ height: "200px", padding: "30px", color: "black", backgroundColor: "whitesmoke" }}>
+                    <div className="course-video-list-container">
                     {formData.videos.map(card => <EditableCard key={card.id} title={card.title} image={card.image} id={card.id}
                         className="" handleDelete={handleDeleteVideo} handleEdit={handleEditVideo} />)}
                     <div className='add-new-course-plus' onClick={openNewVideoModal} >
