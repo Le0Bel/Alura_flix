@@ -18,7 +18,7 @@ import CourseDataForm from './components/CourseDataForm'
 
 function App() {
   const [courseList, setCourseList] = useState([])
-  const [courseEditId, setCourseEditId] = useState("")
+  const [courseEdit, setCourseEdit] = useState({ isNewCourse: false, courseEditId: "" })
   const [playingCardId, setPlayingCardId] = useState(null)
   const [activeCourseId, setActiveCourseId] = useState("")
   const [viewed, setViewed] = useState([])
@@ -134,7 +134,7 @@ function App() {
     setPlayingCardId(null)
   }
 
-  async function handleDeleteCourse(e,id) {
+  async function handleDeleteCourse(e, id) {
     e.stopPropagation()
     try {
       const response = await deleteCourse(id)
@@ -148,7 +148,7 @@ function App() {
   }
 
   function cleanCourseToEditState() {
-    setCourseEditId("")
+    setCourseEdit(prev => ({ courseEditId: "", isNewCourse: false }))
   }
 
 
@@ -164,9 +164,9 @@ function App() {
     catch { alert(" Error de conexión con el servidor al agregar video") }
   }
 
-  function selectCourseToEdit(e,id) {
+  function selectCourseToEdit(e, id) {
     e.stopPropagation()
-    setCourseEditId(id)
+    setCourseEdit(prev => ({ ...prev, courseEditId: id }))
   }
 
   async function newCurso(curso) {
@@ -176,7 +176,7 @@ function App() {
       if (response.ok) {
         console.log("Curso agregado correctamente")
         setCourseList(prev => ([...prev, curso])) // actualiza el estado con el nuevo video  
-        setCourseEditId(curso.id)
+        setCourseEdit({ courseEditId: curso.id, isNewCourse: false })
       }
     }
     catch { alert(" Error de conexión con el servidor al agregar el curso") }
@@ -199,6 +199,9 @@ function App() {
     catch { alert(" Error de conexión con el servidor al agregar el curso") }
   }
 
+  function openNewCourseForm() {
+    setCourseEdit(prev => ({ ...prev, isNewCourse: true }))
+  }
 
   function activateEdition() {
     setEditOn(prev => !prev)
@@ -211,9 +214,9 @@ function App() {
     loginRef.current.close()
   }
 
- 
 
-  
+
+
 
   function selectActiveCourse(id) {
     setActiveCourseId(id)
@@ -223,18 +226,18 @@ function App() {
   let playingList = []
   let activeCourseName
   let viewdCounter = 0
-  if (playingCardId){
+  if (playingCardId) {
     const activeCourse = courseList.filter(course => course.id === activeCourseId)[0]
     playingList = activeCourse.videos
     activeCourseName = activeCourse.name
     viewdCounter = playingList.filter(video => viewed.includes(video.id)).length
   }
-  
+   console.log(courseEdit.isNewCourse, courseEdit.courseEditId )
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
 
-      <Header activateEdition={activateEdition} openLogin={openLogin}
+      <Header activateEdition={activateEdition} openLogin={openLogin} openNewCourseForm={openNewCourseForm}
         isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
 
       {playingCardId &&
@@ -249,7 +252,7 @@ function App() {
         </div>
       }
 
-      {!playingCardId &&
+      {!playingCardId && !courseEdit.isNewCourse && !courseEdit.courseEditId &&
         <div className='front-page-main' >
           <div className='banner'>
             <div className='banner-info'>
@@ -275,15 +278,20 @@ function App() {
               {courseList.map(course => <Course key={course.id} id={course.id} {...course} selectActiveCourse={selectActiveCourse}
                 handleDeleteCourse={handleDeleteCourse} selectCourseToEdit={selectCourseToEdit} />)}
             </div>
-            <CourseDataForm courseEditId={courseEditId} courseList={courseList} newCurso={newCurso}
-              editCourse={editCourse} cleanCourseToEditState={cleanCourseToEditState} />
           </div>
         </div>}
+      {user.role === "admin" && (courseEdit.isNewCourse || courseEdit.courseEditId) &&
+        <CourseDataForm courseEditId={courseEdit.courseEditId} courseList={courseList} newCurso={newCurso}
+          editCourse={editCourse} cleanCourseToEditState={cleanCourseToEditState} />
+      }
       <Footer />
 
     </>
   )
+
 }
+
+
 
 export default App
 
