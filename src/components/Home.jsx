@@ -10,6 +10,10 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
    
     const { user } = useContext(AuthContext)
    
+    useEffect(() => {    // al montar el player resetea el scroll a 0 para ue quede visible
+        window.scrollTo(0, 0)
+      }, [])
+
     useEffect(() => { // resetea el player si cambia de video seleccionado
         isPlaying(false)
     }
