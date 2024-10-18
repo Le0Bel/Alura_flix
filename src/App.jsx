@@ -5,10 +5,8 @@ import Header from "./components/Header"
 import Home from "./components/Home"
 import Footer from "./components/Footer"
 import { useState } from 'react'
-import VideoDataForm from './components/VideoDataForm'
 import Login from './components/Login'
 import { AuthContext } from './context/AuthContext'
-import { deleteVideos, editVideo, getVideos, saveNewVideo } from './services/videosCrud'
 import { deleteCourse, getCourses, saveNewCourse, saveEditedCourse } from './services/courses'
 import { getViewedList, saveViewed } from './services/viewedList'
 import PlayList from './components/PlayList'
@@ -41,25 +39,16 @@ function App() {
   }, [])
 
 
-  // Obtener el ultimo video activo de LS, si esta, y lista de ya vistos si el usuario esta logueado del server y si es anonimo de localstorage 
-  /* useEffect(() => {
+  // Obtener la lista de ya vistos si el usuario esta logueado del server  
+  useEffect(() => {
     if (user.role === "user") {
-      if (cardList.length > 0) {
-        if (localStorage.getItem(user.name)) { // lee el local storage y si hay info del ultimo video activo la carga
-          const activeVideo = JSON.parse(localStorage.getItem(user.name))
-          setPlayingCardId(activeVideo.id)
-          startTime.current = (activeVideo.playedSeconds)
-        }
-      }
       if (user.isLogged) {  //usuario loggeado, lee la lista de videos ya vistos del server            
         getViewedList(user.name).then(viewedList => {
           if (viewedList) setViewed(viewedList)
         })
-      }
-      else setViewed(JSON.parse(localStorage.getItem('viewedAnonymous')))  // usuario anonimo, lee la lista de videos ya vistos de localStorage  
+      } else setViewed([]) //limpia para el caso de desloguearse el usuario
     }
-    else setViewed([]) //limpia para el caso de que haga login un Admin (cuando user.role no es user) 
-  }, [user, cardList]) */
+  }, [user])
 
 
   async function handleViewed(id) {  // agrega los videos ya listos a la lista en el srvr o en LS segun usuario loggueado o anonimo y reseta la info del video quw se estaba reproduciendo 
@@ -130,8 +119,13 @@ function App() {
     setPlaying(value)
   }, [])
 
-  function resetPlayingCardId() {
+  function resetEditAndPLayState() {
     setPlayingCardId(null)
+    setCourseEdit({ isNewCourse: false, courseEditId: "" })
+  }
+
+  function cleanCourseToEditState() {
+    setCourseEdit(({ courseEditId: "", isNewCourse: false }))
   }
 
   async function handleDeleteCourse(e, id) {
@@ -145,23 +139,6 @@ function App() {
       }
     }
     catch { alert(" No se pudo eliminar el video por un error de conexión con el servidor") }
-  }
-
-  function cleanCourseToEditState() {
-    setCourseEdit(prev => ({ courseEditId: "", isNewCourse: false }))
-  }
-
-
-  async function newVideo(video) {
-    // hace la llamada  a la Api del server para agregar en el nuevo video
-    try {
-      const response = await saveNewVideo(video)
-      if (response.ok) {
-        console.log("Video agregado correctamente")
-        // setCardList(prev => ([...prev, video])) // actualiza el estado con el nuevo video  
-      }
-    }
-    catch { alert(" Error de conexión con el servidor al agregar video") }
   }
 
   function selectCourseToEdit(e, id) {
@@ -203,8 +180,9 @@ function App() {
     setCourseEdit(prev => ({ ...prev, isNewCourse: true }))
   }
 
-  function activateEdition() {
-    setEditOn(prev => !prev)
+  function selectActiveCourse(id) {
+    setActiveCourseId(id)
+    setPlayingCardId(courseList.filter(course => course.id === id)[0].videos[0].id)
   }
 
   function openLogin() {
@@ -212,15 +190,6 @@ function App() {
   }
   function closeLogin() {
     loginRef.current.close()
-  }
-
-
-
-
-
-  function selectActiveCourse(id) {
-    setActiveCourseId(id)
-    setPlayingCardId(courseList.filter(course => course.id === id)[0].videos[0].id)
   }
 
   let playingList = []
@@ -232,13 +201,14 @@ function App() {
     activeCourseName = activeCourse.name
     viewdCounter = playingList.filter(video => viewed.includes(video.id)).length
   }
-   console.log(courseEdit.isNewCourse, courseEdit.courseEditId )
+
+
   return (
     <>
       <Login loginRef={loginRef} closeLogin={closeLogin} />
 
-      <Header activateEdition={activateEdition} openLogin={openLogin} openNewCourseForm={openNewCourseForm}
-        isPlaying={isPlaying} resetPlayingCardId={resetPlayingCardId} />
+      <Header openLogin={openLogin} showNewCourseButton={!playingCardId && !courseEdit.courseEditId && !courseEdit.isNewCourse}
+        openNewCourseForm={openNewCourseForm} resetEditAndPLayState={resetEditAndPLayState} />
 
       {playingCardId &&
         <div className='player-dashboard-container'>

@@ -1,28 +1,22 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import editVideoSvg from '/edit.svg'
 import lbLogo from "/logo-2.svg"
 
 
 
 
-export default function Header({ activateEdition, openLogin, isPlaying, resetPlayingCardId, openNewCourseForm }) {
+export default function Header({ openLogin, resetEditAndPLayState, showNewCourseButton, openNewCourseForm }) {
 
     const { user, logout } = useContext(AuthContext)
-    const [editVideoBtn, setEditVideoBtn] = useState(false)
 
-    function switchEdit() {
-        activateEdition()
-        setEditVideoBtn(prev => !prev)
-        
-    }
-    
+
+
     return (
         <header>
-            <div className='header-logo-container' onClick={()=> resetPlayingCardId()}>
-            <img src={lbLogo} className="logo" alt="Learning blocks logo" />
-            <p className='logo-letters'>imparo</p>
+            <div className='header-logo-container' onClick={() => resetEditAndPLayState()}>
+                <img src={lbLogo} className="logo" alt="Learning blocks logo" />
+                <p className='logo-letters'>imparo</p>
             </div>
                 
                 {!user.isLogged ? <button className=" login-btn" onClick={openLogin}> Login </button>
