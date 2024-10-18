@@ -51,58 +51,40 @@ function App() {
   }, [user])
 
 
-  async function handleViewed(id) {  // agrega los videos ya listos a la lista en el srvr o en LS segun usuario loggueado o anonimo y reseta la info del video quw se estaba reproduciendo 
-    if (user.role === "user") {
+  async function handleViewed(id) {  // agrega los videos ya listos a la lista en el srvr 
+    if (user.role === "user" && user.isLogged) {
 
-      if (localStorage.getItem(user.name)) { // si el video termino resetea el startTime para que no comienze desde el final si el usuario vuelve clikear el mismo video
-        const activeVideo = JSON.parse(localStorage.getItem(user.name))
-        localStorage.setItem(user.name, JSON.stringify({ ...activeVideo, playedSeconds: 0, played: 0 }))  // resetea el tiempo reproducido
+      if (viewed.includes(id)) return //early return si el video ya fue visto previamente
 
-        if (viewed.includes(id)) return //early return si el video ya fue visto previamente
+      const viewedVideos = { id: user.name, viewed: [...viewed, id] }
 
-        const viewedVideos = { id: user.name, viewed: [...viewed, id] }
-
-        if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
-          try { // hace la llamada  a la Api del server para agregar el video visto a la lista
-            const response = await saveViewed(user.name, viewedVideos)
-            if (response.ok) {
-              console.log("Video agregado a vistos correctamente")
-              setViewed(viewedVideos.viewed) // actualiza el estado con el nuevo video  
-            }
-          }
-          catch { alert(" No se pudo registrar el video como visto en el servidor") }
-        }
-        else {
-          localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideos.viewed))  // para usuario anonimo guarda en localStorage
-          setViewed(viewedVideos.viewed) // actualizo el estado con el nuevo video visto
+      try { // hace la llamada  a la Api del server para agregar el video visto a la lista
+        const response = await saveViewed(user.name, viewedVideos)
+        if (response.ok) {
+          console.log("Video agregado a vistos correctamente")
+          setViewed(viewedVideos.viewed) // actualiza el estado con el nuevo video  
         }
       }
+      catch { alert(" No se pudo registrar el video como visto en el servidor") }
     }
   }
 
 
-
   async function toggleViewed(id) {
-    if (user.role === "user") {
+    if (user.role === "user" && user.isLogged) {
       let viewedVideos // si ya existe elimina la id del video y si no existe en la lista de vistos la agrega
       if (viewed.includes(id)) {
         viewedVideos = { id: user.name, viewed: viewed.filter(viewId => id !== viewId) } //elimina la id}
       }
       else viewedVideos = { id: user.name, viewed: [...viewed, id] }  // agrega la id
 
-      if (user.isLogged) { // para usuario loggueado guarda los vistos en el servidor a nombre del usuario activo
-        try { // hace la llamada  a la Api del server para agregar el video visto a la lista
-          const response = await saveViewed(user.name, viewedVideos)
-          if (response.ok) {
-            setViewed(viewedVideos.viewed) // actualiza el estado con el nuevo video  
-          }
+      try { // hace la llamada  a la Api del server para agregar el video visto a la lista
+        const response = await saveViewed(user.name, viewedVideos)
+        if (response.ok) {
+          setViewed(viewedVideos.viewed) // actualiza el estado con el nuevo video  
         }
-        catch { alert(" Fallo toggle Viewed no se pudo comunicar con en el servidor") }
       }
-      else {
-        localStorage.setItem('viewedAnonymous', JSON.stringify(viewedVideos.viewed))  // para usuario anonimo guarda en localstorage
-        setViewed(viewedVideos.viewed) // actualizo el estado con el nueo video visto
-      }
+      catch { alert(" Fallo toggle Viewed no se pudo comunicar con en el servidor") }
     }
   }
 
@@ -244,16 +226,16 @@ function App() {
           </div>
           <div className='courses-main-container'>
             <h2 className='courses-main-container-title'>Cursos</h2>
-            
+
             {user.role === "admin" && <div className='video-controls-wrapper'>
-                    <button
-                         className="btn new-btn" 
-                         onClick={openNewCourseForm} 
-                         > <span className='add-new-course-plus'> + </span> CREAR CURSO
-                    </button>          
-                </div>
+              <button
+                className="btn new-btn"
+                onClick={openNewCourseForm}
+              > <span className='add-new-course-plus'> + </span> CREAR CURSO
+              </button>
+            </div>
             }
-            
+
             <div className='courses-card-container'>
               {courseList.map(course => <Course key={course.id} id={course.id} {...course} selectActiveCourse={selectActiveCourse}
                 handleDeleteCourse={handleDeleteCourse} selectCourseToEdit={selectCourseToEdit} />)}
