@@ -8,7 +8,7 @@
 body {
   background-color: rgb(89, 88, 88);
   font-family: "Roboto", sans-serif;
-  
+  color: #f8f8f8;
   margin: 0 auto;
 }
 
@@ -47,14 +47,11 @@ header {
 }
 
 .btn {
-  background-color: #2f2f2f;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.212);
+  background-color: transparent;
   border: none;
   color: white;
   cursor: pointer;
-  height: 35px;
-  width: 130px;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .login-btn {
@@ -72,15 +69,14 @@ header {
 }
 
 .new-btn {
-  border-bottom-left-radius: 20px;
-  border-top-left-radius: 20px;
-  border-right: 1px solid rgb(82, 82, 82);
+  border-radius: 5px;
+  padding: 1em 1.5em 1em 0;
+  margin: 2em 2em 1em;
+  display: flex;
+  align-items: center;
+   gap: 1em;
 }
 
-.edit-btn {
-  border-bottom-right-radius: 20px;
-  border-top-right-radius: 20px;
-}
 
 .edit-btn-active {
   background-color: hsl(219, 65%, 60%);
@@ -117,10 +113,6 @@ header {
   justify-content: center;
 }
 
-.video-controls-wrapper {
-  text-align: center;
-}
-
 /* ------------------- Front page Main ---------------*/
 .front-page-main {
   background-color: #1F1F1F;
@@ -138,20 +130,21 @@ header {
 } 
 
 .banner-info {
-  padding:  1em;
+  padding: 1em 3.5em;
 }
+
 .banner-title{
   margin-bottom: 1em;
   font-weight: 400;
 }
 
-.banner-main-text{
+.banner-main-text {
 font-size: 1.5rem;
 color: #DCDCDC;
 text-shadow: 1px 3px 3px rgba(0, 0, 0, 0.774);
 }
 
-.banner-logos-container{
+.banner-logos-container {
   display: flex;
   gap: 3em;
   justify-content: space-around;
@@ -164,13 +157,13 @@ text-shadow: 1px 3px 3px rgba(0, 0, 0, 0.774);
 
 /* ------------------- Courses container ---------------*/
 .courses-main-container {
-  justify-content: space-evenly;
   color: #f5f5f5;
-
+  max-width: 1680px;
+  margin: 0 auto;
 }
 
 .courses-main-container-title {
-  margin-left: 1em;
+  margin-left: 1.5em;
   margin-top: 1.5em;
 }
 
@@ -194,12 +187,14 @@ border-radius: 7px;
 color:#A7A9BA;
 box-shadow: 4px 4px 15px  rgba(0, 0, 0, 0.25);
 cursor: pointer;
+position: relative;
 }
 
 .course-main-top {
   display: flex;
   min-height: 110px;
 }
+
 .course-title {
   font-size: 1.4rem;
   line-height: 2em;
@@ -255,6 +250,25 @@ width: 320px;
  color: #F6FF00;
 }
 
+.card-action-course {
+  display: flex;
+  gap: 40px;
+  position: absolute;
+  right: 2em;
+  top: 15px;
+  fill: rgba(58,54,69,1);
+}
+
+.card-edit-course,
+.card-delete-course  {
+  filter: brightness(0) saturate(100%) invert(58%) sepia(8%) saturate(589%) hue-rotate(218deg) brightness(93%) contrast(91%);
+}
+
+.card-edit-course:hover,
+.card-delete-course:hover {
+  filter: invert(48%) sepia(0%) saturate(397%) hue-rotate(25deg)
+  brightness(116%) contrast(1000%);
+}
 
 
 /* ------------------- Video Player Dashboard ---------------*/
@@ -440,7 +454,7 @@ width: 320px;
 
 .add-new-video-container { 
   display: 	flex;
-  align-items: center;
+  align-items: center; 
   padding: 1em 3em;
   background-color: #353535;
   gap: 10px;
@@ -458,6 +472,18 @@ width: 320px;
   border-radius: 50%;
   background-color: #215CAB;
   cursor: pointer;
+}
+
+.course-finish-btn {
+  margin: 0 0 0 auto;
+  font-size: 1.1rem;
+  background-color: #c09316;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 5px;
+  color: #f8f8f8;
+  cursor: pointer;
+  
 }
 /* ------------------ Cards ------------------ */
 

@@ -24,14 +24,6 @@ export default function Header({ activateEdition, openLogin, isPlaying, resetPla
             <img src={lbLogo} className="logo" alt="Learning blocks logo" />
             <p className='logo-letters'>imparo</p>
             </div>
-                {user.role === "admin" && <div className='video-controls-wrapper'>
-                    <button
-                         className="btn new-btn" 
-                         onClick={openNewCourseForm} 
-                         > <span>➕ NUEVO CURSO </span>
-                    </button>          
-
-                </div>}
                 
                 {!user.isLogged ? <button className=" login-btn" onClick={openLogin}> Login </button>
                     : <div className='logout'>

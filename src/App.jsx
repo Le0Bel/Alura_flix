@@ -274,6 +274,16 @@ function App() {
           </div>
           <div className='courses-main-container'>
             <h2 className='courses-main-container-title'>Cursos</h2>
+            
+            {user.role === "admin" && <div className='video-controls-wrapper'>
+                    <button
+                         className="btn new-btn" 
+                         onClick={openNewCourseForm} 
+                         > <span className='add-new-course-plus'> + </span> CREAR CURSO
+                    </button>          
+                </div>
+            }
+            
             <div className='courses-card-container'>
               {courseList.map(course => <Course key={course.id} id={course.id} {...course} selectActiveCourse={selectActiveCourse}
                 handleDeleteCourse={handleDeleteCourse} selectCourseToEdit={selectCourseToEdit} />)}

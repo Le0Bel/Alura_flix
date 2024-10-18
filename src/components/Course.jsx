@@ -23,14 +23,12 @@ export default function Course({ id, name, description, image, duration, level, 
                 <p className="course-main-bottom-nivel">Nivel: <span>{level}</span></p>
             </div>
             {user.role === "admin" && editable &&
-                <div className='card-action' >
-                    <div className='card-edit' onClick={(e) => selectCourseToEdit(e,id)}>
-                        <img className="svg svg-edit" src="edit.svg" alt="" />
-                        <p>Editar Curso</p>
+                <div className='card-action-course' >
+                    <div className='card-edit-course' onClick={(e) => selectCourseToEdit(e,id)}>
+                        <img className="svg svg-edit-course" src="edit.svg" alt="" />
                     </div>
-                    <div className='card-delete' onClick={(e) => handleDeleteCourse(e, id)}>
+                    <div className='card-delete-course' onClick={(e) => handleDeleteCourse(e, id)}>
                         <img className="svg svg-delete" src="delete.svg" alt="" />
-                        <p>Borrar</p>
                     </div>
                 </div>
             }

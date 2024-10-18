@@ -176,13 +176,16 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
                         + 
                     </div>
                     <p>Agregar Videos</p>
+                    <button className='course-finish-btn'> Finalizar</button>
                 </div>
                 {courseEditId &&
                     <div className="course-video-list-container">
                     {formData.videos.map(card => <EditableCard key={card.id} title={card.title} image={card.image} id={card.id}
                         className="" handleDelete={handleDeleteVideo} handleEdit={handleEditVideo} />)}
                     
-                    </div>}
+                    </div>
+                }
+                
             </div>
         </>
     )
