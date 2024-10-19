@@ -184,12 +184,14 @@ header {
   box-shadow: 4px 4px 15px  rgba(0, 0, 0, 0.25);
   color:#A7A9BA;
   cursor: pointer;
-  padding: 1em;
-  height: 270px;
   padding: 2em;
-  position: relative;
-  width: 500px;
 }
+
+.course-card {
+  height: 270px;
+  position: relative;
+}
+
 
 .course-main-top {
   display: flex;
@@ -438,11 +440,13 @@ header {
 
 .course-data-form{
   width: 50%;
+  margin: 0 auto;
 }
 
 .course-preview-card{
   width: 40%;
   margin-top: 2.5em;
+  border: 1px solid red;
 }
 
 .course-video-list-container {
@@ -460,7 +464,7 @@ header {
   background-color: #353535;
   gap: 10px;
   font-size: 1.125rem;
-  padding: 1em 3em;
+  padding: 1em 7.5em;
 }
 
 .add-new-course-plus{
@@ -681,7 +685,7 @@ dialog h1 {
   flex-direction: column;
   color: azure;
   gap: 10px;
-  max-width: 600px;
+  max-width: 700px;
   min-width: 350px;
 }
 
@@ -851,6 +855,10 @@ footer {
     width: 48%;
     margin-bottom: 1em;
   }
+
+  .add-new-video-container { 
+    padding: 1em 6em;
+  }
 }
 
 @media (max-width:970px) {
@@ -859,8 +867,6 @@ footer {
     padding: 1em 2em;
   }
   
-  
-
   .banner-logos-container {
     justify-content: space-between;
     padding: 0 2em;
@@ -873,6 +879,10 @@ footer {
 
   .course-card {
     margin-bottom: 0.1em;
+  }
+
+  .add-new-video-container { 
+    padding: 1em 4em;
   }
 }
 
@@ -895,6 +905,8 @@ footer {
   .card-action-course {
     right: 68px;
   }
+
+
 
 }
 
