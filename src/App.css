@@ -472,6 +472,7 @@ header {
   gap: 10px;
   font-size: 1.125rem;
   padding: 1em 7.5em;
+  cursor: default;
 }
 
 .add-new-course-plus{
@@ -485,6 +486,12 @@ header {
   font-size: 2.5rem;
   width: 45px;
   height: 45px;
+}
+
+.add-new-course-plus.disabled{
+  background-color: #bdbdbd;
+  cursor:default;
+  pointer-events: none;
 }
 
 .course-finish-btn {

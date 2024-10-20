@@ -164,8 +164,10 @@ function App() {
 
   function selectActiveCourse(id) {
     setActiveCourseId(id)
-    setPlayingCardId(courseList.filter(course => course.id === id)[0].videos[0].id)
-  }
+    if (courseList.filter(course => course.id === id)[0].videos[0]) {
+      setPlayingCardId(courseList.filter(course => course.id === id)[0].videos[0]?.id)// si hay videos en el curso setea el primer
+    }else alert(" Este curso no posee videos disponibles")                                                                                 //  como activo en el player
+  }                                                                             
 
   function openLogin() {
     loginRef.current.showModal()
