@@ -4,7 +4,6 @@ import Card from './Card'
 export default function PlayList({ playingList, toggleViewed, viewed, handleDelete, handleEdit, selectAsActiveCard,
     activeCourseName, playingCardId }) {
 
-        console.log(viewed)
     return (
         <div className='playing-list-container'>
             <h1 className='category1-title'> {activeCourseName.toUpperCase()}</h1>

@@ -37,7 +37,7 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
     }
 
     function savePlayedInfo(info) {  // guarda la informacion del video activo 
-        if (user.role === "user") {
+        if (user.role === "user" && user.isLogged) {
             let activeVideo = { id: playingCardId, playedSeconds: info.playedSeconds, playedPercent: info.played }
             localStorage.setItem(user.name, JSON.stringify(activeVideo))  //  guarda en localstorage el video activo y tiempo reproducido para el usuario actual
             startTime.current = info.playedSeconds // actualiza la referencia de startime para que si se activa y desactiva el play el video comienze de donde estaba
@@ -83,6 +83,7 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
                                 <p>0%</p>
                                 <p>25%</p>
                                 <p>50%</p>
+                                <p>75%</p>
                                 <p>100%</p>
                             </div>
 
@@ -97,7 +98,6 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
                     </div>
 
                     <img src='/slashcamera.svg' className="player-img" alt="" />
-
                 </section>
             }
 

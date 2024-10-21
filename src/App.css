@@ -205,6 +205,13 @@ header {
   min-height: 45px;
 }
 
+.course-title.preview {
+  color: #d71919;
+  font-size: 1.4rem;
+  line-height: 2em;
+  min-height: 45px;
+}
+
 .course-main-top {
   display: flex;
   justify-content: space-between;
@@ -465,6 +472,7 @@ header {
   gap: 10px;
   font-size: 1.125rem;
   padding: 1em 7.5em;
+  cursor: default;
 }
 
 .add-new-course-plus{
@@ -478,6 +486,12 @@ header {
   font-size: 2.5rem;
   width: 45px;
   height: 45px;
+}
+
+.add-new-course-plus.disabled{
+  background-color: #bdbdbd;
+  cursor:default;
+  pointer-events: none;
 }
 
 .course-finish-btn {
@@ -992,6 +1006,7 @@ footer {
       font-size: 1.125rem;
     }
 
+   
     .course-main-top {
       margin-top: 0 ;
     }

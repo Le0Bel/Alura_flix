@@ -4,14 +4,15 @@
       "id": "user",
       "viewed": [
         "i0mysDUfo8kgQhVjAwhp8",
-        "KOkz2jfMSKBGTW4ofQ9BR"
+        "KOkz2jfMSKBGTW4ofQ9BR",
+        "bd-51rF-_kO4cDm3gcwhN"
       ]
     }
   ],
   "courses": [
     {
       "id": "2",
-      "name": " HTML Avanzado ",
+      "name": " HTML Avanzado  1",
       "description": "Descripción del curso, no hace falta que sea muy larga la descripción, dos o tres líneas de texto estaría bastante bien",
       "image": "./logos/html.svg",
       "duration": "50h",
@@ -134,6 +135,15 @@
           "video": ""
         }
       ]
+    },
+    {
+      "id": "bkQJQqTkew3RgoIQBrII7",
+      "name": "sdasd",
+      "image": "dadaw",
+      "description": "dawdw",
+      "duration": "dawd",
+      "level": "dwa",
+      "videos": []
     }
   ]
 }

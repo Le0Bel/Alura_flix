@@ -40,12 +40,12 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
         e.preventDefault();
         if (courseEditId) {
             // Esta en modo edicion 
-            const editedCourse = {...formData}
+            const editedCourse = { ...formData }
             editCourse(editedCourse)
+            cleanCourseToEditState() // al resetear este estado sale del modo de edición
         } else {   // Si esta vacio cardToEditId estamso en modo nuevo video
             const curso = { ...formData, id: nanoid() }
-            console.log(curso)
-            newCurso(curso) // agrega el curso una vez agregado el curso pasa al modo ediccion para poder agregarle los videos
+            newCurso(curso) // agrega el curso, una vez agregado pasa al modo ediccion para poder agregarle los videos
         }
     }
 
@@ -64,25 +64,25 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
 
     async function handleDeleteVideo(id) {
         // Modifica el estado Formdata con la lista de videos actualizada y llama la API para guardar el curso modificado 
-        const updatedCourse = {...formData, videos:formData.videos.filter(vid => vid.id !==id)}
+        const updatedCourse = { ...formData, videos: formData.videos.filter(vid => vid.id !== id) }
         editCourse(updatedCourse)
     }
 
     function addNewVideo(newVideo) {
         // agrega un video a la lista de videos y llama la API para guardar el curso modificado 
-        const updatedCourse = {...formData, videos:[...formData.videos, newVideo]}
+        const updatedCourse = { ...formData, videos: [...formData.videos, newVideo] }
         editCourse(updatedCourse)
-    } 
+    }
 
-    function saveEditedVideoList (video) {
+    function saveEditedVideoList(video) {
         // Modifica el estado Formdata con la lista de videos actualizada y llama la API para guardar el curso modificado 
-        const updatedVideoList = formData.videos.map( vid => { 
-            if(vid.id !== video.id) return vid
+        const updatedVideoList = formData.videos.map(vid => {
+            if (vid.id !== video.id) return vid
             else return video
         })
-        const updatedCourse = {...formData, videos:updatedVideoList}
+        const updatedCourse = { ...formData, videos: updatedVideoList }
         editCourse(updatedCourse)
-    } 
+    }
 
     function handleChange(event) {
         const id = event.target.id
@@ -103,7 +103,7 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
 
     return (
         <>
-            {user.role === "admin" && courseEditId && 
+            {user.role === "admin" && courseEditId &&
                 <VideoDataForm videoDataRef={videoDataRef} cardEditId={cardEditId} videoToEdit={videoToEdit}
                     cleanCardToEditState={cleanVideoToEditState} saveEditedVideoList={saveEditedVideoList} addNewVideo={addNewVideo} />
             }
@@ -155,7 +155,11 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
 
                             <div className="modal-btn">
                                 <button type="button" className="modal-btn-reset" onClick={cleanCourseToEditState}>Cancelar</button>
-                                <button type="submit" className="modal-btn-submit">Guardar</button>
+                                <button
+                                    type="submit"
+                                    className="modal-btn-submit">
+                                    {courseEditId ? "Guardar Cambios" : "Crear Curso"}
+                                </button>
                             </div>
 
                         </form>
@@ -170,22 +174,21 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
                         />
                     </div>
                 </div>
-                
-                <div className='add-new-video-container'>
-                    <div className='add-new-course-plus' onClick={openNewVideoModal} >
-                        + 
+
+                <div className='add-new-video-container '>
+                    <div className={`add-new-course-plus ${!courseEditId ? "disabled" : ""}` } onClick={openNewVideoModal} >
+                        +
                     </div>
                     <p>Agregar Videos</p>
-                    <button className='course-finish-btn'> Finalizar</button>
                 </div>
                 {courseEditId &&
                     <div className="course-video-list-container">
-                    {formData.videos.map(card => <EditableCard key={card.id} title={card.title} image={card.image} id={card.id}
-                        className="" handleDelete={handleDeleteVideo} handleEdit={handleEditVideo} />)}
-                    
+                        {formData.videos.map(card => <EditableCard key={card.id} title={card.title} image={card.image} id={card.id}
+                            className="" handleDelete={handleDeleteVideo} handleEdit={handleEditVideo} />)}
+
                     </div>
                 }
-                
+
             </div>
         </>
     )
