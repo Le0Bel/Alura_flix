@@ -77,7 +77,7 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
                             </div>
                         </div>
                         <div className="progress-bar-container">
-                            <p>Progreso de la colección</p>
+                            <p>Progreso del curso</p>
                             <progress  value={playingList.length!==0 ?viewedCounter/playingList.length : 0 } className="progress"> </progress>
                             <div className="progress-bar-labels">
                                 <p>0%</p>
