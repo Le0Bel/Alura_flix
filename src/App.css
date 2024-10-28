@@ -461,8 +461,16 @@ header {
   display: flex;
   background-color: #2B2B2B;
   gap: 2em;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 1em 2em;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.course-video-list-container .video-card-container {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .add-new-video-container { 
@@ -474,6 +482,8 @@ header {
   padding: 1em 7.5em;
   cursor: default;
 }
+
+
 
 .add-new-course-plus{
   display: flex;
@@ -494,17 +504,9 @@ header {
   pointer-events: none;
 }
 
-.course-finish-btn {
-  background-color: #c09316;
-  border: none;
-  border-radius: 5px;
-  color: #f8f8f8;
-  cursor: pointer;
-  font-size: 1.1rem;
-  padding: 0.5em 1em;
-  margin: 0 0 0 auto;
-  
-}
+
+
+
 /* ------------------ Cards ------------------ */
 
 

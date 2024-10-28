@@ -5,6 +5,8 @@ import { AuthContext } from '../context/AuthContext';
 import Course from './Course';
 import EditableCard from './EditableCard';
 import VideoDataForm from './VideoDataForm';
+import { Reorder } from "framer-motion"
+
 
 const DOT_30 = "........................"
 const DOT_3L = "....................................................\n" +
@@ -95,6 +97,11 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
         })
     }
 
+    function updateVideos(updatedVideoList) {
+        console.log(updatedVideoList)
+        setFormData(prev => ({ ...prev, videos: updatedVideoList }))
+    }
+
     let videoToEdit = null
     if (courseEditId && cardEditId) { // encuentra el video seleccionado en caso de activarse la edicion de un video de un curso 
         const courseToEdit = courseList.filter(course => course.id === courseEditId)[0]
@@ -176,20 +183,32 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
                 </div>
 
                 <div className='add-new-video-container '>
-                    <div className={`add-new-course-plus ${!courseEditId ? "disabled" : ""}` } onClick={openNewVideoModal} >
+                    <div className={`add-new-course-plus ${!courseEditId ? "disabled" : ""}`} onClick={openNewVideoModal} >
                         +
                     </div>
                     <p>Agregar Videos</p>
                 </div>
                 {courseEditId &&
-                    <div className="course-video-list-container">
-                        {formData.videos.map(card => <EditableCard key={card.id} title={card.title} image={card.image} id={card.id}
-                            className="" handleDelete={handleDeleteVideo} handleEdit={handleEditVideo} />)}
 
-                    </div>
+                    <Reorder.Group as="div" axis="x" className="course-video-list-container"
+                        layoutScroll values={formData.videos} onReorder={updateVideos}>
+
+                        {formData.videos.map(card =>
+                            <Reorder.Item className='video-card-container' key={card.id} value={card}>
+                                <EditableCard title={card.title} image={card.image} id={card.id}
+                                    handleDelete={handleDeleteVideo} handleEdit={handleEditVideo} />
+                            </Reorder.Item>
+                        )}
+
+                    </Reorder.Group>
+
+
+
+
+
                 }
 
-            </div>
+            </div >
         </>
     )
 }
