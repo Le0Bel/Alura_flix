@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: rgb(89, 88, 88);
+  background-color: #2B2B2B;
   font-family: "Roboto", sans-serif;
   color: #f8f8f8;
   margin: 0 auto;
@@ -159,7 +159,7 @@ header {
 
 .courses-main-container {
   color: #f5f5f5;
-  max-width: 1680px;
+  max-width: 1520px;
   margin: 0 auto;
 }
 
@@ -174,6 +174,8 @@ header {
   flex-wrap: wrap;
   gap: 2em;
   padding: 2em;
+  width: 1520px;
+  margin: 0 auto;
 }
 
 /* ------------------- Courses card ---------------*/
@@ -185,17 +187,19 @@ header {
   color:#A7A9BA;
   cursor: pointer;
   padding: 2em;
-}
-
-.course-card {
   height: 270px;
   position: relative;
 }
 
+.course-card.preview {
+  border: 1px solid white;
+  max-width: 550px;
+}
 
 .course-main-top {
   display: flex;
   min-height: 110px;
+  gap: 1.2em;
 }
 
 .course-title {
@@ -224,7 +228,8 @@ header {
   margin-top: 1em;
   line-height: 1.3;
   white-space: pre-wrap;
-  width: 320px;
+  max-width: 450px;
+  
 }
 
 .course-logo {
@@ -284,31 +289,42 @@ header {
 
 /* ------------------- Video Player Dashboard ---------------*/
 .player-dashboard-container {
-  background-color: rgb(31, 31, 31);
+  background-color: #2B2B2B;
   display: flex;
 }
 
+
 /*-------- Playing List (active in player mode only) --------- */
+
+.player-dashboard-container {
+  display: flex;
+  justify-content: center;
+  max-width: 1650px;
+  margin: 0 auto;
+}
+
 .playing-list-container {
   display: flex;
-  align-items: center;
   flex-direction: column;
-  justify-content: start;
-  color: white;
-  height: 100%;
-  margin-right: 1em;
+  align-items: center;
+  border-radius: 10px;
+  height: 95vh;
+  padding: 1.5em;
   margin-top: 0.8em ;
+  margin-right: 1em;
+  margin-bottom: 1em;
+  background-color: #202020;
+  overflow-y: scroll;
 }
 
 .playing-list-container h1 {
   background-color: rgb(52, 52, 52);
-  border: 1px solid #5f5f5f;
   border-radius: 7px;
   display: inline;
   font-size: 1.1rem;
   font-weight: 400;
-  padding: 0.3em 0.8em;
-  margin-bottom: 0.5em;
+  padding: 0.7em;
+  margin-bottom: 1em;
   text-align: center;
   width: 100%;
 }
@@ -320,16 +336,19 @@ header {
   max-width: 260px;
 }
 
-/* ------------------ Video Player section ------------------ */
 .hero {
   aspect-ratio: 16 / 9;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.205);
   color: white;
-  height: auto;
+  
   padding: 9px 15px;
-  position: relative;
-  overflow: hidden;
+  
   width: 100%;
+}
+
+.video-img-wrapper ,
+.hero-info, 
+.hero {
+  max-width: 1200px;
 }
 
 .video-img-wrapper {
@@ -337,7 +356,6 @@ header {
   align-items: center;
   display: flex;
   background-image: url("./Images/frontend_background.jpg");
-  border-bottom: 1px solid rgb(83, 83, 83);
   border-radius: 7px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.295);
   gap: 1.5em;
@@ -355,7 +373,6 @@ header {
   align-items: start;
   background-color: rgb(24, 24, 24);
   border-radius: 7px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.295);
   height: auto;
   overflow: hidden;
   margin-top: 5px;
@@ -365,15 +382,13 @@ header {
 .player-img {
   border-radius: 10px;
   object-fit: cover;
-  width: 50%;
+  
 }
 
 .hero-info {
-  background-color: #2b2b2b;
+  background-color: #363636;
   border-radius: 7px;
   color: #f5f5f5;
-  display: flex;
-  flex-direction: column;
   padding: 1.5em;
   margin-top: 15px;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.705);
@@ -392,6 +407,10 @@ header {
   width: 75%;
 }
 
+.playing-list-container .card {
+  max-width: 400px; 
+}
+
 .hero-info-top-right {
   align-items: center;
   display: flex;
@@ -400,30 +419,38 @@ header {
   width: 15%;
 }
 
-.hero-info-top-right .video-counter {
+.hero-info-top-right {
   font-size: 1.8rem;
   font-weight: 300;
 }
 
+.video-counter {
+  font-size: 1.2rem;
+  
+}
+
 .hero-info-top-left .hero-info-title {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  line-height: 1;
   margin-bottom: 0.5em;
 }
 
 .hero-info-top-left .hero-info-text {
+  font-size: 15px;
   font-weight: 300;
-  font-size: 1rem;
-  font-weight: 300;
+  color: rgb(194, 194, 194);
 }
+
+
 
 .progress-bar-container {
   margin-top: 15px;
 }
+
 .progress {
   height: 1.3rem;
   width: 85%;
+  
 }
 
 .progress-bar-labels {
@@ -431,7 +458,40 @@ header {
   justify-content: space-between;
   font-size: 0.8rem;
   width: 85%;
+  color: rgb(194, 194, 194);
 }
+
+/* scrollbars*/
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: #444444;
+  border-radius: 20px;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(140, 130, 233);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(96, 87, 179); 
+  border-radius: 10px;
+  height: 100px;
+  height: 100px;
+}
+
+
+
 
 /* End of hero/player section */
 
@@ -453,7 +513,6 @@ header {
 .course-preview-card{
   width: 40%;
   margin-top: 2.5em;
-  border: 1px solid red;
 }
 
 .course-video-list-container {
@@ -479,7 +538,7 @@ header {
   background-color: #353535;
   gap: 10px;
   font-size: 1.125rem;
-  padding: 1em 7.5em;
+  padding: 1em 6em;
   cursor: default;
 }
 
@@ -508,7 +567,6 @@ header {
 
 
 /* ------------------ Cards ------------------ */
-
 
 .section-frame {
   display: flex;
@@ -671,10 +729,10 @@ dialog {
 }
 
 .edit-container {
-  background-color: #03122f;
-  border: 1px solid #133866;
+  background-color: #222222;
+  border: 1px solid #363636;
   border-radius: 15px;
-  color: #2271d1;
+  color: #c2c2c2;
   height: 80%;
   max-width: 800px;
   padding: 3em 5em;
@@ -701,8 +759,9 @@ dialog h1 {
   flex-direction: column;
   color: azure;
   gap: 10px;
-  max-width: 700px;
-  min-width: 350px;
+  
+  max-width: 650px;
+  margin: 0 auto;
 }
 
 .edit-form label {
@@ -795,7 +854,7 @@ dialog h1 {
 /* ------------------------- login screen -------------------------*/
 
 .login-container {
-  height: 50vh;
+  height: 420px;
   max-width: 500px;
   margin-top: 4em;
   background: linear-gradient(
@@ -861,19 +920,34 @@ footer {
   }
   
   .courses-card-container {
-    justify-content: space-between;
-    
+    justify-content: space-between; 
     margin: 0 auto;
     width: 100%;
   }
 
+  .course-preview-card {
+    width: 46%;
+  }
+  
   .course-card {
     width: 48%;
     margin-bottom: 1em;
   }
 
+  .course-card.preview {
+    width: 100%;
+  }
+  
   .add-new-video-container { 
-    padding: 1em 6em;
+    padding: 1em 3em;
+  }
+
+  .new-btn {
+    margin: 2em 2em 1em;
+  }
+
+  .course-video-list-container {
+    justify-content: space-between;
   }
 }
 
@@ -897,23 +971,35 @@ footer {
     margin-bottom: 0.1em;
   }
 
-  .add-new-video-container { 
-    padding: 1em 4em;
+  /* create - edit course & videos */
+  
+  .edit-form {
+    width: 100%;
+  }
+  
+  .course-preview-card {
+    width: 46%;
+  }
+  
+  .course-card.preview {
+    width: 100%;
+    padding: 1.5em;
+    height: 260px;
   }
 }
 
-@media (max-width:815px) {
+@media (max-width:863px) {
 
-
+  .courses-main-container-title {
+    margin-left: 2em;
+  }
 
   .courses-card-container {
     justify-content: center;
   }
 
-
-  
-  .course-card {
-    width: 93%;
+   .course-card {
+    width: 90%;
     padding-left: 4em;
     padding-right: 4em;
   }
@@ -922,9 +1008,80 @@ footer {
     right: 68px;
   }
 
+  .new-btn {
+    margin: 2em 1em 1em 3em;
+  }
 
+  /* create - edit course & videos */
+  
+  .course-card.preview {
+    height: 220px;
+  }
+
+  .course-title.preview {
+    font-size: 20px;
+  }
+  
+  .course-main-top.preview {
+    margin-top: 0;
+  }
+
+  .course-description.preview {
+    font-size: 0.8125rem;
+  }
+
+  .course-main-bottom.preview {
+    margin-top: 0.4em;
+  }
+  
+  .course-logo {
+    text-align: right;
+  }
+  
+  .course-logo.preview img {
+    width: 68px;
+  }
+
+  .course-video-list-container {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .course-video-list-container .card {
+    max-width: 320px;
+  }
 
 }
+
+@media (max-width:758px) {
+    
+  /* create - edit course & videos */
+
+    .course-form-container {
+      justify-content: flex-start;
+    }
+    
+    .course-preview-card {
+      display: none;
+    }
+
+    .course-form-container {
+      width: 100%;
+    }
+    
+    .course-data-form {
+      width: 75%;
+    }
+    
+    .edit-form {
+      max-width: none;
+      min-width: none;
+      width: 100%;  
+    }
+
+   
+}
+
 
 @media (max-width:550px) {
  
@@ -982,6 +1139,56 @@ footer {
   .banner-main-text{
     font-size: 1.125rem;
   }
+
+  .courses-main-container-title {
+    margin-left: 1em;
+  }
+  
+  .course-data-form {
+    width: 85%;
+  }
+
+  .new-btn {
+    margin: 1.5em 1em;
+  }
+  
+  /* Edit-create course */
+  
+  .add-new-video-container {
+    justify-content: center;
+  }
+
+  .course-video-list-container {
+    justify-content: center;
+    padding-top: 2em;
+  }
+
+  .course-video-list-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /*  Edit-create video */
+
+  .edit-container, 
+  .edit-form {
+    padding: 2em 1.5em;
+  }
+
+  .edit-container h1 {
+    margin: 0;
+    padding-left: 0.6em;
+  }
+
+}
+
+@media (max-width: 455px) {
+  /* ------------------------- login screen -------------------------*/
+
+.login-container {
+  padding: 2em;
+}
+
 }
 
 @media (max-width:375px) {
@@ -1031,134 +1238,34 @@ footer {
       top: 7px;
     }
 
+    /* edit-create course */
     
+    .course-form-container {
+      padding: 0;
+    }
+    
+    .edit-input,
+    .edit-text-area {
+     font-size: 0.875rem;
+    }
+    
+    .course-data-form {
+      width: 100%;
+    }
+
+    /* edit-new video */
+    
+    dialog .edit-container {
+      padding: 2em 0.7em;
+      border-radius: 0;
+      border: none;
+    }
+
+    dialog {
+      padding: 0;
+    }
+
     
 }
 
 
-/*@media (min-width: 900px) {
-  header,
-  .cards-container-spacer,
-  .cards-container,
-  footer {
-    margin: 0 auto;
-  }
-
-  .hero {
-    width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    overflow: visible;
-    aspect-ratio: unset;
-  }
-
-  .video-player-wrapper {
-    background-color: rgb(24, 24, 24);
-    z-index: 200;
-  }
-
-  .cards-container-spacer {
-    max-height: 564px;
-  }
-}
-
-@media (max-width: 600px) {
-  header {
-    padding: 1em;
-  }
-
-  .logo {
-    height: 20px;
-  }
-
-  .video-controls-wrapper {
-    display: flex;
-    background-color: rgb(44, 44, 44);
-    border-top: 1px solid rgb(61, 84, 209);
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 70px;
-    width: 100%;
-    box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.26);
-  }
-
-  .video-img-wrapper {
-    height: 100%;
-    padding: 1em;
-    width: 100%;
-  }
-
-  .player-img,
-  .hero-info {
-    width: 50%;
-  }
-
-  .player-img {
-    border-radius: 5px;
-  }
-
-  .hero-info-category {
-    font-size: 1rem;
-  }
-
-  .hero-info-title {
-    margin-bottom: 0.5em;
-    font-size: 0.875rem;
-  }
-
-  .hero-info {
-    overflow: hidden;
-  }
-
-  .hero-info {
-    font-size: 0.7rem;
-    line-height: 1.3;
-    font-weight: 300;
-  }
-
-  .cards-container {
-    padding: 2em 1em 5.5em;
-  }
-
-  .section-frame {
-    margin: 20px 0 25px;
-  }
-
-  .card {
-    margin: 0 0 1em;
-  }
-}
-
-@media (max-width: 470px) {
-  /* login screen */
-
-/*  dialog {
-    padding: 0;
-  }
-
-  .edit-container {
-    border-radius: 0;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    margin: auto auto;
-    padding: 3em 3em;
-  }
-
-  .login-container {
-    height: 55vh;
-    width: 100%;
-  }
-
-  .edit-input {
-    height: 40px;
-  }
-
-  .card {
-    max-width: 85%;
-    aspect-ratio: unset;
-  }
-}*/
