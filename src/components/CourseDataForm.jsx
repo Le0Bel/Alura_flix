@@ -102,6 +102,7 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
         setFormData(prev => ({ ...prev, videos: updatedVideoList }))
     }
 
+
     let videoToEdit = null
     if (courseEditId && cardEditId) { // encuentra el video seleccionado en caso de activarse la edicion de un video de un curso 
         const courseToEdit = courseList.filter(course => course.id === courseEditId)[0]
@@ -190,7 +191,7 @@ export default function CourseDataForm({ courseEditId, courseList, newCurso, edi
                 </div>
                 {courseEditId &&
 
-                    <Reorder.Group as="div" axis="x" className="course-video-list-container"
+                    <Reorder.Group as="div" axis="x" className="course-video-list-container" 
                         layoutScroll values={formData.videos} onReorder={updateVideos}>
 
                         {formData.videos.map(card =>

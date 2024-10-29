@@ -39,14 +39,18 @@ function App() {
   }, [])
 
 
-  // Obtener la lista de ya vistos si el usuario esta logueado del server  
+  // Obtener la lista de ya vistos si el usuario esta logueado del server y limpia estados al desloguearse
   useEffect(() => {
     if (user.role === "user") {
       if (user.isLogged) {  //usuario loggeado, lee la lista de videos ya vistos del server            
         getViewedList(user.name).then(viewedList => {
           if (viewedList) setViewed(viewedList)
         })
-      } else setViewed([]) //limpia para el caso de desloguearse el usuario
+      } else {  //limpia para el caso de desloguearse el usuario
+        setViewed([])
+        setCourseEdit({ isNewCourse: false, courseEditId: "" })
+        setPlayingCardId("")
+      }
     }
   }, [user])
 
