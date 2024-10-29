@@ -462,28 +462,28 @@ header {
 }
 
 /* scrollbars*/
-::-webkit-scrollbar {
+.playing-list-container::-webkit-scrollbar {
   width: 6px;
 }
 
 
-::-webkit-scrollbar-track {
+.playing-list-container::-webkit-scrollbar-track {
   background: #444444;
   border-radius: 20px;
 }
 
 
-::-webkit-scrollbar-thumb {
+.playing-list-container::-webkit-scrollbar-thumb {
   background: #888;
 }
 
 
-::-webkit-scrollbar-thumb:hover {
+.playing-list-container::-webkit-scrollbar-thumb:hover {
   background: rgb(140, 130, 233);
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+.playing-list-container::-webkit-scrollbar-thumb {
   background: rgb(96, 87, 179); 
   border-radius: 10px;
   height: 100px;
