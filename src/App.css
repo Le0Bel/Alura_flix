@@ -178,11 +178,9 @@ header {
 /* ------------------- Courses card ---------------*/
 
 .course-card {
-  background: linear-gradient(
-    180deg,
-    rgba(58, 54, 69, 1) 44%,
-    rgba(43, 40, 51, 1) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(58, 54, 69, 1) 44%,
+      rgba(43, 40, 51, 1) 100%);
   border-radius: 7px;
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
   color: #a7a9ba;
@@ -276,14 +274,12 @@ header {
 
 .card-edit-course,
 .card-delete-course {
-  filter: brightness(0) saturate(100%) invert(58%) sepia(8%) saturate(589%)
-    hue-rotate(218deg) brightness(93%) contrast(91%);
+  filter: brightness(0) saturate(100%) invert(58%) sepia(8%) saturate(589%) hue-rotate(218deg) brightness(93%) contrast(91%);
 }
 
 .card-edit-course:hover,
 .card-delete-course:hover {
-  filter: invert(48%) sepia(0%) saturate(397%) hue-rotate(25deg)
-    brightness(116%) contrast(1000%);
+  filter: invert(48%) sepia(0%) saturate(397%) hue-rotate(25deg) brightness(116%) contrast(1000%);
 }
 
 /* ------------------- Video Player Dashboard ---------------*/
@@ -354,6 +350,7 @@ header {
   align-items: center;
   display: flex;
   background-image: url("./Images/frontend_background.jpg");
+  background-size: contain;
   border-radius: 7px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.295);
   gap: 1.5em;
@@ -605,19 +602,35 @@ header {
   min-width: 250px;
   max-width: 260px;
   padding: 0.8em 0.8em 1.3em 0.8em;
+  border: solid 1px  transparent;
+}
+
+.video-card-container .card {
+  cursor: grab;
 }
 
 .card.selected-card {
-  background-color: #8a8a8a2b;
+  background-color: #8a8a8a41;
+  border: solid 1px  #a8a7a735;
 }
 
 .drag-anchor {
   transform: rotate(90deg);
   border-radius: 100%;
-  background-color: #5f5f5fd9;
-  cursor:move;
+  background-color: #5f5f5fa8;
+  opacity: 0;
+  transition: opacity 0.25s ease-in;
+  -webkit-transition: opacity 0.25s ease-in;
+  -moz-transition: opacity 0.25s ease-in;
 }
 
+.video-card-container:hover .drag-anchor {
+  opacity: 1;
+  transition: opacity 0.25s ease-out;
+  -webkit-transition: opacity 0.25s ease-out;
+  -moz-transition: opacity 0.25s ease-out;
+
+}
 
 .card-img {
   display: flex;
@@ -698,14 +711,12 @@ header {
 .card-edit:hover,
 .card-delete:hover {
   color: white;
-  filter: invert(48%) sepia(0%) saturate(397%) hue-rotate(25deg)
-    brightness(116%) contrast(1000%);
+  filter: invert(48%) sepia(0%) saturate(397%) hue-rotate(25deg) brightness(116%) contrast(1000%);
 }
 
 .svg {
   width: 20px;
-  filter: invert(48%) sepia(5%) saturate(397%) hue-rotate(25deg)
-    brightness(116%) contrast(80%);
+  filter: invert(48%) sepia(5%) saturate(397%) hue-rotate(25deg) brightness(116%) contrast(80%);
 }
 
 /* ------------------ Modal ------------------ */
@@ -851,11 +862,9 @@ dialog h1 {
   height: 420px;
   max-width: 500px;
   margin-top: 4em;
-  background: linear-gradient(
-    180deg,
-    rgba(29, 27, 50, 1) 44%,
-    rgba(24, 43, 78, 1) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(29, 27, 50, 1) 44%,
+      rgba(24, 43, 78, 1) 100%);
 }
 
 .login-title {

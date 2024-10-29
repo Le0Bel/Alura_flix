@@ -201,7 +201,7 @@ function App() {
       {playingCardId &&
         <div className='player-dashboard-container'>
 
-          <Home playingCardId={playingCardId} playingList={playingList} viewedCounter={viewdCounter} handleViewed={handleViewed} startTime={startTime}
+          <Home playingCardId={playingCardId} playingList={playingList} viewedCounter={viewdCounter} handleViewed={handleViewed}
             playing={playing} isPlaying={isPlaying} />
 
           <PlayList playingList={playingList} toggleViewed={toggleViewed} viewed={viewed} activeCourseName={activeCourseName}
