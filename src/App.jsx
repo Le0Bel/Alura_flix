@@ -39,14 +39,18 @@ function App() {
   }, [])
 
 
-  // Obtener la lista de ya vistos si el usuario esta logueado del server  
+  // Obtener la lista de ya vistos si el usuario esta logueado del server y limpia estados al desloguearse
   useEffect(() => {
     if (user.role === "user") {
       if (user.isLogged) {  //usuario loggeado, lee la lista de videos ya vistos del server            
         getViewedList(user.name).then(viewedList => {
           if (viewedList) setViewed(viewedList)
         })
-      } else setViewed([]) //limpia para el caso de desloguearse el usuario
+      } else {  //limpia para el caso de desloguearse el usuario
+        setViewed([])
+        setCourseEdit({ isNewCourse: false, courseEditId: "" })
+        setPlayingCardId("")
+      }
     }
   }, [user])
 
@@ -197,7 +201,7 @@ function App() {
       {playingCardId &&
         <div className='player-dashboard-container'>
 
-          <Home playingCardId={playingCardId} playingList={playingList} viewedCounter={viewdCounter} handleViewed={handleViewed} startTime={startTime}
+          <Home playingCardId={playingCardId} playingList={playingList} viewedCounter={viewdCounter} handleViewed={handleViewed}
             playing={playing} isPlaying={isPlaying} />
 
           <PlayList playingList={playingList} toggleViewed={toggleViewed} viewed={viewed} activeCourseName={activeCourseName}

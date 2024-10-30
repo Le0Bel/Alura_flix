@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import ReactPlayer from 'react-player'
 
-export default function Home({ playingCardId, playingList, viewedCounter, handleViewed, startTime, playing, isPlaying }) {
+export default function Home({ playingCardId, playingList, viewedCounter, handleViewed, playing, isPlaying }) {
 
     const playingCard = playingList.filter(card => card.id === playingCardId)[0]
     const refPlayer = useRef(null)
@@ -24,24 +24,9 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
     }
         , [user.isLogged, isPlaying])
 
-
-    function checkStart() {   // Si el video ya estaba empezado lo continua desde donde habia quedado (segun lo que guarda en LS la funcion savePlayedInfo)
-        if (startTime.current > 0) {
-            refPlayer.current.seekTo(startTime.current)
-        }
-    }
-
     function handleOnEnded() {
         isPlaying(false)
         handleViewed(playingCardId)
-    }
-
-    function savePlayedInfo(info) {  // guarda la informacion del video activo 
-        if (user.role === "user" && user.isLogged) {
-            let activeVideo = { id: playingCardId, playedSeconds: info.playedSeconds, playedPercent: info.played }
-            localStorage.setItem(user.name, JSON.stringify(activeVideo))  //  guarda en localstorage el video activo y tiempo reproducido para el usuario actual
-            startTime.current = info.playedSeconds // actualiza la referencia de startime para que si se activa y desactiva el play el video comienze de donde estaba
-        }
     }
 
     return (
@@ -51,7 +36,8 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
                 <section className="hero">
 
                     {!playing ?
-                        <div className="video-img-wrapper" onClick={() => isPlaying(true)} >
+                        <div className="video-img-wrapper" onClick={() => isPlaying(true)} 
+                        style={{backgroundImage:`url(${playingCard.image})`}}>
                             <img src="./playButton.svg" alt="" />
                         </div>
                         :
@@ -60,8 +46,8 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
                                 controls={true} playing={playing}
                                 height="100%" width="100%"
                                 config={{ youtube: { playerVars: { rel: 0, color: "white" } }, }}
-                                url={playingCard.video} progressInterval={5000} onProgress={savePlayedInfo}
-                                onReady={checkStart} onEnded={handleOnEnded}
+                                url={playingCard.video} progressInterval={5000} 
+                                onEnded={handleOnEnded}
                             />
                         </div>
                     }
