@@ -3,6 +3,7 @@ import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import ReactPlayer from 'react-player'
 
+
 export default function Home({ playingCardId, playingList, viewedCounter, handleViewed, playing, isPlaying }) {
 
     const playingCard = playingList.filter(card => card.id === playingCardId)[0]
@@ -52,16 +53,13 @@ export default function Home({ playingCardId, playingList, viewedCounter, handle
                         </div>
                     }
 
+                    <div className="hero-info-space"></div>
                     <div className="hero-info">
                         <div className="hero-info-top">
-                            <div className="hero-info-top-left">
-                                <p className="hero-info-title">{playingCard?.title}</p>
-                                <p className="hero-info-text">{playingCard?.description}</p>
-                            </div>
-                            <div className="hero-info-top-right">
-                                <p className="video-counter"> {`Videos ${viewedCounter}/${playingList.length}`}</p>
-                            </div>
+                            <p className="hero-info-title">{playingCard?.title}</p>
+                            <p className="video-counter"> {`Videos ${viewedCounter}/${playingList.length}`}</p>                   
                         </div>
+                        <p className="hero-info-text">{playingCard?.description}</p>
                         <div className="progress-bar-container">
                             <p>Progreso del curso</p>
                             <progress  value={playingList.length!==0 ?viewedCounter/playingList.length : 0 } className="progress"> </progress>
